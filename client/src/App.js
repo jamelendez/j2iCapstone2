@@ -3,10 +3,11 @@ import AppNavbar from './components/AppNavbar';
 import Menu from './components/Menu';
 import MainWindow from './components/MainWindow';
 import { Col, Container, Containern, Row } from 'reactstrap';
-import OverviewTables from './components/OverviewTables';
+//import Overview from './components/Overview';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Timer from './components/Timer'
 //import styles from './styles/MainWindow.module.css'
 
 
@@ -16,15 +17,18 @@ function App() {
       <AppNavbar />
       <Container className="themed-container" fluid={true}>
         <Row>
-          <Col xs = "auto"> 
+          <Timer />
+        </Row>
+        <Row>
+          <Col xs="auto">
             <Menu />
           </Col>
           <Col>
-            <OverviewTables />
+            <MainWindow />
           </Col>
         </Row>
       </Container>
-      
+
     </div>
   );
 }

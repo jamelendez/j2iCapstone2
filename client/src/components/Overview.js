@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 
-class OverviewTables extends Component {
+class Overview extends Component {
+
+
     render() {
         return (
             <div>
@@ -161,4 +163,4 @@ class OverviewTables extends Component {
     }
 }
 
-export default OverviewTables;
+export default Overview;
