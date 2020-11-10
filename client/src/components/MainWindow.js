@@ -7,18 +7,15 @@ import IOSettings from './IOSettings'
 import ChangePassword from './ChangePassword'
 import LdFacDef from './LdFacDef'
 import SaveReset from './SaveReset'
+import { connect } from 'react-redux'
+import { getMenu } from '../actions/MenuAction'
+import PropTypes from 'prop-types';
 //import styles from './syles/MainWindow.module.css'
 
 class MainWindow extends Component {
-    constructor(props) {
-        super(props);
-        //this.state = { currentPage: <Overview /> };
-        //this.state = { currentPage: <GeneralSettings /> };
-        //this.state = { currentPage: <UserDefModbusAddressing /> };
-        //this.state = { currentPage: <IOSettings />}
-        //this.state = { currentPage: <ChangePassword />}
-        //this.state = { currentPage: <LdFacDef />}
-        this.state = { currentPage: <SaveReset />}
+    
+    componentDidMount() {
+        this.props.getMenu();
     }
 
     /*//new Menu = Menu
@@ -42,12 +39,22 @@ class MainWindow extends Component {
     } */
 
     render() {
+        const { menu } = this.props.menu;
         return (
             <div>
-                {this.state.currentPage}
+                
             </div>
         )
     }
 }
 
-export default MainWindow;
+MainWindow.propTypes = {
+    getMenu: PropTypes.func.isRequired,
+    menu: PropTypes.object.isRequired //represents the state, which is an object
+}
+
+const mapStateToProps = (state) => ({
+    menu: state.menu
+});
+
+export default connect(mapStateToProps, { getMenu }) (MainWindow);

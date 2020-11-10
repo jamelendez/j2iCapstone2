@@ -2,7 +2,19 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
 
 class GeneralSettings extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { saveMessage: ''};
+    }
+
+    saveMessageHanler = () => {
+        this.setState({saveMessage: 'Changes have been saved.'})
+    }
+    
     render() {
+        
+
         return (
             <div>
                 <h1>GeneralSettings</h1>
@@ -13,7 +25,13 @@ class GeneralSettings extends Component {
                     <Label for="serverLocation" style={{marginTop: '2rem'}} >Server Location:</Label>
                     <Input type="testarea" name="serverLocation" id="serverLocation" placeholder="e.g. UPRM or Mayagüez or Room 8" />
                 </Form>
-                <Button style={{marginTop: '2rem'}}>Save Changes</Button>
+                <Button 
+                    style={{marginTop: '2rem'}}
+                    onClick={this.saveMessageHanler}
+                >
+                        Save Changes
+                </Button>
+                <p>{this.state.saveMessage}</p>
             </div>
         )
     }
