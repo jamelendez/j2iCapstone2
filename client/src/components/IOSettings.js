@@ -1,41 +1,27 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
+import Di1modal from '../modals/Di1modal'
+import Di2modal from '../modals/Di2modal'
+import Di3modal from '../modals/Di3modal'
+import Di4modal from '../modals/Di4modal'
+import Do1modal from '../modals/Do1modal'
+import Do2modal from '../modals/Do2modal'
+import Do3modal from '../modals/Do3modal'
+import Do4modal from '../modals/Do4modal'
+import Ai1modal from '../modals/Ai1modal'
+import Ai2modal from '../modals/Ai2modal'
+import Ai3modal from '../modals/Ai3modal'
+import Ai4modal from '../modals/Ai4modal'
+import Ao1modal from '../modals/Ao1modal'
+import Ao2modal from '../modals/Ao2modal'
+import Ao3modal from '../modals/Ao3modal'
+import Ao4modal from '../modals/Ao4modal'
+
+
 
 class IOSettings extends Component {
-    state = {
-        modal: false,
-        di1Name: 'DI-1',
-        aliasDI1OFF: 'OFF',
-        aliasDI1ON: 'ON',
-        status1: 'OFF',
-
-        di2Name: 'DI-2',
-        aliasDI2OFF: 'OFF',
-        aliasDI2ON: 'ON',
-        status2: 'OFF'
-
-    }
-
-    toggle = () => {
-        this.setState({
-            modal: !this.state.modal
-        });
-    };
-
-    onSubmit = (e) => {
-        e.preventDefault();
-        this.toggle();
-    }
-
-    //aun no guarda el value que es, o sea el chanel name nuevo
-    onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-    };
-
     render() {
-        const { di1Name, aliasDI1OFF, di2Name, aliasDI2OFF } = this.state
-
-        return (
+       return (
             <div>
                 <h1>I/O Settings</h1>
                 <h2>DI Channel Settings</h2>
@@ -50,98 +36,28 @@ class IOSettings extends Component {
                     <tbody>
                         <tr>
                             <th scope="row">
-                                <Button color="link" onClick={this.toggle}>
-                                    {di1Name}
-                                </Button>
-                                <Modal
-                                    isOpen={this.state.modal}
-                                    toggle={this.toggle}
-                                >
-                                    <ModalHeader toggle={this.toggle}>DI Channel 1 Settings</ModalHeader>
-                                    <ModalBody>
-                                        <Form onSubmit={this.onSubmit}>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="checkbox" />{' '}
-                                                    Apply to all DI channels
-                                                </Label>
-                                            </FormGroup>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="checkbox" />{' '}
-                                                    Channel status
-                                                </Label>
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="di1">Alias name of channel</Label>
-                                                <Input name="di1Name" id="di1" placeholder="DI-1" onChange={this.onChange} />
-                                                <Label for="offdi1">Alias name "OFF" status</Label>
-                                                <Input name="aliasDI1OFF" id="offdi1" placeholder="OFF" onChange={this.onChange} />
-                                                <Label for="ondi1">Alias name "ON" status</Label>
-                                                <Input name="text" id="ondi1" placeholder="ON" />
-                                                <Button color="dark" style={{ marginTop: '2rem' }} block>Save Changes</Button>
-                                            </FormGroup>
-                                        </Form>
-                                    </ModalBody>
-                                </Modal>
-                            </th>
-                            <td>{aliasDI1OFF}</td>
-                            <td>100.0ms</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <Button color="link" onClick={this.toggle}>
-                                    {di2Name}
-                                </Button>
-                                <Modal
-                                    isOpen={this.state.modal}
-                                    toggle={this.toggle}
-                                >
-                                    <ModalHeader toggle={this.toggle}>DI Channel 2 Settings</ModalHeader>
-                                    <ModalBody>
-                                        <Form onSubmit={this.onSubmit}>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="checkbox" />{' '}
-                                                    Apply to all DI channels
-                                                </Label>
-                                            </FormGroup>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="checkbox" />{' '}
-                                                    Channel status
-                                                </Label>
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="di2">Alias name of channel</Label>
-                                                <Input name="di2Name" id="di2" placeholder="DI-2" onChange={this.onChange} />
-                                                <Label for="offdi2">Alias name "OFF" status</Label>
-                                                <Input name="aliasDI2OFF" id="offdi2" placeholder="OFF" onChange={this.onChange} />
-                                                <Label for="ondi2">Alias name "ON" status</Label>
-                                                <Input name="text" id="ondi2" placeholder="ON" />
-                                                <Button color="dark" style={{ marginTop: '2rem' }} block>Save Changes</Button>
-                                            </FormGroup>
-                                        </Form>
-                                    </ModalBody>
-                                </Modal>
-                            </th>
-                            <td>{aliasDI2OFF}</td>
-                            <td>100.0ms</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <Button color="link">
-                                    DI-3
-                                </Button>
+                                <Di1modal />
                             </th>
                             <td>OFF</td>
                             <td>100.0ms</td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Button color="link">
-                                    DI-4
-                                </Button>
+                                <Di2modal />
+                            </th>
+                            <td>OFF</td>
+                            <td>100.0ms</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <Di3modal/>
+                            </th>
+                            <td>OFF</td>
+                            <td>100.0ms</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <Di4modal/>
                             </th>
                             <td>OFF</td>
                             <td>100.0ms</td>
@@ -159,19 +75,27 @@ class IOSettings extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">DO-1</th>
+                            <th scope="row">
+                                <Do1modal/>
+                            </th>
                             <td>OFF</td>
                         </tr>
                         <tr>
-                            <th scope="row">DO-2</th>
+                            <th scope="row">
+                                <Do2modal/>
+                            </th>
                             <td>OFF</td>
                         </tr>
                         <tr>
-                            <th scope="row">DO-3</th>
+                            <th scope="row">
+                                <Do3modal/>
+                            </th>
                             <td>OFF</td>
                         </tr>
                         <tr>
-                            <th scope="row">DO-4</th>
+                            <th scope="row">
+                                <Do4modal/>
+                            </th>
                             <td>OFF</td>
                         </tr>
                     </tbody>
@@ -190,7 +114,9 @@ class IOSettings extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">AI-1</th>
+                            <th scope="row">
+                                <Ai1modal/>
+                            </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
@@ -198,7 +124,9 @@ class IOSettings extends Component {
                             <td>0.006</td>
                         </tr>
                         <tr>
-                            <th scope="row">AI-2</th>
+                            <th scope="row">
+                                <Ai2modal/>
+                            </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
@@ -206,7 +134,9 @@ class IOSettings extends Component {
                             <td>0.006</td>
                         </tr>
                         <tr>
-                            <th scope="row">AI-3</th>
+                            <th scope="row">
+                                <Ai3modal/>
+                            </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
@@ -214,7 +144,9 @@ class IOSettings extends Component {
                             <td>0.006</td>
                         </tr>
                         <tr>
-                            <th scope="row">AI-4</th>
+                            <th scope="row">
+                                <Ai4modal/>
+                            </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
@@ -237,7 +169,9 @@ class IOSettings extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">AO-1</th>
+                            <th scope="row">
+                                <Ao1modal/>
+                            </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
@@ -245,7 +179,9 @@ class IOSettings extends Component {
                             <td>0.006</td>
                         </tr>
                         <tr>
-                            <th scope="row">AO-2</th>
+                            <th scope="row">
+                                <Ao2modal/>
+                            </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
@@ -253,7 +189,9 @@ class IOSettings extends Component {
                             <td>0.006</td>
                         </tr>
                         <tr>
-                            <th scope="row">AO-3</th>
+                            <th scope="row">
+                                <Ao3modal/>
+                            </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
@@ -261,7 +199,9 @@ class IOSettings extends Component {
                             <td>0.006</td>
                         </tr>
                         <tr>
-                            <th scope="row">AO-4</th>
+                            <th scope="row">
+                                <Ao4modal/>
+                            </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
                             <td>0.006</td>
