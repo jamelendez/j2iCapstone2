@@ -1,3 +1,2 @@
-export const GET_MENU = 'GET_MENU';
-export const ADD_MENU = 'ADD_MENU';
-export const DELETE_MENU = 'DELETE_MENU';
+export const GET_SERVER_INFO = 'GET_SERVER_INFO';
+export const SET_SERVER_INFO = 'SET_SERVER_INFO';

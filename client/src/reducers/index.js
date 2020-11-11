@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import menuReducer from './menuReducer';
+import serverInfoReducer from './serverInfoReducer'
 
 export default combineReducers({
-    menu: menuReducer
+    serverInfo: serverInfoReducer
 });

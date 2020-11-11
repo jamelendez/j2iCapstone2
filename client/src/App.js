@@ -23,23 +23,6 @@ import Login from './components/Login'
 
 
 function App() {
-  const page = () => {
-    return (
-      <div>
-        <InfoBar />
-        <Container className="themed-container" fluid={true}>
-          <Row>
-            <Timer />
-          </Row>
-          <Row>
-            <Col sm='auto'>
-              <Menu />
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
-  }
 
   const login = () => {
     return (
@@ -68,7 +51,7 @@ function App() {
               </FormGroup>
             </Col>
             <Button
-              onClick={page()}
+              tag={Link} to="/menu"
             >Log In</Button>
           </Form>
         </Container>
@@ -80,8 +63,8 @@ function App() {
 
 
   return (
-    <div className="App">
-      <Provider store={store}>
+    <Provider store={store}>
+      <div className="App"> 
         <AppNavbar />
         <Container>
           <Router>
@@ -107,8 +90,9 @@ function App() {
             </Switch>
           </Router>
         </Container>
-      </Provider>
-    </div>
+
+      </div>
+    </Provider>
   );
 }
 

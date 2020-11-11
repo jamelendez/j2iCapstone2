@@ -13,9 +13,15 @@ import {
     DropdownItem,
     NavbarText,
     Button,
-    ButtonGroup 
-    
+    ButtonGroup
+
 } from 'reactstrap';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 
 class AppNav extends Component {
@@ -41,8 +47,9 @@ class AppNav extends Component {
                                 <Button color="info">Help</Button>{' '}
                             </NavItem>
                             <NavItem>
-                                <NavLink href="https://github.com/jamelendez/j2iCapstone2">Log out</NavLink>
+                                <NavLink href="/login">Log out</NavLink>
                             </NavItem>
+
                         </Nav>
                     </Collapse>
                 </Navbar>

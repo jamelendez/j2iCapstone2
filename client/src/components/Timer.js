@@ -11,10 +11,10 @@ class Timer extends Component {
 
     tick() {
         
-        if (this.seconds === 60) {
+        if (this.state.seconds == 59) {
             this.setState(state => ({
                 seconds: 0,
-                minutes: this.minutes + 1
+                minutes: this.state.minutes + 1
             }));
         }
         else {

@@ -7,7 +7,7 @@ import IOSettings from './IOSettings'
 import ChangePassword from './ChangePassword'
 import LdFacDef from './LdFacDef'
 import SaveReset from './SaveReset'
-import MainWindow from './MainWindow'
+
 
 class Menu extends Component {
     constructor(props) {
