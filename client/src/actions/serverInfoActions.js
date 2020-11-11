@@ -1,7 +1,17 @@
-import { GET_SERVER_INFO, SET_SERVER_INFO } from './types';
+import axios from 'axios';
+import { GET_SERVER_INFO, SET_SERVER_INFO, SERVER_INFO_LOADING } from './types';
 
 export const getServerInfo = () => {
+    //dispatch(setServerInfoLoading());
+    //axios
+    //    .get('/api/')
     return {
         type: GET_SERVER_INFO
-    };
+    }
 };
+
+export const setServerInfoLoading = () => {
+    return {
+        type: SERVER_INFO_LOADING
+    }
+}

@@ -5,31 +5,30 @@ class GeneralSettings extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { saveMessage: ''};
+        this.state = { saveMessage: '' };
     }
 
+    // Handles the message to be displayed after clicking the 'Save Changes' Button. 
     saveMessageHanler = () => {
-        this.setState({saveMessage: 'Changes have been saved.'})
+        this.setState({ saveMessage: 'Changes have been saved.' })
     }
-    
-    render() {
-        
 
+    render() {
         return (
             <div>
                 <h1>GeneralSettings</h1>
                 <h2>I/O Server Settings</h2>
                 <Form>
-                    <Label for="serverName" style={{marginTop: '2rem'}} >Server Name:</Label>
+                    <Label for="serverName" style={{ marginTop: '2rem' }} >Server Name:</Label>
                     <Input type="testarea" name="serverName" id="serverName" placeholder="e.g. Server1, or My Meliora 1" />
-                    <Label for="serverLocation" style={{marginTop: '2rem'}} >Server Location:</Label>
+                    <Label for="serverLocation" style={{ marginTop: '2rem' }} >Server Location:</Label>
                     <Input type="testarea" name="serverLocation" id="serverLocation" placeholder="e.g. UPRM or Mayagüez or Room 8" />
                 </Form>
-                <Button 
-                    style={{marginTop: '2rem'}}
+                <Button
+                    style={{ marginTop: '2rem' }}
                     onClick={this.saveMessageHanler}
                 >
-                        Save Changes
+                    Save Changes
                 </Button>
                 <p>{this.state.saveMessage}</p>
             </div>

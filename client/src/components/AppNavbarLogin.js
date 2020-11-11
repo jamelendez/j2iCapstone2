@@ -44,12 +44,7 @@ class AppNav extends Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <Help />
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/login">Log out</NavLink>
-                            </NavItem>
+
 
                         </Nav>
                     </Collapse>

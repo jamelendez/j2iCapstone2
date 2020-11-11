@@ -21,7 +21,7 @@ class Di1modal extends Component {
         this.toggle();
     }
 
-    //aun no guarda el value que es, o sea el chanel name nuevo
+
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
