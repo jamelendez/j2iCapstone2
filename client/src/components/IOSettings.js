@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
-import Di1modal from '../modals/Di1modal'
-import Di2modal from '../modals/Di2modal'
-import Di3modal from '../modals/Di3modal'
-import Di4modal from '../modals/Di4modal'
-import Do1modal from '../modals/Do1modal'
-import Do2modal from '../modals/Do2modal'
-import Do3modal from '../modals/Do3modal'
-import Do4modal from '../modals/Do4modal'
-import Ai1modal from '../modals/Ai1modal'
-import Ai2modal from '../modals/Ai2modal'
-import Ai3modal from '../modals/Ai3modal'
-import Ai4modal from '../modals/Ai4modal'
-import Ao1modal from '../modals/Ao1modal'
-import Ao2modal from '../modals/Ao2modal'
-import Ao3modal from '../modals/Ao3modal'
-import Ao4modal from '../modals/Ao4modal'
+import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap';
+import Di1modal from '../modals/Di1modal';
+import Di2modal from '../modals/Di2modal';
+import Di3modal from '../modals/Di3modal';
+import Di4modal from '../modals/Di4modal';
+import Do1modal from '../modals/Do1modal';
+import Do2modal from '../modals/Do2modal';
+import Do3modal from '../modals/Do3modal';
+import Do4modal from '../modals/Do4modal';
+import Ai1modal from '../modals/Ai1modal';
+import Ai2modal from '../modals/Ai2modal';
+import Ai3modal from '../modals/Ai3modal';
+import Ai4modal from '../modals/Ai4modal';
+import Ao1modal from '../modals/Ao1modal';
+import Ao2modal from '../modals/Ao2modal';
+import Ao3modal from '../modals/Ao3modal';
+import Ao4modal from '../modals/Ao4modal';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getChanelDi1Info } from '../actions/di1Actions';
 
 
 
 class IOSettings extends Component {
+
+    componentDidMount() {
+        this.props.getChanelDi1Info();
+    }
+
     render() {
-       return (
+
+        const { status } = this.props.di1.di.find(channel => channel.ch === 1);
+
+        return (
             <div>
                 <h1>I/O Settings</h1>
                 <h2>DI Channel Settings</h2>
@@ -38,7 +49,7 @@ class IOSettings extends Component {
                             <th scope="row">
                                 <Di1modal />
                             </th>
-                            <td>OFF</td>
+                            <td> {status} </td>
                             <td>100.0ms</td>
                         </tr>
                         <tr>
@@ -50,14 +61,14 @@ class IOSettings extends Component {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Di3modal/>
+                                <Di3modal />
                             </th>
                             <td>OFF</td>
                             <td>100.0ms</td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Di4modal/>
+                                <Di4modal />
                             </th>
                             <td>OFF</td>
                             <td>100.0ms</td>
@@ -76,25 +87,25 @@ class IOSettings extends Component {
                     <tbody>
                         <tr>
                             <th scope="row">
-                                <Do1modal/>
+                                <Do1modal />
                             </th>
                             <td>OFF</td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Do2modal/>
+                                <Do2modal />
                             </th>
                             <td>OFF</td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Do3modal/>
+                                <Do3modal />
                             </th>
                             <td>OFF</td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Do4modal/>
+                                <Do4modal />
                             </th>
                             <td>OFF</td>
                         </tr>
@@ -115,7 +126,7 @@ class IOSettings extends Component {
                     <tbody>
                         <tr>
                             <th scope="row">
-                                <Ai1modal/>
+                                <Ai1modal />
                             </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
@@ -125,7 +136,7 @@ class IOSettings extends Component {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Ai2modal/>
+                                <Ai2modal />
                             </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
@@ -135,7 +146,7 @@ class IOSettings extends Component {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Ai3modal/>
+                                <Ai3modal />
                             </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
@@ -145,7 +156,7 @@ class IOSettings extends Component {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Ai4modal/>
+                                <Ai4modal />
                             </th>
                             <td>-24V - 24V</td>
                             <td>Enable</td>
@@ -170,7 +181,7 @@ class IOSettings extends Component {
                     <tbody>
                         <tr>
                             <th scope="row">
-                                <Ao1modal/>
+                                <Ao1modal />
                             </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
@@ -180,7 +191,7 @@ class IOSettings extends Component {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Ao2modal/>
+                                <Ao2modal />
                             </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
@@ -190,7 +201,7 @@ class IOSettings extends Component {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Ao3modal/>
+                                <Ao3modal />
                             </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
@@ -200,7 +211,7 @@ class IOSettings extends Component {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <Ao4modal/>
+                                <Ao4modal />
                             </th>
                             <td>0V - 24V</td>
                             <td>Enable</td>
@@ -215,4 +226,13 @@ class IOSettings extends Component {
     }
 }
 
-export default IOSettings;
+IOSettings.propTypes = {
+    getChanelDi1Info: PropTypes.func.isRequired,
+    di1: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    di1: state.di1
+});
+
+export default connect(mapStateToProps, { getChanelDi1Info })(IOSettings);

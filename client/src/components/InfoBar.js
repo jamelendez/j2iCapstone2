@@ -13,8 +13,8 @@ import {
     DropdownItem,
     NavbarText,
     Button,
-    ButtonGroup 
-    
+    ButtonGroup
+
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getServerInfo } from '../actions/serverInfoActions';
@@ -26,19 +26,19 @@ class InfoBar extends Component {
         this.props.getServerInfo();
     }
 
-    
+
 
     render() {
-        const { serverName, serverLocation} = this.props.serverInfo
+        const { serverName, serverLocation } = this.props.serverInfo;
         return (
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
-                <Nav className="mr-auto" navbar>
-                            <NavItem>
-                                <p className="text-white">Server Name: {serverName}</p>
-                                <p className="text-white">Server Location: {serverLocation}</p>
-                            </NavItem>
-                        </Nav>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem>
+                            <p className="text-white">Server Name: {serverName}</p>
+                            <p className="text-white">Server Location: {serverLocation}</p>
+                        </NavItem>
+                    </Nav>
                 </Navbar>
             </div>
         )
@@ -54,4 +54,4 @@ const mapStateToProps = (state) => ({
     serverInfo: state.serverInfo
 })
 
-export default connect(mapStateToProps, { getServerInfo }) (InfoBar);
+export default connect(mapStateToProps, { getServerInfo })(InfoBar);

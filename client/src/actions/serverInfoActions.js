@@ -7,7 +7,15 @@ export const getServerInfo = () => {
     //    .get('/api/')
     return {
         type: GET_SERVER_INFO
-    }
+    };
+};
+
+export const setServerInfo = (serverName, serverLocation) => {
+    return {
+        type: SET_SERVER_INFO,
+        payload: serverName,
+        payload2: serverLocation
+    };
 };
 
 export const setServerInfoLoading = () => {

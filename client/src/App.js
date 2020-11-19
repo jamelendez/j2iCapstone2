@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import AppNavbar from './components/AppNavbar';
 import AppNavbarLogin from './components/AppNavbarLogin';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import Menu from './components/Menu';
 import InfoBar from './components/InfoBar';
 import { Col, Container, Containern, Row } from 'reactstrap';
@@ -90,7 +90,21 @@ class App extends Component {
                     </Row>
                   </Container>
                 </Route>
+                <Route path='/forgot_password'>
+                  <Navbar color="dark" dark expand="sm" className="mb-5">
+                    <NavbarBrand href="/">Reset Passowrd</NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                      <NavItem>
+                        <NavLink href="/">Log in</NavLink>
+                      </NavItem>
+                    </Nav>
+                  </Navbar>
+                  <p>En proceso...</p>
+                </Route>
                 <Route path="/">
+                  <Navbar color="dark" dark expand="sm" className="mb-5">
+                    <NavbarBrand href="/">Welcome to Meliora Remote I/O Server</NavbarBrand>
+                  </Navbar>
                   <Form className="form">
                     <Col>
                       <FormGroup>
@@ -113,13 +127,14 @@ class App extends Component {
                         />
                       </FormGroup>
                     </Col>
+                    <Button color="link" tag={Link} to="/forgot_password">
+                      Forgot password?
+                    </Button>
                     <Button
                       tag={Link} to="/menu"
                     >Log In</Button>
                   </Form>
                 </Route>
-
-
               </Switch>
             </Router>
           </Container>

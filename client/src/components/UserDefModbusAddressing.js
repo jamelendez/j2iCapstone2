@@ -27,8 +27,8 @@ class UserDefModbusAddressing extends Component {
                             <th>No.</th>
                             <th>Description</th>
                             <th>User-defined Start Address (DEC)</th>
-                            <th>Function Code</th>
-                            <th>Read/Write</th>
+                            <th>Function Code      </th>
+                            <th>Read(R)/Write(W)</th>
                             <th>Reference Address (DEC)</th>
                             <th>Total Channels</th>
                             <th>Data Type</th>
@@ -50,6 +50,10 @@ class UserDefModbusAddressing extends Component {
                                         <option>02:INPUT STATUS</option>
                                         <option>03:HOLDING REGISTER</option>
                                         <option>04:INPUT REGISTER</option>
+                                        <option>05:OUTPUT COIL</option>
+                                        <option>06:HOLDING REGISTER</option>
+                                        <option>15:OUTPUT COILS</option>
+                                        <option>16:HOLDING REGISTERS</option>
                                     </Input>
                                 </Form>
                             </td>
@@ -73,6 +77,10 @@ class UserDefModbusAddressing extends Component {
                                         <option>02:INPUT STATUS</option>
                                         <option>03:HOLDING REGISTER</option>
                                         <option>04:INPUT REGISTER</option>
+                                        <option>05:OUTPUT COIL</option>
+                                        <option>06:HOLDING REGISTER</option>
+                                        <option>15:OUTPUT COILS</option>
+                                        <option>16:HOLDING REGISTERS</option>
                                     </Input>
                                 </Form>
                             </td>
@@ -96,6 +104,10 @@ class UserDefModbusAddressing extends Component {
                                         <option>02:INPUT STATUS</option>
                                         <option>03:HOLDING REGISTER</option>
                                         <option>04:INPUT REGISTER</option>
+                                        <option>05:OUTPUT COIL</option>
+                                        <option>06:HOLDING REGISTER</option>
+                                        <option>15:OUTPUT COILS</option>
+                                        <option>16:HOLDING REGISTERS</option>
                                     </Input>
                                 </Form>
                             </td>
@@ -119,6 +131,10 @@ class UserDefModbusAddressing extends Component {
                                         <option>02:INPUT STATUS</option>
                                         <option>03:HOLDING REGISTER</option>
                                         <option>04:INPUT REGISTER</option>
+                                        <option>05:OUTPUT COIL</option>
+                                        <option>06:HOLDING REGISTER</option>
+                                        <option>15:OUTPUT COILS</option>
+                                        <option>16:HOLDING REGISTERS</option>
                                     </Input>
                                 </Form>
                             </td>
@@ -142,6 +158,10 @@ class UserDefModbusAddressing extends Component {
                                         <option>02:INPUT STATUS</option>
                                         <option>03:HOLDING REGISTER</option>
                                         <option>04:INPUT REGISTER</option>
+                                        <option>05:OUTPUT COIL</option>
+                                        <option>06:HOLDING REGISTER</option>
+                                        <option>15:OUTPUT COILS</option>
+                                        <option>16:HOLDING REGISTERS</option>
                                     </Input>
                                 </Form>
                             </td>
@@ -222,7 +242,7 @@ class UserDefModbusAddressing extends Component {
                     </tbody>
                 </Table >
 
-                <Button style={{marginBottom: '2rem'}}>Save Changes</Button>
+                <Button style={{ marginBottom: '2rem' }}>Save Changes</Button>
             </div>
         )
     }

@@ -13,11 +13,17 @@ export default function (state = initialState, action) {
             return {
                 ...state
             };
+        case SET_SERVER_INFO:
+            return {
+                ...state,
+                serverName: action.payload,
+                serverLocation: action.payload2
+            };
         case SERVER_INFO_LOADING:
             return {
                 ...state,
                 loading: true
-            }
+            };
         default:
             return state;
     }

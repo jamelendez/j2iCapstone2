@@ -7,11 +7,11 @@ class SaveReset extends Component {
             <div>
                 <h1>Save/Reset</h1>
                 <p>
-                    The configuration has been changed. Click submit to save changes. 
+                    The configuration has been changed. Click 'Save' to save changes.
                 </p>
                 <p>Click 'Reset' to reboot with the new configuration.</p>
-                <Button style={{marginTop: '2rem'}}>Save</Button>
-                <Button style={{marginTop: '2rem', marginLeft:'10rem'}}>Reset</Button>
+                <Button style={{ marginTop: '2rem' }}>Save</Button>
+                <Button style={{ marginTop: '2rem', marginLeft: '10rem' }}>Reset</Button>
             </div>
         )
     }
