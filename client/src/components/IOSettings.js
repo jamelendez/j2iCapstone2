@@ -31,6 +31,9 @@ class IOSettings extends Component {
     render() {
 
         const { status } = this.props.di1.di.find(channel => channel.ch === 1);
+        const status2 = this.props.di1.di[1].status;
+        const status3 = this.props.di1.di[2].status;
+        const status4 = this.props.di1.di[3].status;
 
         return (
             <div>
@@ -41,7 +44,6 @@ class IOSettings extends Component {
                         <tr>
                             <th>DI Channel</th>
                             <th>Status</th>
-                            <th>Filter</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,28 +52,28 @@ class IOSettings extends Component {
                                 <Di1modal />
                             </th>
                             <td> {status} </td>
-                            <td>100.0ms</td>
+
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di2modal />
                             </th>
-                            <td>OFF</td>
-                            <td>100.0ms</td>
+                            <td>{status2}</td>
+
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di3modal />
                             </th>
-                            <td>OFF</td>
-                            <td>100.0ms</td>
+                            <td>{status3}</td>
+
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di4modal />
                             </th>
-                            <td>OFF</td>
-                            <td>100.0ms</td>
+                            <td>{status4}</td>
+
                         </tr>
                     </tbody>
                 </Table>

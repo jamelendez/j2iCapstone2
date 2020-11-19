@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, ModalHeader, Modal, ModalBody } from 'reactstrap';
+import { connect } from 'react-redux';
+import {
+    getChanelDi1Info,
+    setChannelDiInfo,
+    setDIChannelName,
+    setDIChannelAliasOFF,
+    setDIChannelAliasON,
+    setDIChannelStatus
+} from '../actions/di1Actions';
+import PropTypes from 'prop-types';
 
 class Di2modal extends Component {
     state = {
         modal: false,
         name: 'DI-2',
+        status: false,
         aliasOFF: 'OFF',
         aliasON: 'ON',
-        status: 'OFF',
+        toAll: false,
+        nameChanged: false
+    }
+
+    componentDidMount() {
+        this.props.getChanelDi1Info();
     }
 
     toggle = () => {
@@ -18,16 +34,58 @@ class Di2modal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+
+        if (this.state.toAll) {
+            for (var i = 1; i <= 4; i++) {
+                if (this.state.nameChanged) {
+                    this.props.setDIChannelName(this.state.name, i);
+                    this.setState({ nameChanged: false });
+                }
+                if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, i);
+                if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, i);
+                if (this.state.status === false) {
+                    this.props.setDIChannelStatus(this.state.aliasOFF, i);
+                }
+                else {
+                    this.props.setDIChannelStatus(this.state.aliasON, i);
+                }
+            }
+        }
+
+        else {
+            this.props.setDIChannelName(this.state.name, 2);
+            this.setState({ nameChanged: false });
+            if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, 2);
+            if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, 2);
+            if (this.state.status === false) {
+                this.props.setDIChannelStatus(this.state.aliasOFF, 2);
+            }
+            else {
+                this.props.setDIChannelStatus(this.state.aliasON, 2);
+            }
+        }
+
+
         this.toggle();
     }
 
-    //aun no guarda el value que es, o sea el chanel name nuevo
+
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+        if ([e.target.name] == 'name') this.setState({ nameChanged: true });
+        if (e.target.value === '') this.setState({ nameChanged: false });
     };
 
+    onCheckboxChange = (e) => {
+        this.setState({ [e.target.name]: e.target.checked });
+    }
+
+
+
     render() {
-        const { name, aliasOFF, aliasON, status } = this.state
+        // Escoge el nombre del canal 1 en el state del reducer
+        const { name } = this.props.di1.di.find(channel => channel.ch === 2);
+
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
@@ -42,24 +100,28 @@ class Di2modal extends Component {
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="toAll" checked={this.state.toAll} onChange={this.onCheckboxChange} />{' '}
                                                     Apply to all DI channels
-                                                </Label>
+                                </Label>
                             </FormGroup>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}
                                                     Channel status
                                 </Label>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="name">Alias name of channel</Label>
-                                <Input name="name" id="aliasName" placeholder="DI-2" onChange={this.onChange} />
-                                <Label for="off">Alias name "OFF" status</Label>
+                                <Input name="name" id="aliasName" placeholder="DI-2" onChange={(e) => { this.onChange(e) }} />
+                                <Label for="aliasOFF">Alias name "OFF" status</Label>
                                 <Input name="aliasOFF" id="aliasOff" placeholder="OFF" onChange={this.onChange} />
-                                <Label for="on">Alias name "ON" status</Label>
-                                <Input name="aliasON" id="aliasOn" placeholder="ON" />
-                                <Button color="dark" style={{ marginTop: '2rem' }} block>Save Changes</Button>
+                                <Label for="aliasON">Alias name "ON" status</Label>
+                                <Input name="aliasON" id="aliasON" placeholder="ON" onChange={this.onChange} />
+                                <Button
+                                    color="dark"
+                                    style={{ marginTop: '2rem' }}
+                                    block
+                                >Save Changes</Button>
                             </FormGroup>
                         </Form>
                     </ModalBody>
@@ -69,4 +131,25 @@ class Di2modal extends Component {
     }
 }
 
-export default Di2modal;
+Di2modal.propTypes = {
+    getChanelDi1Info: PropTypes.func.isRequired,
+    setChannelDiInfo: PropTypes.func.isRequired,
+    setDIChannelName: PropTypes.func.isRequired,
+    setDIChannelAliasOFF: PropTypes.func.isRequired,
+    setDIChannelAliasON: PropTypes.func.isRequired,
+    setDIChannelStatus: PropTypes.func.isRequired,
+    di1: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    di1: state.di1
+});
+
+export default connect(mapStateToProps, {
+    getChanelDi1Info,
+    setChannelDiInfo,
+    setDIChannelName,
+    setDIChannelAliasOFF,
+    setDIChannelAliasON,
+    setDIChannelStatus
+})(Di2modal);

@@ -18,7 +18,9 @@ class Di1modal extends Component {
         name: 'DI-1',
         status: false,
         aliasOFF: 'OFF',
-        aliasON: 'ON'
+        aliasON: 'ON',
+        toAll: false,
+        nameChanged: false
     }
 
     componentDidMount() {
@@ -34,21 +36,45 @@ class Di1modal extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        this.props.setDIChannelName(this.state.name, 1);
-        if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, 1);
-        if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, 1);
-        if (this.state.status === false) {
-            this.props.setDIChannelStatus(this.state.aliasOFF, 1);
+        if (this.state.toAll) {
+            for (var i = 1; i <= 4; i++) {
+                if (this.state.nameChanged) {
+                    this.props.setDIChannelName(this.state.name, i);
+                    this.setState({ nameChanged: false });
+                }
+                if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, i);
+                if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, i);
+                if (this.state.status === false) {
+                    this.props.setDIChannelStatus(this.state.aliasOFF, i);
+                }
+                else {
+                    this.props.setDIChannelStatus(this.state.aliasON, i);
+                }
+            }
         }
+
         else {
-            this.props.setDIChannelStatus(this.state.aliasON, 1);
+            this.props.setDIChannelName(this.state.name, 1);
+            this.setState({ nameChanged: false });
+            if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, 1);
+            if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, 1);
+            if (this.state.status === false) {
+                this.props.setDIChannelStatus(this.state.aliasOFF, 1);
+            }
+            else {
+                this.props.setDIChannelStatus(this.state.aliasON, 1);
+            }
         }
+
+
         this.toggle();
     }
 
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+        if ([e.target.name] == 'name') this.setState({ nameChanged: true });
+        if (e.target.value === '') this.setState({ nameChanged: false });
     };
 
     onCheckboxChange = (e) => {
@@ -75,7 +101,7 @@ class Di1modal extends Component {
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="toAll" checked={this.state.toAll} onChange={this.onCheckboxChange} />{' '}
                                                     Apply to all DI channels
                                 </Label>
                             </FormGroup>

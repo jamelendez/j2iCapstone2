@@ -14,29 +14,29 @@ class Overview extends Component {
                         <tr>
                             <th>DI Channel</th>
                             <th>Status</th>
-                            <th>Filter</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th scope="row">1</th>
                             <td>OFF</td>
-                            <td>100.0ms</td>
+
                         </tr>
                         <tr>
                             <th scope="row">2</th>
                             <td>OFF</td>
-                            <td>100.0ms</td>
+
                         </tr>
                         <tr>
                             <th scope="row">3</th>
                             <td>OFF</td>
-                            <td>100.0ms</td>
+
                         </tr>
                         <tr>
                             <th scope="row">4</th>
                             <td>OFF</td>
-                            <td>100.0ms</td>
+
                         </tr>
                     </tbody>
                 </Table >

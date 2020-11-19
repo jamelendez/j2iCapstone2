@@ -4,7 +4,8 @@ import {
     SET_DICHANNEL_ALIASOFF,
     SET_DICHANNEL_NAME,
     SET_DICHANNEL_ALIASON,
-    SET_DICHANNEL_STATUS
+    SET_DICHANNEL_STATUS,
+    APPLY_TO_ALL_DI
 } from '../actions/types';
 import update from 'immutability-helper';
 
@@ -62,6 +63,8 @@ export default function (state = initialState, action) {
                     }
                 }
             })
+
+
         default:
             return state;
     }
