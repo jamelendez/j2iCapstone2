@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, ModalHeader, Modal, ModalBody } from 'reactstrap';
+import { connect } from 'react-redux';
+import {
+    getDOChannels,
+    setDOChannelName,
+    setDOChannelAliasOFF,
+    setDOChannelAliasON,
+    setDOChannelStatus
+} from '../actions/doActions';
+import PropTypes from 'prop-types';
 
 class Do1modal extends Component {
     state = {
         modal: false,
         name: 'DO-1',
+        status: false,
         aliasOFF: 'OFF',
         aliasON: 'ON',
-        status: 'OFF',
+        toAll: false,
+        nameChanged: false
+    }
+
+    componentDidMount() {
+        this.props.getDOChannels();
     }
 
     toggle = () => {
@@ -18,16 +33,58 @@ class Do1modal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+
+        if (this.state.toAll) {
+            for (var i = 1; i <= 4; i++) {
+                if (this.state.nameChanged) {
+                    this.props.setDOChannelName(this.state.name, i);
+                    this.setState({ nameChanged: false });
+                }
+                if (this.state.aliasOFF !== '') this.props.setDOChannelAliasOFF(this.state.aliasOFF, i);
+                if (this.state.aliasON !== '') this.props.setDOChannelAliasON(this.state.aliasON, i);
+                if (this.state.status === false) {
+                    this.props.setDOChannelStatus(this.state.aliasOFF, i);
+                }
+                else {
+                    this.props.setDOChannelStatus(this.state.aliasON, i);
+                }
+            }
+        }
+
+        else {
+            this.props.setDOChannelName(this.state.name, 1);
+            this.setState({ nameChanged: false });
+            if (this.state.aliasOFF !== '') this.props.setDOChannelAliasOFF(this.state.aliasOFF, 1);
+            if (this.state.aliasON !== '') this.props.setDOChannelAliasON(this.state.aliasON, 1);
+            if (this.state.status === false) {
+                this.props.setDOChannelStatus(this.state.aliasOFF, 1);
+            }
+            else {
+                this.props.setDOChannelStatus(this.state.aliasON, 1);
+            }
+        }
+
+
         this.toggle();
     }
 
-    //aun no guarda el value que es, o sea el chanel name nuevo
+
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+        if ([e.target.name] == 'name') this.setState({ nameChanged: true });
+        if (e.target.value === '') this.setState({ nameChanged: false });
     };
 
+    onCheckboxChange = (e) => {
+        this.setState({ [e.target.name]: e.target.checked });
+    }
+
+
+
     render() {
-        const { name, aliasOFF, aliasON, status } = this.state
+        // Escoge el nombre del canal 1 en el state del reducer
+        const { name } = this.props.do1.do.find(channel => channel.ch === 1);
+
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
@@ -42,24 +99,28 @@ class Do1modal extends Component {
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="toAll" checked={this.state.toAll} onChange={this.onCheckboxChange} />{' '}
                                                     Apply to all DO channels
-                                                </Label>
+                                </Label>
                             </FormGroup>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}
                                                     Channel status
                                 </Label>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="name">Alias name of channel</Label>
                                 <Input name="name" id="aliasName" placeholder="DO-1" onChange={this.onChange} />
-                                <Label for="off">Alias name "OFF" status</Label>
+                                <Label for="aliasOFF">Alias name "OFF" status</Label>
                                 <Input name="aliasOFF" id="aliasOff" placeholder="OFF" onChange={this.onChange} />
-                                <Label for="on">Alias name "ON" status</Label>
-                                <Input name="aliasON" id="aliasOn" placeholder="ON" />
-                                <Button color="dark" style={{ marginTop: '2rem' }} block>Save Changes</Button>
+                                <Label for="aliasON">Alias name "ON" status</Label>
+                                <Input name="aliasON" id="aliasON" placeholder="ON" onChange={this.onChange} />
+                                <Button
+                                    color="dark"
+                                    style={{ marginTop: '2rem' }}
+                                    block
+                                >Save Changes</Button>
                             </FormGroup>
                         </Form>
                     </ModalBody>
@@ -69,4 +130,23 @@ class Do1modal extends Component {
     }
 }
 
-export default Do1modal;
+Do1modal.propTypes = {
+    getDOChannels: PropTypes.func.isRequired,
+    setDOChannelName: PropTypes.func.isRequired,
+    setDOChannelAliasOFF: PropTypes.func.isRequired,
+    setDOChannelAliasON: PropTypes.func.isRequired,
+    setDOChannelStatus: PropTypes.func.isRequired,
+    do1: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    do1: state.do1
+});
+
+export default connect(mapStateToProps, {
+    getDOChannels,
+    setDOChannelName,
+    setDOChannelAliasOFF,
+    setDOChannelAliasON,
+    setDOChannelStatus
+})(Do1modal);

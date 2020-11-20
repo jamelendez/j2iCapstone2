@@ -9,7 +9,6 @@ import {
     setDIChannelAliasON,
     setDIChannelStatus
 } from '../actions/di1Actions';
-//import di1Reducer from '../reducers/di1Reducer';
 import PropTypes from 'prop-types';
 
 class Di1modal extends Component {

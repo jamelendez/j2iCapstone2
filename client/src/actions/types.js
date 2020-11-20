@@ -12,11 +12,17 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
-// Basic channel info action types. 
+// Basic DI channel info action types. 
 export const GET_CHANNELDI1_INFO = 'GET_CHANNELDI1_INFO';
 export const SET_CHANNELDI1_INFO = 'SET_CHANNELDI1_INFO';
 export const SET_DICHANNEL_NAME = 'SET_DICHANNEL-NAME';
 export const SET_DICHANNEL_ALIASOFF = 'SET_DICHANNEL_ALIASOFF';
 export const SET_DICHANNEL_ALIASON = 'SET_DICHANNEL_ALIASON';
 export const SET_DICHANNEL_STATUS = 'SET_DICHANNEL_STATUS';
-//export const APPLY_TO_ALL_DI = 'APPLY_TO_ALL_DI';
+
+// Basic DO channel info action types.
+export const GET_DO_CHANNELS = 'GET_DO_CHANNELS'
+export const SET_DOCHANNEL_NAME = 'SET_DOCHANNEL-NAME';
+export const SET_DOCHANNEL_ALIASOFF = 'SET_DOCHANNEL_ALIASOFF';
+export const SET_DOCHANNEL_ALIASON = 'SET_DOCHANNEL_ALIASON';
+export const SET_DOCHANNEL_STATUS = 'SET_DOCHANNEL_STATUS';

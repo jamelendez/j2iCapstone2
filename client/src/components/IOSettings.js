@@ -19,6 +19,7 @@ import Ao4modal from '../modals/Ao4modal';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getChanelDi1Info } from '../actions/di1Actions';
+import { getDOChannels } from '../actions/doActions'
 
 
 
@@ -26,14 +27,21 @@ class IOSettings extends Component {
 
     componentDidMount() {
         this.props.getChanelDi1Info();
+        this.props.getDOChannels();
     }
 
     render() {
-
+        // Digital Inputs status
         const { status } = this.props.di1.di.find(channel => channel.ch === 1);
         const status2 = this.props.di1.di[1].status;
         const status3 = this.props.di1.di[2].status;
         const status4 = this.props.di1.di[3].status;
+
+        // Digital Output Status
+        const doStatus = this.props.do1.do[0].status;
+        const doStatus2 = this.props.do1.do[1].status;
+        const doStatus3 = this.props.do1.do[2].status;
+        const doStatus4 = this.props.do1.do[3].status;
 
         return (
             <div>
@@ -78,6 +86,7 @@ class IOSettings extends Component {
                     </tbody>
                 </Table>
 
+
                 <h2>DO Channel Settings</h2>
                 <Table id="DO" bordered hover>
                     <thead>
@@ -91,28 +100,30 @@ class IOSettings extends Component {
                             <th scope="row">
                                 <Do1modal />
                             </th>
-                            <td>OFF</td>
+                            <td>{doStatus}</td>
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Do2modal />
                             </th>
-                            <td>OFF</td>
+                            <td>{doStatus2}</td>
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Do3modal />
                             </th>
-                            <td>OFF</td>
+                            <td>{doStatus3}</td>
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Do4modal />
                             </th>
-                            <td>OFF</td>
+                            <td>{doStatus4}</td>
                         </tr>
                     </tbody>
                 </Table>
+
+
                 <h2>AI Channel Settings</h2>
                 <Table bordered hover>
                     <thead>
@@ -230,11 +241,14 @@ class IOSettings extends Component {
 
 IOSettings.propTypes = {
     getChanelDi1Info: PropTypes.func.isRequired,
-    di1: PropTypes.object.isRequired
+    getDOChannels: PropTypes.func.isRequired,
+    di1: PropTypes.object.isRequired,
+    do1: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    di1: state.di1
+    di1: state.di1,
+    do1: state.do1
 });
 
-export default connect(mapStateToProps, { getChanelDi1Info })(IOSettings);
+export default connect(mapStateToProps, { getChanelDi1Info, getDOChannels })(IOSettings);
