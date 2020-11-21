@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, Table, ModalHeader, Modal, ModalBody } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {
+    getAOChannels,
+    setAOChannelName,
+    setAOChannelStatus,
+    setAOChannelSlopeInterceptResult
+} from '../actions/aoActions';
 
 class Ao3modal extends Component {
     state = {
         modal: false,
         name: 'AO-3',
-        status: 'Enable',
+        status: false,
+        toAll: false,
+        slopeIntercept: false,
+        M: 0,
+        D: 0
     }
 
     toggle = () => {
@@ -16,6 +28,14 @@ class Ao3modal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+
+        this.props.setAOChannelName(this.state.name, 3);
+        if (this.state.status === false) {
+            this.props.setAOChannelStatus('Disabled', 3);
+        }
+        else {
+            this.props.setAOChannelStatus('Enabled', 3);
+        }
         this.toggle();
     }
 
@@ -24,8 +44,12 @@ class Ao3modal extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
+    onCheckboxChange = (e) => {
+        this.setState({ [e.target.name]: e.target.checked });
+    }
+
     render() {
-        const { name, status } = this.state
+        const { name } = this.props.ao1.ao.find(channel => channel.ch === 3);
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
@@ -40,24 +64,16 @@ class Ao3modal extends Component {
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}
                                         Enable AO Channel
                                 </Label>
                             </FormGroup>
 
-                            <FormGroup tag="fieldset">
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="radio" name="radio1" checked="true" />{' '}
-                                        Disable Scaling
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="slopeIntercept" checked={this.state.slopeIntercept} onChange={this.onCheckboxChange} />{' '}
+                                        Enable Slope-intercept
                                 </Label>
-                                </FormGroup>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="radio" name="radio1" />{' '}
-                                        Enable Point-Slope Formula
-                                    </Label>
-                                </FormGroup>
                             </FormGroup>
 
                             <p>Auto Scalling Settings</p>
@@ -82,6 +98,8 @@ class Ao3modal extends Component {
                                                     name="n1"
                                                     id="n1"
                                                     placeholder="n1"
+                                                    disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -95,6 +113,8 @@ class Ao3modal extends Component {
                                                     name="n2"
                                                     id="n2"
                                                     placeholder="n2"
+                                                    disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -111,6 +131,8 @@ class Ao3modal extends Component {
                                                     name="m1"
                                                     id="m1"
                                                     placeholder="m1"
+                                                    disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -124,6 +146,8 @@ class Ao3modal extends Component {
                                                     name="m2"
                                                     id="m2"
                                                     placeholder="m2"
+                                                    disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -139,6 +163,7 @@ class Ao3modal extends Component {
                                                     name="unit"
                                                     id="unit"
                                                     placeholder="V"
+                                                    disabled={!this.state.slopeIntercept}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -152,6 +177,7 @@ class Ao3modal extends Component {
                                                     name="unit"
                                                     id="unit"
                                                     placeholder="V"
+                                                    disabled={!this.state.slopeIntercept}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -172,4 +198,21 @@ class Ao3modal extends Component {
     }
 }
 
-export default Ao3modal;
+Ao3modal.propTypes = {
+    getAOChannels: PropTypes.func.isRequired,
+    setAOChannelName: PropTypes.func.isRequired,
+    setAOChannelStatus: PropTypes.func.isRequired,
+    setAOChannelSlopeInterceptResult: PropTypes.func.isRequired,
+    ao1: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    ao1: state.ao1
+});
+
+export default connect(mapStateToProps, {
+    getAOChannels,
+    setAOChannelName,
+    setAOChannelStatus,
+    setAOChannelSlopeInterceptResult
+})(Ao3modal);

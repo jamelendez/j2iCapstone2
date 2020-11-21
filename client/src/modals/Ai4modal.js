@@ -1,11 +1,33 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
+import { connect } from 'react-redux';
+import {
+    getAIChannels,
+    setAIChannelName,
+    setAIChannelStatus,
+    calculateAutoScalling,
+    setAIChannelSlopeInterceptResult
+} from '../actions/aiActions';
+import PropTypes from 'prop-types';
 
 class Ai4modal extends Component {
     state = {
         modal: false,
         name: 'AI-4',
-        status: 'Enable',
+        status: false,
+        toAll: false,
+        pointSlopeFormula: false,
+        slopeIntercept: false,
+        n1: 0,
+        m1: 0,
+        n2: 0,
+        m2: 0,
+        M: 0,
+        D: 0
+    }
+
+    componentDidMount() {
+        this.props.getAIChannels();
     }
 
     toggle = () => {
@@ -16,6 +38,24 @@ class Ai4modal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+
+        this.props.setAIChannelName(this.state.name, 4);
+        if (this.state.status === false) {
+            this.props.setAIChannelStatus('Disabled', 4);
+        }
+        else {
+            this.props.setAIChannelStatus('Enabled', 4);
+        }
+        if (this.state.pointSlopeFormula) {
+            this.props.calculateAutoScalling(this.state.n1, this.state.n2, this.state.m1, this.state.m2, this.props.ai1.ai[3].value, 4);
+        }
+
+        if (this.state.slopeIntercept) {
+            const result = +(this.state.M * this.props.ai1.ai[3].value) + +this.state.D;
+            this.props.setAIChannelSlopeInterceptResult(result, 4);
+        }
+
+
         this.toggle();
     }
 
@@ -24,8 +64,13 @@ class Ai4modal extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
+    onCheckboxChange = (e) => {
+        this.setState({ [e.target.name]: e.target.checked });
+    }
+
     render() {
-        const { name, status } = this.state
+        const { name } = this.props.ai1.ai.find(channel => channel.ch === 4);
+
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
@@ -40,24 +85,16 @@ class Ai4modal extends Component {
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}
                                         Enable AI Channel
                                 </Label>
                             </FormGroup>
 
-                            <FormGroup tag="fieldset">
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="radio" name="radio1" checked="true" />{' '}
-                                        Disable Scaling
-                                </Label>
-                                </FormGroup>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="radio" name="radio1" />{' '}
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="pointSlopeFormula" checked={this.state.pointSlopeFormula} onChange={this.onCheckboxChange} />{' '}
                                         Enable Point-Slope Formula
-                                    </Label>
-                                </FormGroup>
+                                </Label>
                             </FormGroup>
 
                             <p>Auto Scalling Settings</p>
@@ -82,6 +119,8 @@ class Ai4modal extends Component {
                                                     name="n1"
                                                     id="n1"
                                                     placeholder="n1"
+                                                    disabled={!this.state.pointSlopeFormula}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -95,6 +134,8 @@ class Ai4modal extends Component {
                                                     name="n2"
                                                     id="n2"
                                                     placeholder="n2"
+                                                    disabled={!this.state.pointSlopeFormula}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -111,6 +152,8 @@ class Ai4modal extends Component {
                                                     name="m1"
                                                     id="m1"
                                                     placeholder="m1"
+                                                    disabled={!this.state.pointSlopeFormula}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -124,6 +167,8 @@ class Ai4modal extends Component {
                                                     name="m2"
                                                     id="m2"
                                                     placeholder="m2"
+                                                    disabled={!this.state.pointSlopeFormula}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -139,6 +184,7 @@ class Ai4modal extends Component {
                                                     name="unit"
                                                     id="unit"
                                                     placeholder="V"
+                                                    disabled={!this.state.pointSlopeFormula}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -152,6 +198,7 @@ class Ai4modal extends Component {
                                                     name="unit"
                                                     id="unit"
                                                     placeholder="V"
+                                                    disabled={!this.state.pointSlopeFormula}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -159,9 +206,10 @@ class Ai4modal extends Component {
                                 </tbody>
                             </Table>
                             <p>*Result = n2 + (input - n1) x [ (m2-n2)/(m1-n1) ]</p>
+
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" />{' '}
+                                    <Input type="checkbox" name="slopeIntercept" checked={this.state.slopeIntercept} onChange={this.onCheckboxChange} />{' '}
                                         Enable Slope-intercept
                                 </Label>
                             </FormGroup>
@@ -170,47 +218,52 @@ class Ai4modal extends Component {
                                 <tbody>
                                     <tr>
                                         <td>
-                                        M=
-                                        </td> 
+                                            M=
+                                        </td>
                                         <td>
-                                        <FormGroup>
-                                            <Input
-                                            type="number"
-                                            name="M"
-                                            id="M"
-                                            placeholder="M"
-                                            />   
-                                        </FormGroup>   
+                                            <FormGroup>
+                                                <Input
+                                                    type="number"
+                                                    name="M"
+                                                    id="M"
+                                                    placeholder="M"
+                                                    disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
+                                                />
+                                            </FormGroup>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                        D=
-                                        </td> 
+                                            D=
+                                        </td>
                                         <td>
-                                        <FormGroup>
-                                            <Input
-                                            type="number"
-                                            name="D"
-                                            id="D"
-                                            placeholder="D"
-                                            />   
-                                        </FormGroup>   
+                                            <FormGroup>
+                                                <Input
+                                                    type="number"
+                                                    name="D"
+                                                    id="D"
+                                                    placeholder="D"
+                                                    disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
+                                                />
+                                            </FormGroup>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                        Unit
-                                        </td> 
+                                            Unit
+                                        </td>
                                         <td>
-                                        <FormGroup>
-                                            <Input
-                                            type="text"
-                                            name="unit"
-                                            id="unit"
-                                            placeholder="Unit"
-                                            />   
-                                        </FormGroup>   
+                                            <FormGroup>
+                                                <Input
+                                                    type="text"
+                                                    name="unit"
+                                                    id="unit"
+                                                    placeholder="Unit"
+                                                    disabled={!this.state.slopeIntercept}
+                                                />
+                                            </FormGroup>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -230,4 +283,23 @@ class Ai4modal extends Component {
     }
 }
 
-export default Ai4modal;
+Ai4modal.propTypes = {
+    getAIChannels: PropTypes.func.isRequired,
+    setAIChannelName: PropTypes.func.isRequired,
+    setAIChannelStatus: PropTypes.func.isRequired,
+    calculateAutoScalling: PropTypes.func.isRequired,
+    setAIChannelSlopeInterceptResult: PropTypes.func.isRequired,
+    ai1: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    ai1: state.ai1
+});
+
+export default connect(mapStateToProps, {
+    getAIChannels,
+    setAIChannelName,
+    setAIChannelStatus,
+    calculateAutoScalling,
+    setAIChannelSlopeInterceptResult
+})(Ai4modal);
