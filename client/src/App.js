@@ -10,7 +10,7 @@ import AppNavbarLogin from './components/AppNavbarLogin';
 import { Button, Form, FormGroup, Input, Label, Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import Menu from './components/Menu';
 import InfoBar from './components/InfoBar';
-import { Col, Container, Containern, Row } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 
 import { Provider } from 'react-redux';
 import store from './store'

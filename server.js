@@ -25,6 +25,7 @@ mongoose
 
 // Use Routes
 app.use('/api/users', users);
+app.use('/api/serverInfo', require('./routes/api/serverInfo'));
 app.use('/api/auth', require('./routes/api/auth'));
 
 const port = process.env.PORT || 5000;

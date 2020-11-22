@@ -1,6 +1,9 @@
+// Server Information Types
 export const GET_SERVER_INFO = 'GET_SERVER_INFO';
 export const SET_SERVER_INFO = 'SET_SERVER_INFO';
 export const SERVER_INFO_LOADING = 'SERVER_INFO_LOADING';
+
+
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';

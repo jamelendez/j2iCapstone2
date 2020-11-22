@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
 import {
-    Collapse,
     Navbar,
-    NavbarToggler,
-    NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText,
-    Button,
-    ButtonGroup
-
+    NavItem
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getServerInfo } from '../actions/serverInfoActions';
@@ -29,7 +17,8 @@ class InfoBar extends Component {
 
 
     render() {
-        const { serverName, serverLocation } = this.props.serverInfo;
+        const { serverName, serverLocation } = this.props.serverInfo.serverInfo[0];
+        console.log(serverName);
         return (
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
