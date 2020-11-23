@@ -18,7 +18,6 @@ router.get('/', (req, res) => {
 // @desc Update Server Information given by the user.  
 // @access Public
 router.put('/:_id', (req, res) => {
-    console.log("req: " + req);
     const updatedDIChannel = new DIChannels({
         name: req.body.name,
         status: req.body.status,

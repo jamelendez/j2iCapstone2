@@ -84,7 +84,7 @@ class Di2modal extends Component {
 
     render() {
         // Escoge el nombre del canal 1 en el state del reducer
-        const name = this.props.di1.di[0].name;
+        const name = this.props.di1.di[1].name;
 
         return (
             <div>

@@ -24,11 +24,13 @@ export default function (state = initialState, action) {
                 loading: false
             };
         case SET_CHANNELDI1_INFO:
-            return {
-                ...state,
-                di: [action.payload, ...state.di],
-                di: state.di.filter(channel => channel.ch !== action.payload2),
-            };
+            return update(state, {
+                di: {
+                    [action.payload2 - 1]: {
+                        di: { $set: action.payload }
+                    }
+                }
+            })
         case SET_DICHANNEL_NAME:
             return update(state, {
                 di: {

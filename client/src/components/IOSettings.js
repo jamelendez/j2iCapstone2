@@ -36,10 +36,14 @@ class IOSettings extends Component {
 
     render() {
         // Digital Inputs status
-        const { status: distatus1 } = this.props.di1.di[0];
+        const { status: distatus1, aliasOFF: aliasOFF1, aliasON: aliasON1 } = this.props.di1.di[0];
         const { status: distatus2 } = this.props.di1.di[1];
         const { status: distatus3 } = this.props.di1.di[2];
         const { status: distatus4 } = this.props.di1.di[3];
+
+        var status1 = ''
+        if (distatus1) { status1 = aliasON1; }
+        else { status1 = aliasOFF1; }
 
         // Digital Output Status
         const doStatus = this.props.do1.do[0].status;
@@ -106,7 +110,7 @@ class IOSettings extends Component {
                             <th scope="row">
                                 <Di1modal />
                             </th>
-                            <td> {distatus1} </td>
+                            <td> {status1} </td>
 
                         </tr>
                         <tr>

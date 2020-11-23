@@ -14,20 +14,25 @@ export const getChanelDi1Info = () => dispatch => {
         .then(res =>
             dispatch({
                 type: GET_CHANNELDI1_INFO,
-                payload: res.data
+                payload: res.data,
             })
         )
 }
 
-export const setChannelDiInfo = (channel, chNumber) => {
-    return {
-        type: SET_CHANNELDI1_INFO,
-        payload: channel,
-        payload2: chNumber
-    }
+export const setChannelDiInfo = (channel, chNumber) => dispatch => {
+    const id = channel._id;
+    axios
+        .put(`/api/digitalInputs/${id}`, channel)
+        .then(res =>
+            dispatch({
+                type: SET_CHANNELDI1_INFO,
+                payload: res.data,
+                payload2: chNumber
+            })
+        )
 }
 
-export const setDIChannelName = (name, chNumber) => {
+export const setDIChannelName = (name, chNumber) => dispatch => {
     return {
         type: SET_DICHANNEL_NAME,
         payload: name,

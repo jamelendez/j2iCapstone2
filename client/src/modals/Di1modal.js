@@ -14,16 +14,21 @@ import PropTypes from 'prop-types';
 class Di1modal extends Component {
     state = {
         modal: false,
-        name: 'DI-1',
+        name: '',
         status: false,
-        aliasOFF: 'OFF',
-        aliasON: 'ON',
+        aliasOFF: '',
+        aliasON: '',
         toAll: false,
         nameChanged: false
     }
 
     componentDidMount() {
         this.props.getChanelDi1Info();
+        this.setState({
+            status: this.props.di1.di[0].status
+        });
+
+        console.log(this.props.di1.di[0].status);
     }
 
     toggle = () => {
@@ -53,7 +58,28 @@ class Di1modal extends Component {
         }
 
         else {
-            this.props.setDIChannelName(this.state.name, 1);
+            console.log("Name in Redux: " + this.props.di1.di[0].name);
+            console.log("Name in this.state: " + this.props.name)
+            console.log(this.props.di1.di[0].aliasOFF);
+            console.log(this.props.di1.di[0].aliasON);
+            if (this.state.name === undefined) {
+                console.log('entró');
+                this.setState({ name: this.props.di1.di[0].name });
+            }
+            if (this.state.aliasOFF === undefined) { this.state.name = this.props.di1.di[0].aliasOFF }
+            if (this.state.aliasON === undefined) { this.state.name = this.props.di1.di[0].aliasON }
+            console.log("Name in this.state after changing it to the one in db : " + this.props.name)
+
+            const updatedChannel =
+            {
+                _id: '5fbb1e33e0991cf0e4f1f5c3',
+                name: this.state.name,
+                status: this.state.status,
+                aliasOFF: this.state.aliasOFF,
+                aliasON: this.state.aliasON
+            }
+            this.props.setChannelDiInfo(updatedChannel, 1);
+            /*this.props.setDIChannelName(this.state.name, 1);
             this.setState({ nameChanged: false });
             if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, 1);
             if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, 1);
@@ -62,7 +88,7 @@ class Di1modal extends Component {
             }
             else {
                 this.props.setDIChannelStatus(this.state.aliasON, 1);
-            }
+            }*/
         }
 
 
@@ -84,8 +110,10 @@ class Di1modal extends Component {
 
     render() {
         // Escoge el nombre del canal 1 en el state del reducer
-        const name = this.props.di1.di[0].name;
-
+        const { name, status } = this.props.di1.di[0];
+        console.log("Status: " + status);
+        console.log("this.state.status: " + this.state.status)
+        console.log("this.state.name: " + this.state.name)
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
@@ -112,11 +140,11 @@ class Di1modal extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="name">Alias name of channel</Label>
-                                <Input name="name" id="aliasName" placeholder="DI-1" onChange={this.onChange} />
+                                <Input value={this.state.name} name="name" id="aliasName" onChange={this.onChange} />
                                 <Label for="aliasOFF">Alias name "OFF" status</Label>
-                                <Input name="aliasOFF" id="aliasOff" placeholder="OFF" onChange={this.onChange} />
+                                <Input value={this.state.aliasOFF} name="aliasOFF" id="aliasOff" onChange={this.onChange} />
                                 <Label for="aliasON">Alias name "ON" status</Label>
-                                <Input name="aliasON" id="aliasON" placeholder="ON" onChange={this.onChange} />
+                                <Input value={this.state.aliasON} name="aliasON" id="aliasON" onChange={this.onChange} />
                                 <Button
                                     color="dark"
                                     style={{ marginTop: '2rem' }}
