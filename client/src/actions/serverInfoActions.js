@@ -13,12 +13,16 @@ export const getServerInfo = () => dispatch => {
         )
 };
 
-export const setServerInfo = (serverName, serverLocation) => {
-    return {
-        type: SET_SERVER_INFO,
-        payload: serverName,
-        payload2: serverLocation
-    };
+export const setServerInfo = (newServerInfo) => dispatch => {
+    const id = newServerInfo._id;
+    axios
+        .put(`/api/serverInfo/${id}`, newServerInfo)
+        .then(res =>
+            dispatch({
+                type: SET_SERVER_INFO,
+                payload: res.data
+            })
+        )
 };
 
 export const setServerInfoLoading = () => {

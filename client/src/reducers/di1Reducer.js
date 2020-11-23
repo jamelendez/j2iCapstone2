@@ -5,17 +5,13 @@ import {
     SET_DICHANNEL_NAME,
     SET_DICHANNEL_ALIASON,
     SET_DICHANNEL_STATUS,
-    APPLY_TO_ALL_DI
+    DI_CHANNELS_LOADING
 } from '../actions/types';
 import update from 'immutability-helper';
 
 const initialState = {
-    di: [
-        { name: 'DI-1', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 1 },
-        { name: 'DI-2', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 2 },
-        { name: 'DI-3', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 3 },
-        { name: 'DI-4', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 4 }
-    ]
+    di: [{}, {}, {}, {}],
+    loading: false
 }
 
 
@@ -23,7 +19,9 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case GET_CHANNELDI1_INFO:
             return {
-                ...state
+                ...state,
+                di: action.payload,
+                loading: false
             };
         case SET_CHANNELDI1_INFO:
             return {
@@ -63,7 +61,11 @@ export default function (state = initialState, action) {
                     }
                 }
             })
-
+        case DI_CHANNELS_LOADING:
+            return {
+                ...state,
+                loading: true
+            };
 
         default:
             return state;

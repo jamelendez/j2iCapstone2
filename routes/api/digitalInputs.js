@@ -3,15 +3,15 @@ const router = express.Router();
 
 
 // Server Info Model
-const MelioraServerInfo = require('../../models/ServerInfo');
+const DIChannels = require('../../models/DIChannels');
 
 // @route  GET api/serverInfo
 // @desc   Get Meliora server's name and location defined by the user in the web app. 
 // @access Public
 router.get('/', (req, res) => {
     //Model
-    MelioraServerInfo.find()
-        .then(serverInfo => res.json(serverInfo));
+    DIChannels.find()
+        .then(di => res.json(di));
 });
 
 // @route PUT api/serverInfo/:id
@@ -19,16 +19,21 @@ router.get('/', (req, res) => {
 // @access Public
 router.put('/:_id', (req, res) => {
     console.log("req: " + req);
-    const updatedServerInfo = new MelioraServerInfo({
-        serverName: req.body.serverName,
-        serverLocation: req.body.serverLocation
+    const updatedDIChannel = new DIChannels({
+        name: req.body.name,
+        status: req.body.status,
+        aliasOFF: req.body.aliasOFF,
+        aliasON: req.body.aliasON
     });
 
-    MelioraServerInfo.findByIdAndUpdate(req.params._id, {
-        serverName: updatedServerInfo.serverName,
-        serverLocation: updatedServerInfo.serverLocation
+    DIChannels.findByIdAndUpdate('5fbb1e33e0991cf0e4f1f5c3', {
+        name: updatedDIChannel.name,
+        status: updatedDIChannel.status,
+        aliasOFF: updatedDIChannel.aliasOFF,
+        aliasON: updatedDIChannel.aliasON
+
     })
-        .then(serverInfo => res.json(serverInfo))
+        .then(diChannel => res.json(diChannel))
         .catch(err => res.status(404).json('Server info not found.'));
 });
 

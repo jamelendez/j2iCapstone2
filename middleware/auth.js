@@ -1,4 +1,4 @@
-const config = require('config');
+/*const config = require('config');
 const jwt = require('jsonwebtoken');
 
 // Get the token sent from either React, or Postman
@@ -6,7 +6,7 @@ function auth(req, res, next) {
     const token = req.header('x-auth-token');
 
     // Check for token
-    if (!token) return res.status(401).json({ msg: 'No token, authorization denied.' }) // User is unauthorized 
+    if (!token) return res.status(401).json({ msg: 'No token, authorization denied.' }) // User is unauthorized
 
     try {
         // Verify token
@@ -20,4 +20,4 @@ function auth(req, res, next) {
 
 }
 
-module.exports = auth;
+module.exports = auth;*/

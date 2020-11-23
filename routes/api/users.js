@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
             if(user) return res.status(400).json({ msg: 'User already exists' })
 
             const newUser = new User({
-                username, 
+                username,
                 password
             });
 
@@ -48,12 +48,12 @@ router.post('/', (req, res) => {
                                             username: user.username,
                                         }
                                     });
-                                }    
+                                }
                             )
                         });
                 })
             })
         })
-}); 
+});
 
-module.exports = router;
+module.exports = router; */

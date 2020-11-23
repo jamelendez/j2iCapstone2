@@ -18,7 +18,7 @@ class InfoBar extends Component {
 
     render() {
         const { serverName, serverLocation } = this.props.serverInfo.serverInfo[0];
-        console.log(serverName);
+        //console.log(serverName);
         return (
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">

@@ -84,7 +84,7 @@ class Di4modal extends Component {
 
     render() {
         // Escoge el nombre del canal 1 en el state del reducer
-        const { name } = this.props.di1.di.find(channel => channel.ch === 4);
+        const name = this.props.di1.di[3].name;
 
         return (
             <div>

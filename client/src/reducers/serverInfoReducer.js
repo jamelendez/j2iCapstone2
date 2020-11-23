@@ -1,12 +1,5 @@
 import { GET_SERVER_INFO, SET_SERVER_INFO, SERVER_INFO_LOADING } from '../actions/types';
-
-
-// Esto es data estática
-/* const initialState = {
-    serverName: 'My Meliora',
-    serverLocation: 'Mayaguez',
-    loading: false
-} */
+import update from 'immutability-helper';
 
 const initialState = {
     serverInfo: [{}],
@@ -23,11 +16,13 @@ export default function (state = initialState, action) {
                 loading: false
             };
         case SET_SERVER_INFO:
-            return {
-                ...state,
-                serverName: action.payload,
-                serverLocation: action.payload2
-            };
+            return update(state, {
+                serverInfo: {
+                    [0]: {
+                        serverInfo: { $set: action.payload }
+                    }
+                }
+            })
         case SERVER_INFO_LOADING:
             return {
                 ...state,

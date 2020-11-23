@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
     GET_CHANNELDI1_INFO,
     SET_CHANNELDI1_INFO,
@@ -7,10 +8,15 @@ import {
     SET_DICHANNEL_STATUS
 } from './types';
 
-export const getChanelDi1Info = () => {
-    return {
-        type: GET_CHANNELDI1_INFO
-    }
+export const getChanelDi1Info = () => dispatch => {
+    axios
+        .get('/api/digitalInputs')
+        .then(res =>
+            dispatch({
+                type: GET_CHANNELDI1_INFO,
+                payload: res.data
+            })
+        )
 }
 
 export const setChannelDiInfo = (channel, chNumber) => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Table, ModalHeader, Modal, ModalBody } from 'reactstrap';
+import { Table } from 'reactstrap';
 import Di1modal from '../modals/Di1modal';
 import Di2modal from '../modals/Di2modal';
 import Di3modal from '../modals/Di3modal';
@@ -36,10 +36,10 @@ class IOSettings extends Component {
 
     render() {
         // Digital Inputs status
-        const { status } = this.props.di1.di.find(channel => channel.ch === 1);
-        const status2 = this.props.di1.di[1].status;
-        const status3 = this.props.di1.di[2].status;
-        const status4 = this.props.di1.di[3].status;
+        const { status: distatus1 } = this.props.di1.di[0];
+        const { status: distatus2 } = this.props.di1.di[1];
+        const { status: distatus3 } = this.props.di1.di[2];
+        const { status: distatus4 } = this.props.di1.di[3];
 
         // Digital Output Status
         const doStatus = this.props.do1.do[0].status;
@@ -106,28 +106,28 @@ class IOSettings extends Component {
                             <th scope="row">
                                 <Di1modal />
                             </th>
-                            <td> {status} </td>
+                            <td> {distatus1} </td>
 
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di2modal />
                             </th>
-                            <td>{status2}</td>
+                            <td>{distatus2}</td>
 
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di3modal />
                             </th>
-                            <td>{status3}</td>
+                            <td>{distatus3}</td>
 
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di4modal />
                             </th>
-                            <td>{status4}</td>
+                            <td>{distatus4}</td>
 
                         </tr>
                     </tbody>

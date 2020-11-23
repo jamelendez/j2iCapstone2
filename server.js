@@ -14,6 +14,7 @@ app.use(express.json());
 const db = config.get('mongoURI');
 
 // Connect to Mongo
+mongoose.set('useFindAndModify', false);
 mongoose
     .connect(db, {
         useNewUrlParser: true,
@@ -23,10 +24,14 @@ mongoose
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
+
+
 // Use Routes
-app.use('/api/users', users);
+//app.use('/api/users', users);
 app.use('/api/serverInfo', require('./routes/api/serverInfo'));
-app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/digitalInputs', require('./routes/api/digitalInputs'));
+app.use('/api/digitalOutputs', require('./routes/api/digitalOutputs'));
+//app.use('/api/auth', require('./routes/api/auth'));
 
 const port = process.env.PORT || 5000;
 

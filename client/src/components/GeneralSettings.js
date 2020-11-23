@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import { Button, Form, Label, Input } from 'reactstrap'
 import { connect } from 'react-redux';
 import { getServerInfo, setServerInfo } from '../actions/serverInfoActions'
 import PropTypes from 'prop-types';
@@ -26,13 +26,23 @@ class GeneralSettings extends Component {
 
     // Handles the message to be displayed after clicking the 'Save Changes' Button. 
     onSaveChangesClick = (serverName, serverLocation) => {
+        const { current_id, currentServerName, currentServerLocation } = this.props.serverInfo.serverInfo;
         if (serverName == '') {
-            serverName = this.props.serverInfo.serverName;
+            serverName = currentServerName;
         }
         if (serverLocation == '') {
-            serverLocation = this.props.serverInfo.serverLocation;
+            serverLocation = currentServerLocation;
         }
-        this.props.setServerInfo(serverName, serverLocation);
+        const newServerInfo =
+        {
+            _id: '5fb9d0d7e4399d70a65fc209',
+            serverName: serverName,
+            serverLocation: serverLocation
+        };
+        console.log(this.props.serverInfo);
+        console.log(newServerInfo);
+        this.props.setServerInfo(newServerInfo);
+        console.log(this.props.serverInfo);
         this.setState({ saveMessage: 'Changes have been saved.' })
     }
 

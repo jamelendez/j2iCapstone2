@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
@@ -57,4 +57,4 @@ router.get('/user', auth, (req, res) => {
         .then(user => res.json(user));
 });
 
-module.exports = router; 
+module.exports = router; */
