@@ -1,19 +1,17 @@
 import {
     GET_DO_CHANNELS,
+    SET_DO_CHANNEL_INFO,
     SET_DOCHANNEL_ALIASOFF,
     SET_DOCHANNEL_NAME,
     SET_DOCHANNEL_ALIASON,
     SET_DOCHANNEL_STATUS,
+    DO_CHANNELS_LOADING
 } from '../actions/types';
 import update from 'immutability-helper';
 
 const initialState = {
-    do: [
-        { name: 'DO-1', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 1 },
-        { name: 'DO-2', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 2 },
-        { name: 'DO-3', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 3 },
-        { name: 'DO-4', status: 'OFF', aliasOFF: 'OFF', aliasON: 'ON', ch: 4 }
-    ]
+    do: [{}, {}, {}, {}],
+    loading: false
 }
 
 
@@ -21,8 +19,19 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case GET_DO_CHANNELS:
             return {
-                ...state
+                ...state,
+                do: action.payload,
+                loading: false
             };
+
+        case SET_DO_CHANNEL_INFO:
+            return update(state, {
+                do: {
+                    [action.payload2 - 1]: {
+                        do: { $set: action.payload }
+                    }
+                }
+            })
         case SET_DOCHANNEL_NAME:
             return update(state, {
                 do: {
@@ -55,6 +64,11 @@ export default function (state = initialState, action) {
                     }
                 }
             })
+        case DO_CHANNELS_LOADING:
+            return {
+                ...state,
+                loading: true
+            };
         default:
             return state;
     }

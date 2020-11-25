@@ -69,7 +69,7 @@ class Ai2modal extends Component {
     }
 
     render() {
-        const { name } = this.props.ai1.ai.find(channel => channel.ch === 2);
+        const { name } = this.props.ai1.ai[1];
 
         return (
             <div>

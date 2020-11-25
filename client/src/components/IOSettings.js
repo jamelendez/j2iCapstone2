@@ -36,62 +36,112 @@ class IOSettings extends Component {
 
     render() {
         // Digital Inputs status
-        const { status: distatus1, aliasOFF: aliasOFF1, aliasON: aliasON1 } = this.props.di1.di[0];
-        const { status: distatus2 } = this.props.di1.di[1];
-        const { status: distatus3 } = this.props.di1.di[2];
-        const { status: distatus4 } = this.props.di1.di[3];
+        const { status: distatus1, aliasOFF: dialiasOFF1, aliasON: dialiasON1 } = this.props.di1.di[0];
+        const { status: distatus2, aliasOFF: dialiasOFF2, aliasON: dialiasON2 } = this.props.di1.di[1];
+        const { status: distatus3, aliasOFF: dialiasOFF3, aliasON: dialiasON3 } = this.props.di1.di[2];
+        const { status: distatus4, aliasOFF: dialiasOFF4, aliasON: dialiasON4 } = this.props.di1.di[3];
 
-        var status1 = ''
-        if (distatus1) { status1 = aliasON1; }
-        else { status1 = aliasOFF1; }
+        var current_distatus1 = '';
+        var current_distatus2 = '';
+        var current_distatus3 = '';
+        var current_distatus4 = '';
+        if (distatus1) { current_distatus1 = dialiasON1; }
+        else { current_distatus1 = dialiasOFF1; }
+        if (distatus2) { current_distatus2 = dialiasON2; }
+        else { current_distatus2 = dialiasOFF2; }
+        if (distatus3) { current_distatus3 = dialiasON3; }
+        else { current_distatus3 = dialiasOFF3; }
+        if (distatus4) { current_distatus4 = dialiasON4; }
+        else { current_distatus4 = dialiasOFF4; }
 
         // Digital Output Status
-        const doStatus = this.props.do1.do[0].status;
-        const doStatus2 = this.props.do1.do[1].status;
-        const doStatus3 = this.props.do1.do[2].status;
-        const doStatus4 = this.props.do1.do[3].status;
+        const { status: dostatus1, aliasOFF: doaliasOFF1, aliasON: doaliasON1 } = this.props.do1.do[0];
+        const { status: dostatus2, aliasOFF: doaliasOFF2, aliasON: doaliasON2 } = this.props.do1.do[1];
+        const { status: dostatus3, aliasOFF: doaliasOFF3, aliasON: doaliasON3 } = this.props.do1.do[2];
+        const { status: dostatus4, aliasOFF: doaliasOFF4, aliasON: doaliasON4 } = this.props.do1.do[3];
+
+        var current_dostatus1 = '';
+        var current_dostatus2 = '';
+        var current_dostatus3 = '';
+        var current_dostatus4 = '';
+        if (dostatus1) { current_dostatus1 = doaliasON1; }
+        else { current_dostatus1 = doaliasOFF1; }
+        if (dostatus2) { current_dostatus2 = doaliasON2; }
+        else { current_dostatus2 = doaliasOFF2; }
+        if (dostatus3) { current_dostatus3 = doaliasON3; }
+        else { current_dostatus3 = doaliasOFF3; }
+        if (dostatus4) { current_dostatus4 = doaliasON4; }
+        else { current_dostatus4 = doaliasOFF4; }
 
         // Analog Input Information
-        const aiStatus = this.props.ai1.ai[0].status;
-        const aiStatus2 = this.props.ai1.ai[1].status;
-        const aiStatus3 = this.props.ai1.ai[2].status;
-        const aiStatus4 = this.props.ai1.ai[3].status;
+        const { status: aiStatus1 } = this.props.ai1.ai[0];
+        const { status: aiStatus2 } = this.props.ai1.ai[1];
+        const { status: aiStatus3 } = this.props.ai1.ai[2];
+        const { status: aiStatus4 } = this.props.ai1.ai[3];
 
-        const aiValue = this.props.ai1.ai[0].value;
-        const aiValue2 = this.props.ai1.ai[1].value;
-        const aiValue3 = this.props.ai1.ai[2].value;
-        const aiValue4 = this.props.ai1.ai[3].value;
+        var current_aistatus1 = '';
+        var current_aistatus2 = '';
+        var current_aistatus3 = '';
+        var current_aistatus4 = '';
+        if (aiStatus1) { current_aistatus1 = 'Enabled'; }
+        else { current_aistatus1 = 'Disabled'; }
+        if (aiStatus2) { current_aistatus2 = 'Enabled'; }
+        else { current_aistatus2 = 'Disabled'; }
+        if (aiStatus3) { current_aistatus3 = 'Enabled'; }
+        else { current_aistatus3 = 'Disabled'; }
+        if (aiStatus4) { current_aistatus4 = 'Enabled'; }
+        else { current_aistatus4 = 'Disabled'; }
 
-        const aiMin = this.props.ai1.ai[0].min;
-        const aiMin2 = this.props.ai1.ai[1].min;
-        const aiMin3 = this.props.ai1.ai[2].min;
-        const aiMin4 = this.props.ai1.ai[3].min;
 
-        const aiMax = this.props.ai1.ai[0].max;
-        const aiMax2 = this.props.ai1.ai[1].max;
-        const aiMax3 = this.props.ai1.ai[2].max;
-        const aiMax4 = this.props.ai1.ai[3].max;
+
+        const aiValue = this.props.ai1.inputs[0].value;
+        const aiValue2 = this.props.ai1.inputs[1].value;
+        const aiValue3 = this.props.ai1.inputs[2].value;
+        const aiValue4 = this.props.ai1.inputs[3].value;
+
+        const aiMin = this.props.ai1.inputs[0].min;
+        const aiMin2 = this.props.ai1.inputs[1].min;
+        const aiMin3 = this.props.ai1.inputs[2].min;
+        const aiMin4 = this.props.ai1.inputs[3].min;
+
+        const aiMax = this.props.ai1.inputs[0].max;
+        const aiMax2 = this.props.ai1.inputs[1].max;
+        const aiMax3 = this.props.ai1.inputs[2].max;
+        const aiMax4 = this.props.ai1.inputs[3].max;
 
         // Analog Ouput Information
-        const aoStatus = this.props.ao1.ao[0].status;
-        const aoStatus2 = this.props.ao1.ao[1].status;
-        const aoStatus3 = this.props.ao1.ao[2].status;
-        const aoStatus4 = this.props.ao1.ao[3].status;
+        const { status: aoStatus1 } = this.props.ai1.ai[0];
+        const { status: aoStatus2 } = this.props.ai1.ai[1];
+        const { status: aoStatus3 } = this.props.ai1.ai[2];
+        const { status: aoStatus4 } = this.props.ai1.ai[3];
 
-        const aoValue = this.props.ao1.ao[0].value;
-        const aoValue2 = this.props.ao1.ao[1].value;
-        const aoValue3 = this.props.ao1.ao[2].value;
-        const aoValue4 = this.props.ao1.ao[3].value;
+        var current_aostatus1 = '';
+        var current_aostatus2 = '';
+        var current_aostatus3 = '';
+        var current_aostatus4 = '';
+        if (aoStatus1) { current_aostatus1 = 'Enabled'; }
+        else { current_aostatus1 = 'Disabled'; }
+        if (aoStatus2) { current_aostatus2 = 'Enabled'; }
+        else { current_aostatus2 = 'Disabled'; }
+        if (aoStatus3) { current_aostatus3 = 'Enabled'; }
+        else { current_aostatus3 = 'Disabled'; }
+        if (aoStatus4) { current_aostatus4 = 'Enabled'; }
+        else { current_aostatus4 = 'Disabled'; }
 
-        const aoMin = this.props.ao1.ao[0].min;
-        const aoMin2 = this.props.ao1.ao[1].min;
-        const aoMin3 = this.props.ao1.ao[2].min;
-        const aoMin4 = this.props.ao1.ao[3].min;
+        const aoValue = this.props.ao1.inputs[0].value;
+        const aoValue2 = this.props.ao1.inputs[1].value;
+        const aoValue3 = this.props.ao1.inputs[2].value;
+        const aoValue4 = this.props.ao1.inputs[3].value;
 
-        const aoMax = this.props.ao1.ao[0].max;
-        const aoMax2 = this.props.ao1.ao[1].max;
-        const aoMax3 = this.props.ao1.ao[2].max;
-        const aoMax4 = this.props.ao1.ao[3].max;
+        const aoMin = this.props.ao1.inputs[0].min;
+        const aoMin2 = this.props.ao1.inputs[1].min;
+        const aoMin3 = this.props.ao1.inputs[2].min;
+        const aoMin4 = this.props.ao1.inputs[3].min;
+
+        const aoMax = this.props.ao1.inputs[0].max;
+        const aoMax2 = this.props.ao1.inputs[1].max;
+        const aoMax3 = this.props.ao1.inputs[2].max;
+        const aoMax4 = this.props.ao1.inputs[3].max;
 
 
         return (
@@ -110,28 +160,28 @@ class IOSettings extends Component {
                             <th scope="row">
                                 <Di1modal />
                             </th>
-                            <td> {status1} </td>
+                            <td> {current_distatus1} </td>
 
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di2modal />
                             </th>
-                            <td>{distatus2}</td>
+                            <td>{current_distatus2}</td>
 
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di3modal />
                             </th>
-                            <td>{distatus3}</td>
+                            <td>{current_distatus3}</td>
 
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Di4modal />
                             </th>
-                            <td>{distatus4}</td>
+                            <td>{current_distatus4}</td>
 
                         </tr>
                     </tbody>
@@ -151,25 +201,25 @@ class IOSettings extends Component {
                             <th scope="row">
                                 <Do1modal />
                             </th>
-                            <td>{doStatus}</td>
+                            <td>{current_dostatus1}</td>
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Do2modal />
                             </th>
-                            <td>{doStatus2}</td>
+                            <td>{current_dostatus2}</td>
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Do3modal />
                             </th>
-                            <td>{doStatus3}</td>
+                            <td>{current_dostatus3}</td>
                         </tr>
                         <tr>
                             <th scope="row">
                                 <Do4modal />
                             </th>
-                            <td>{doStatus4}</td>
+                            <td>{current_dostatus4}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -193,7 +243,7 @@ class IOSettings extends Component {
                                 <Ai1modal />
                             </th>
                             <td>-24V - 24V</td>
-                            <td>{aiStatus}</td>
+                            <td>{current_aistatus1}</td>
                             <td>{aiValue}</td>
                             <td>{aiMin}</td>
                             <td>{aiMax}</td>
@@ -203,7 +253,7 @@ class IOSettings extends Component {
                                 <Ai2modal />
                             </th>
                             <td>-24V - 24V</td>
-                            <td>{aiStatus2}</td>
+                            <td>{current_aistatus2}</td>
                             <td>{aiValue2}</td>
                             <td>{aiMin2}</td>
                             <td>{aiMax2}</td>
@@ -213,7 +263,7 @@ class IOSettings extends Component {
                                 <Ai3modal />
                             </th>
                             <td>-24V - 24V</td>
-                            <td>{aiStatus3}</td>
+                            <td>{current_aistatus3}</td>
                             <td>{aiValue3}</td>
                             <td>{aiMin3}</td>
                             <td>{aiMax3}</td>
@@ -223,7 +273,7 @@ class IOSettings extends Component {
                                 <Ai4modal />
                             </th>
                             <td>-24V - 24V</td>
-                            <td>{aiStatus4}</td>
+                            <td>{current_aistatus4}</td>
                             <td>{aiValue4}</td>
                             <td>{aiMin4}</td>
                             <td>{aiMax4}</td>
@@ -248,7 +298,7 @@ class IOSettings extends Component {
                                 <Ao1modal />
                             </th>
                             <td>0V - 24V</td>
-                            <td>{aoStatus}</td>
+                            <td>{current_aostatus1}</td>
                             <td>{aoValue}</td>
                             <td>{aoMin}</td>
                             <td>{aoMax}</td>
@@ -258,7 +308,7 @@ class IOSettings extends Component {
                                 <Ao2modal />
                             </th>
                             <td>0V - 24V</td>
-                            <td>{aoStatus2}</td>
+                            <td>{current_aostatus2}</td>
                             <td>{aoValue2}</td>
                             <td>{aoMin2}</td>
                             <td>{aoMax2}</td>
@@ -268,7 +318,7 @@ class IOSettings extends Component {
                                 <Ao3modal />
                             </th>
                             <td>0V - 24V</td>
-                            <td>{aoStatus3}</td>
+                            <td>{current_aostatus3}</td>
                             <td>{aoValue3}</td>
                             <td>{aoMin3}</td>
                             <td>{aoMax3}</td>
@@ -278,7 +328,7 @@ class IOSettings extends Component {
                                 <Ao4modal />
                             </th>
                             <td>0V - 24V</td>
-                            <td>{aoStatus4}</td>
+                            <td>{current_aostatus4}</td>
                             <td>{aoValue4}</td>
                             <td>{aoMin4}</td>
                             <td>{aoMax4}</td>

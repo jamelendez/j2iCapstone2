@@ -49,8 +49,7 @@ class Ao4modal extends Component {
     }
 
     render() {
-        const { name } = this.props.ao1.ao.find(channel => channel.ch === 4);
-        return (
+        const { name } = this.props.ao1.ao[3]; return (
             <div>
                 <Button color="link" onClick={this.toggle}>
                     {name}

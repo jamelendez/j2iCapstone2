@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, Label, Input, ModalHeader, Modal, ModalBody } 
 import { connect } from 'react-redux';
 import {
     getDOChannels,
+    setChannelDoInfo,
     setDOChannelName,
     setDOChannelAliasOFF,
     setDOChannelAliasON,
@@ -13,12 +14,18 @@ import PropTypes from 'prop-types';
 class Do3modal extends Component {
     state = {
         modal: false,
-        name: 'DO-3',
+        name: '',
         status: false,
-        aliasOFF: 'OFF',
-        aliasON: 'ON',
+        aliasOFF: '',
+        aliasON: '',
         toAll: false,
-        nameChanged: false
+        nameChanged: false,
+        channel_ids: [
+            { id: '5fbb1fa1e0991cf0e4f1f5c7' },
+            { id: '5fbb1fd1e0991cf0e4f1f5c8' },
+            { id: '5fbb1fdae0991cf0e4f1f5c9' },
+            { id: '5fbb1fe4e0991cf0e4f1f5ca' }
+        ]
     }
 
     componentDidMount() {
@@ -31,37 +38,61 @@ class Do3modal extends Component {
         });
     };
 
-    onSubmit = (e) => {
-        e.preventDefault();
-
+    onSubmit = (newName, newStatus, newAliasOFF, newAliasON) => {
         if (this.state.toAll) {
-            for (var i = 1; i <= 4; i++) {
-                if (this.state.nameChanged) {
-                    this.props.setDOChannelName(this.state.name, i);
-                    this.setState({ nameChanged: false });
+            for (var i = 0; i < 4; i++) {
+                const currentName = this.props.do1.do[i].name;
+                const currentAliasOFF = this.props.do1.do[i].aliasOFF;
+                const currentAliasON = this.props.do1.do[i].aliasON;
+                console.log("currentName: " + currentName);
+                if (newName == '') {
+                    newName = currentName
                 }
-                if (this.state.aliasOFF !== '') this.props.setDOChannelAliasOFF(this.state.aliasOFF, i);
-                if (this.state.aliasON !== '') this.props.setDOChannelAliasON(this.state.aliasON, i);
-                if (this.state.status === false) {
-                    this.props.setDOChannelStatus(this.state.aliasOFF, i);
+                if (newAliasOFF == '') {
+                    console.log('entro');
+                    newAliasOFF = currentAliasOFF
                 }
-                else {
-                    this.props.setDOChannelStatus(this.state.aliasON, i);
+                if (newAliasON == '') {
+                    newAliasON = currentAliasON
                 }
+                console.log('newName: ' + newName);
+                const updatedChannel =
+                {
+                    _id: this.state.channel_ids[i].id,
+                    name: newName,
+                    status: newStatus,
+                    aliasOFF: newAliasOFF,
+                    aliasON: newAliasON
+                }
+                this.props.setChannelDoInfo(updatedChannel, i + 1);
             }
         }
 
         else {
-            this.props.setDOChannelName(this.state.name, 3);
-            this.setState({ nameChanged: false });
-            if (this.state.aliasOFF !== '') this.props.setDOChannelAliasOFF(this.state.aliasOFF, 3);
-            if (this.state.aliasON !== '') this.props.setDOChannelAliasON(this.state.aliasON, 3);
-            if (this.state.status === false) {
-                this.props.setDOChannelStatus(this.state.aliasOFF, 3);
+            const currentName = this.props.do1.do[2].name;
+            const currentAliasOFF = this.props.do1.do[2].aliasOFF;
+            const currentAliasON = this.props.do1.do[2].aliasON;
+            console.log("currentName: " + currentName);
+            if (newName == '') {
+                newName = currentName
             }
-            else {
-                this.props.setDOChannelStatus(this.state.aliasON, 3);
+            if (newAliasOFF == '') {
+                console.log('entro');
+                newAliasOFF = currentAliasOFF
             }
+            if (newAliasON == '') {
+                newAliasON = currentAliasON
+            }
+            console.log('newName: ' + newName);
+            const updatedChannel =
+            {
+                _id: this.state.channel_ids[2].id,
+                name: newName,
+                status: newStatus,
+                aliasOFF: newAliasOFF,
+                aliasON: newAliasON
+            }
+            this.props.setChannelDoInfo(updatedChannel, 3);
         }
 
 
@@ -83,12 +114,11 @@ class Do3modal extends Component {
 
     render() {
         // Escoge el nombre del canal 1 en el state del reducer
-        const { name } = this.props.do1.do.find(channel => channel.ch === 3);
-
+        const { name, status, aliasOFF, aliasON } = this.state;
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
-                    {name}
+                    {this.props.do1.do[2].name}
                 </Button>
                 <Modal
                     isOpen={this.state.modal}
@@ -96,7 +126,7 @@ class Do3modal extends Component {
                 >
                     <ModalHeader toggle={this.toggle}>DO Channel 3 Settings</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.onSubmit}>
+                        <Form>
                             <FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" name="toAll" checked={this.state.toAll} onChange={this.onCheckboxChange} />{' '}
@@ -111,15 +141,16 @@ class Do3modal extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="name">Alias name of channel</Label>
-                                <Input name="name" id="aliasName" placeholder="DO-3" onChange={this.onChange} />
+                                <Input value={this.state.name} name="name" id="aliasName" onChange={this.onChange} />
                                 <Label for="aliasOFF">Alias name "OFF" status</Label>
-                                <Input name="aliasOFF" id="aliasOff" placeholder="OFF" onChange={this.onChange} />
+                                <Input value={this.state.aliasOFF} name="aliasOFF" id="aliasOff" onChange={this.onChange} />
                                 <Label for="aliasON">Alias name "ON" status</Label>
-                                <Input name="aliasON" id="aliasON" placeholder="ON" onChange={this.onChange} />
+                                <Input value={this.state.aliasON} name="aliasON" id="aliasON" onChange={this.onChange} />
                                 <Button
                                     color="dark"
                                     style={{ marginTop: '2rem' }}
                                     block
+                                    onClick={this.onSubmit.bind(this, name, status, aliasOFF, aliasON)}
                                 >Save Changes</Button>
                             </FormGroup>
                         </Form>
@@ -132,11 +163,12 @@ class Do3modal extends Component {
 
 Do3modal.propTypes = {
     getDOChannels: PropTypes.func.isRequired,
+    setChannelDoInfo: PropTypes.func.isRequired,
     setDOChannelName: PropTypes.func.isRequired,
     setDOChannelAliasOFF: PropTypes.func.isRequired,
     setDOChannelAliasON: PropTypes.func.isRequired,
-    setDOChannelStatus: PropTypes.func.isRequired,
-    do1: PropTypes.object.isRequired
+    setDoChannelStatus: PropTypes.func.isRequired,
+    di1: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -145,6 +177,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
     getDOChannels,
+    setChannelDoInfo,
     setDOChannelName,
     setDOChannelAliasOFF,
     setDOChannelAliasON,

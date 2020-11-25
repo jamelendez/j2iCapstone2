@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
     GET_AI_CHANNELS,
     SET_AICHANNEL_NAME,
@@ -6,10 +7,15 @@ import {
     SET_AICHANNEL_SLOPEINTERCEPT_RESULT
 } from '../actions/types';
 
-export const getAIChannels = () => {
-    return {
-        type: GET_AI_CHANNELS
-    }
+export const getAIChannels = () => dispatch => {
+    axios
+        .get('/api/analogInputs')
+        .then(res =>
+            dispatch({
+                type: GET_AI_CHANNELS,
+                payload: res.data,
+            })
+        )
 }
 
 export const setAIChannelName = (name, chNumber) => {

@@ -1,15 +1,21 @@
+
+import axios from 'axios';
 import {
     GET_AO_CHANNELS,
-    GET_AO_AUTO_SCALLING,
     SET_AOCHANNEL_STATUS,
     SET_AOCHANNEL_NAME,
     SET_AOCHANNEL_SLOPEINTERCEPT_RESULT
 } from '../actions/types';
 
-export const getAOChannels = () => {
-    return {
-        type: GET_AO_CHANNELS
-    }
+export const getAOChannels = () => dispatch => {
+    axios
+        .get('/api/analogOutputs')
+        .then(res =>
+            dispatch({
+                type: GET_AO_CHANNELS,
+                payload: res.data,
+            })
+        )
 }
 
 export const setAOChannelName = (name, chNumber) => {

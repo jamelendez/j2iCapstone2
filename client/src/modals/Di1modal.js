@@ -19,16 +19,27 @@ class Di1modal extends Component {
         aliasOFF: '',
         aliasON: '',
         toAll: false,
-        nameChanged: false
+        nameChanged: false,
+        channel_ids: [
+            { id: '5fbb1e33e0991cf0e4f1f5c3' },
+            { id: '5fbb1f20e0991cf0e4f1f5c4' },
+            { id: '5fbb1f2fe0991cf0e4f1f5c5' },
+            { id: '5fbb1f38e0991cf0e4f1f5c6' }
+        ]
+
     }
 
     componentDidMount() {
         this.props.getChanelDi1Info();
-        this.setState({
-            status: this.props.di1.di[0].status
-        });
+        this.getStatus();
+    }
 
-        console.log(this.props.di1.di[0].status);
+    getStatus() {
+        console.log(this.props.di1.di[0]);
+        this.setState((state, props) => ({
+            status: props.di1.di[0].status
+        }));
+        console.log("Status from the DB: " + this.state.status);
     }
 
     toggle = () => {
@@ -37,58 +48,61 @@ class Di1modal extends Component {
         });
     };
 
-    onSubmit = (e) => {
-        e.preventDefault();
-
+    onSubmit = (newName, newStatus, newAliasOFF, newAliasON) => {
         if (this.state.toAll) {
-            for (var i = 1; i <= 4; i++) {
-                if (this.state.nameChanged) {
-                    this.props.setDIChannelName(this.state.name, i);
-                    this.setState({ nameChanged: false });
+            for (var i = 0; i < 4; i++) {
+                const currentName = this.props.di1.di[i].name;
+                const currentAliasOFF = this.props.di1.di[i].aliasOFF;
+                const currentAliasON = this.props.di1.di[i].aliasON;
+                console.log("currentName: " + currentName);
+                if (newName == '') {
+                    newName = currentName
                 }
-                if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, i);
-                if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, i);
-                if (this.state.status === false) {
-                    this.props.setDIChannelStatus(this.state.aliasOFF, i);
+                if (newAliasOFF == '') {
+                    console.log('entro');
+                    newAliasOFF = currentAliasOFF
                 }
-                else {
-                    this.props.setDIChannelStatus(this.state.aliasON, i);
+                if (newAliasON == '') {
+                    newAliasON = currentAliasON
                 }
+                console.log('newName: ' + newName);
+                const updatedChannel =
+                {
+                    _id: this.state.channel_ids[i].id,
+                    name: newName,
+                    status: newStatus,
+                    aliasOFF: newAliasOFF,
+                    aliasON: newAliasON
+                }
+                this.props.setChannelDiInfo(updatedChannel, i + 1);
             }
         }
 
         else {
-            console.log("Name in Redux: " + this.props.di1.di[0].name);
-            console.log("Name in this.state: " + this.props.name)
-            console.log(this.props.di1.di[0].aliasOFF);
-            console.log(this.props.di1.di[0].aliasON);
-            if (this.state.name === undefined) {
-                console.log('entró');
-                this.setState({ name: this.props.di1.di[0].name });
+            const currentName = this.props.di1.di[0].name;
+            const currentAliasOFF = this.props.di1.di[0].aliasOFF;
+            const currentAliasON = this.props.di1.di[0].aliasON;
+            console.log("currentName: " + currentName);
+            if (newName == '') {
+                newName = currentName
             }
-            if (this.state.aliasOFF === undefined) { this.state.name = this.props.di1.di[0].aliasOFF }
-            if (this.state.aliasON === undefined) { this.state.name = this.props.di1.di[0].aliasON }
-            console.log("Name in this.state after changing it to the one in db : " + this.props.name)
-
+            if (newAliasOFF == '') {
+                console.log('entro');
+                newAliasOFF = currentAliasOFF
+            }
+            if (newAliasON == '') {
+                newAliasON = currentAliasON
+            }
+            console.log('newName: ' + newName);
             const updatedChannel =
             {
-                _id: '5fbb1e33e0991cf0e4f1f5c3',
-                name: this.state.name,
-                status: this.state.status,
-                aliasOFF: this.state.aliasOFF,
-                aliasON: this.state.aliasON
+                _id: this.state.channel_ids[0].id,
+                name: newName,
+                status: newStatus,
+                aliasOFF: newAliasOFF,
+                aliasON: newAliasON
             }
             this.props.setChannelDiInfo(updatedChannel, 1);
-            /*this.props.setDIChannelName(this.state.name, 1);
-            this.setState({ nameChanged: false });
-            if (this.state.aliasOFF !== '') this.props.setDIChannelAliasOFF(this.state.aliasOFF, 1);
-            if (this.state.aliasON !== '') this.props.setDIChannelAliasON(this.state.aliasON, 1);
-            if (this.state.status === false) {
-                this.props.setDIChannelStatus(this.state.aliasOFF, 1);
-            }
-            else {
-                this.props.setDIChannelStatus(this.state.aliasON, 1);
-            }*/
         }
 
 
@@ -110,14 +124,14 @@ class Di1modal extends Component {
 
     render() {
         // Escoge el nombre del canal 1 en el state del reducer
-        const { name, status } = this.props.di1.di[0];
-        console.log("Status: " + status);
-        console.log("this.state.status: " + this.state.status)
-        console.log("this.state.name: " + this.state.name)
+        const { name, status, aliasOFF, aliasON } = this.state;
+        //console.log("Status: " + status);
+        //console.log("this.state.status: " + this.state.status)
+        //console.log("this.state.name: " + this.state.name)
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
-                    {name}
+                    {this.props.di1.di[0].name}
                 </Button>
                 <Modal
                     isOpen={this.state.modal}
@@ -125,7 +139,7 @@ class Di1modal extends Component {
                 >
                     <ModalHeader toggle={this.toggle}>DI Channel 1 Settings</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.onSubmit}>
+                        <Form>
                             <FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" name="toAll" checked={this.state.toAll} onChange={this.onCheckboxChange} />{' '}
@@ -149,6 +163,7 @@ class Di1modal extends Component {
                                     color="dark"
                                     style={{ marginTop: '2rem' }}
                                     block
+                                    onClick={this.onSubmit.bind(this, name, status, aliasOFF, aliasON)}
                                 >Save Changes</Button>
                             </FormGroup>
                         </Form>

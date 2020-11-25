@@ -14,8 +14,8 @@ router.get('/', (req, res) => {
         .then(di => res.json(di));
 });
 
-// @route PUT api/serverInfo/:id
-// @desc Update Server Information given by the user.  
+// @route PUT api/analogOutputs/:id
+// @desc Update digital input channel. 
 // @access Public
 router.put('/:_id', (req, res) => {
     const updatedDIChannel = new DIChannels({
@@ -25,7 +25,7 @@ router.put('/:_id', (req, res) => {
         aliasON: req.body.aliasON
     });
 
-    DIChannels.findByIdAndUpdate('5fbb1e33e0991cf0e4f1f5c3', {
+    DIChannels.findByIdAndUpdate(req.params._id, {
         name: updatedDIChannel.name,
         status: updatedDIChannel.status,
         aliasOFF: updatedDIChannel.aliasOFF,
