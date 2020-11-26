@@ -1,5 +1,6 @@
 import {
     GET_AO_CHANNELS,
+    SET_CHANNELAO1_INFO,
     GET_AO_AUTO_SCALLING,
     SET_AOCHANNEL_STATUS,
     SET_AOCHANNEL_NAME,
@@ -32,6 +33,14 @@ export default function (state = initialState, action) {
                 ao: action.payload,
                 loading: false
             };
+        case SET_CHANNELAO1_INFO:
+            return update(state, {
+                ao: {
+                    [action.payload2 - 1]: {
+                        ao: { $set: action.payload }
+                    }
+                }
+            })
         case SET_AOCHANNEL_STATUS:
             return update(state, {
                 ao: {

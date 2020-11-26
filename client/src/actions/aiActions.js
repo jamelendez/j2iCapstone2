@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
     GET_AI_CHANNELS,
+    SET_CHANNELAI1_INFO,
     SET_AICHANNEL_NAME,
     SET_AICHANNEL_STATUS,
     CALCULATE_AUTOSCALLING,
@@ -14,6 +15,19 @@ export const getAIChannels = () => dispatch => {
             dispatch({
                 type: GET_AI_CHANNELS,
                 payload: res.data,
+            })
+        )
+}
+
+export const setChannelAiInfo = (channel, chNumber) => dispatch => {
+    const id = channel._id;
+    axios
+        .put(`/api/analogInputs/${id}`, channel)
+        .then(res =>
+            dispatch({
+                type: SET_CHANNELAI1_INFO,
+                payload: res.data,
+                payload2: chNumber
             })
         )
 }

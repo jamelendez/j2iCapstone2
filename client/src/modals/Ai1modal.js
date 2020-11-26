@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, Label, Input, Table, ModalHeader, Modal, Modal
 import { connect } from 'react-redux';
 import {
     getAIChannels,
+    setChannelAiInfo,
     setAIChannelName,
     setAIChannelStatus,
     calculateAutoScalling,
@@ -13,7 +14,7 @@ import PropTypes from 'prop-types';
 class Ai1modal extends Component {
     state = {
         modal: false,
-        name: 'AI-1',
+        name: '',
         status: false,
         toAll: false,
         pointSlopeFormula: false,
@@ -36,24 +37,35 @@ class Ai1modal extends Component {
         });
     };
 
-    onSubmit = (e) => {
-        e.preventDefault();
-
-        this.props.setAIChannelName(this.state.name, 1);
-        if (this.state.status === false) {
+    onSubmit = (newName) => {
+        console.log('newName: ' + newName);
+        console.log('status: ' + this.state.status);
+        const currentName = this.props.ai1.ai[0].name;
+        if (newName == '') {
+            newName = currentName
+        }
+        const updatedChannel =
+        {
+            _id: '5fbdb95aaae376e8250b2460',
+            name: newName,
+            status: this.state.status,
+        }
+        this.props.setChannelAiInfo(updatedChannel, 1);
+        //this.props.setAIChannelName(this.state.name, 1);
+        /*if (this.state.status === false) {
             this.props.setAIChannelStatus('Disabled', 1);
         }
         else {
             this.props.setAIChannelStatus('Enabled', 1);
-        }
-        if (this.state.pointSlopeFormula) {
+        }*/
+        /*if (this.state.pointSlopeFormula) {
             this.props.calculateAutoScalling(this.state.n1, this.state.n2, this.state.m1, this.state.m2, this.props.ai1.ai[0].value, 1);
         }
-
+ 
         if (this.state.slopeIntercept) {
             const result = +(this.state.M * this.props.ai1.ai[0].value) + +this.state.D;
             this.props.setAIChannelSlopeInterceptResult(result, 1);
-        }
+        }*/
 
 
         this.toggle();
@@ -69,12 +81,12 @@ class Ai1modal extends Component {
     }
 
     render() {
-        const { name } = this.props.ai1.ai[0];
+        const { name } = this.state;
 
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
-                    {name}
+                    {this.props.ai1.ai[0].name}
                 </Button>
                 <Modal
                     isOpen={this.state.modal}
@@ -82,7 +94,7 @@ class Ai1modal extends Component {
                 >
                     <ModalHeader toggle={this.toggle}>AI Channel 1 Settings</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.onSubmit}>
+                        <Form>
                             <FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}
@@ -272,8 +284,8 @@ class Ai1modal extends Component {
 
                             <FormGroup>
                                 <Label for="name">Alias name of channel</Label>
-                                <Input name="name" id="aliasName" placeholder="AI-1" onChange={this.onChange} />
-                                <Button color="dark" style={{ marginTop: '2rem' }} block>Save Changes</Button>
+                                <Input name="name" id="name" placeholder="AI-1" onChange={this.onChange} />
+                                <Button color="dark" style={{ marginTop: '2rem' }} block onClick={this.onSubmit.bind(this, name)}>Save Changes</Button>
                             </FormGroup>
                         </Form>
                     </ModalBody>
@@ -285,6 +297,7 @@ class Ai1modal extends Component {
 
 Ai1modal.propTypes = {
     getAIChannels: PropTypes.func.isRequired,
+    setChannelAiInfo: PropTypes.func.isRequired,
     setAIChannelName: PropTypes.func.isRequired,
     setAIChannelStatus: PropTypes.func.isRequired,
     calculateAutoScalling: PropTypes.func.isRequired,
@@ -298,6 +311,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
     getAIChannels,
+    setChannelAiInfo,
     setAIChannelName,
     setAIChannelStatus,
     calculateAutoScalling,

@@ -110,10 +110,10 @@ class IOSettings extends Component {
         const aiMax4 = this.props.ai1.inputs[3].max;
 
         // Analog Ouput Information
-        const { status: aoStatus1 } = this.props.ai1.ai[0];
-        const { status: aoStatus2 } = this.props.ai1.ai[1];
-        const { status: aoStatus3 } = this.props.ai1.ai[2];
-        const { status: aoStatus4 } = this.props.ai1.ai[3];
+        const { status: aoStatus1 } = this.props.ao1.ao[0];
+        const { status: aoStatus2 } = this.props.ao1.ao[1];
+        const { status: aoStatus3 } = this.props.ao1.ao[2];
+        const { status: aoStatus4 } = this.props.ao1.ao[3];
 
         var current_aostatus1 = '';
         var current_aostatus2 = '';

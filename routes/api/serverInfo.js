@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const auth = require('../../middleware/auth');
 
 // Server Info Model
 const MelioraServerInfo = require('../../models/ServerInfo');
@@ -8,7 +8,7 @@ const MelioraServerInfo = require('../../models/ServerInfo');
 // @route  GET api/serverInfo
 // @desc   Get Meliora server's name and location defined by the user in the web app. 
 // @access Public
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     //Model
     MelioraServerInfo.find()
         .then(serverInfo => res.json(serverInfo));
@@ -16,8 +16,8 @@ router.get('/', (req, res) => {
 
 // @route PUT api/serverInfo/:id
 // @desc Update Server Information given by the user.  
-// @access Public
-router.put('/:_id', (req, res) => {
+// @access Private
+router.put('/:_id', auth, (req, res) => {
     console.log("req: " + req);
     const updatedServerInfo = new MelioraServerInfo({
         serverName: req.body.serverName,

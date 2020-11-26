@@ -1,4 +1,4 @@
-/*const config = require('config');
+const config = require('config');
 const jwt = require('jsonwebtoken');
 
 // Get the token sent from either React, or Postman
@@ -20,4 +20,4 @@ function auth(req, res, next) {
 
 }
 
-module.exports = auth;*/
+module.exports = auth;

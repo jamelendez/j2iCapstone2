@@ -23,7 +23,7 @@ router.put('/:_id', (req, res) => {
         status: req.body.status
     });
 
-    DIChannels.findByIdAndUpdate(req.params._id, {
+    AOChannels.findByIdAndUpdate(req.params._id, {
         name: updatedAOChannel.name,
         status: updatedAOChannel.status
     })

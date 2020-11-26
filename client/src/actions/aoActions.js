@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {
     GET_AO_CHANNELS,
+    SET_CHANNELAO1_INFO,
     SET_AOCHANNEL_STATUS,
     SET_AOCHANNEL_NAME,
     SET_AOCHANNEL_SLOPEINTERCEPT_RESULT
@@ -14,6 +15,19 @@ export const getAOChannels = () => dispatch => {
             dispatch({
                 type: GET_AO_CHANNELS,
                 payload: res.data,
+            })
+        )
+}
+
+export const setChannelAoInfo = (channel, chNumber) => dispatch => {
+    const id = channel._id;
+    axios
+        .put(`/api/analogOutputs/${id}`, channel)
+        .then(res =>
+            dispatch({
+                type: SET_CHANNELAO1_INFO,
+                payload: res.data,
+                payload2: chNumber
             })
         )
 }

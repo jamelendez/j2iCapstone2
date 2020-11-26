@@ -1,9 +1,10 @@
-/*const express = require('express');
+const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const auth = require('../../middleware/auth');
+const auth = require('../../middleware/auth')
+
 
 // User  Model
 const User = require('../../models/Users');
@@ -48,7 +49,7 @@ router.post('/', (req, res) => {
         })
 });
 
-// @route   GET api/auth/user
+// @route   GET api/auth/users
 // @desc    Get user data
 // @access  Private
 router.get('/user', auth, (req, res) => {
@@ -57,4 +58,4 @@ router.get('/user', auth, (req, res) => {
         .then(user => res.json(user));
 });
 
-module.exports = router; */
+module.exports = router;

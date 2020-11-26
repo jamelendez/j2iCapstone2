@@ -1,5 +1,6 @@
 import {
     GET_AI_CHANNELS,
+    SET_CHANNELAI1_INFO,
     GET_AI_AUTO_SCALLING,
     SET_AICHANNEL_STATUS,
     SET_AICHANNEL_NAME,
@@ -40,6 +41,14 @@ export default function (state = initialState, action) {
                 ai: action.payload,
                 loading: false
             };
+        case SET_CHANNELAI1_INFO:
+            return update(state, {
+                ai: {
+                    [action.payload2 - 1]: {
+                        ai: { $set: action.payload }
+                    }
+                }
+            })
         case SET_AICHANNEL_STATUS:
             return update(state, {
                 ai: {

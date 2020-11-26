@@ -3,8 +3,6 @@ const mongoose = require('mongoose')
 const path = require('path')
 const config = require('config');
 
-const users = require('./routes/api/users');
-
 const app = express();
 
 // Bodyparser Middleware
@@ -27,14 +25,14 @@ mongoose
 
 
 // Use Routes
-//app.use('/api/users', users);
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/serverInfo', require('./routes/api/serverInfo'));
 app.use('/api/digitalInputs', require('./routes/api/digitalInputs'));
 app.use('/api/digitalOutputs', require('./routes/api/digitalOutputs'));
 app.use('/api/analogInputs', require('./routes/api/analogInputs'));
 app.use('/api/analogOutputs', require('./routes/api/analogOutputs'));
 
-//app.use('/api/auth', require('./routes/api/auth'));
 
 const port = process.env.PORT || 5000;
 

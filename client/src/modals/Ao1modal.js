@@ -1,23 +1,34 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, Table, ModalHeader, Modal, ModalBody } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Table, ModalHeader, Modal, ModalBody } from 'reactstrap'
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
     getAOChannels,
+    setChannelAoInfo,
     setAOChannelName,
     setAOChannelStatus,
+    calculateAutoScalling,
     setAOChannelSlopeInterceptResult
 } from '../actions/aoActions';
+import PropTypes from 'prop-types';
 
 class Ao1modal extends Component {
     state = {
         modal: false,
-        name: 'AO-1',
+        name: '',
         status: false,
         toAll: false,
+        pointSlopeFormula: false,
         slopeIntercept: false,
+        n1: 0,
+        m1: 0,
+        n2: 0,
+        m2: 0,
         M: 0,
         D: 0
+    }
+
+    componentDidMount() {
+        this.props.getAOChannels();
     }
 
     toggle = () => {
@@ -26,16 +37,23 @@ class Ao1modal extends Component {
         });
     };
 
-    onSubmit = (e) => {
-        e.preventDefault();
+    onSubmit = (newName) => {
+        console.log('newName: ' + newName);
+        console.log('status: ' + this.state.status);
+        const currentName = this.props.ao1.ao[0].name;
+        if (newName == '') {
+            newName = currentName
+        }
+        const updatedChannel =
+        {
+            _id: '5fbdb9c4aae376e8250b2464',
+            name: newName,
+            status: this.state.status,
+        }
+        this.props.setChannelAoInfo(updatedChannel, 1);
 
-        this.props.setAOChannelName(this.state.name, 1);
-        if (this.state.status === false) {
-            this.props.setAOChannelStatus('Disabled', 1);
-        }
-        else {
-            this.props.setAOChannelStatus('Enabled', 1);
-        }
+
+
         this.toggle();
     }
 
@@ -49,11 +67,12 @@ class Ao1modal extends Component {
     }
 
     render() {
-        const { name } = this.props.ao1.ao[0];
+        const { name } = this.state;
+
         return (
             <div>
                 <Button color="link" onClick={this.toggle}>
-                    {name}
+                    {this.props.ao1.ao[0].name}
                 </Button>
                 <Modal
                     isOpen={this.state.modal}
@@ -61,7 +80,7 @@ class Ao1modal extends Component {
                 >
                     <ModalHeader toggle={this.toggle}>AO Channel 1 Settings</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.onSubmit}>
+                        <Form>
                             <FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}
@@ -76,76 +95,19 @@ class Ao1modal extends Component {
                                 </Label>
                             </FormGroup>
 
-                            <p>Auto Scalling Settings</p>
                             <Table bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Actual(x.xxxx)</th>
-                                        <th></th>
-                                        <th>Scaled</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">
-                                            Min (n1)
-                                        </th>
                                         <td>
-                                            <FormGroup>
-                                                <Input
-                                                    type="number"
-                                                    name="n1"
-                                                    id="n1"
-                                                    placeholder="n1"
-                                                    disabled={!this.state.slopeIntercept}
-                                                    onChange={this.onChange}
-                                                />
-                                            </FormGroup>
+                                            M=
                                         </td>
-                                        <th scope="row">
-                                            Min (n2)
-                                        </th>
                                         <td>
                                             <FormGroup>
                                                 <Input
                                                     type="number"
-                                                    name="n2"
-                                                    id="n2"
-                                                    placeholder="n2"
-                                                    disabled={!this.state.slopeIntercept}
-                                                    onChange={this.onChange}
-                                                />
-                                            </FormGroup>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            Max (m1)
-                                        </th>
-                                        <td>
-                                            <FormGroup>
-                                                <Input
-                                                    type="number"
-                                                    name="m1"
-                                                    id="m1"
-                                                    placeholder="m1"
-                                                    disabled={!this.state.slopeIntercept}
-                                                    onChange={this.onChange}
-                                                />
-                                            </FormGroup>
-                                        </td>
-                                        <th scope="row">
-                                            Max (m2)
-                                        </th>
-                                        <td>
-                                            <FormGroup>
-                                                <Input
-                                                    type="number"
-                                                    name="m2"
-                                                    id="m2"
-                                                    placeholder="m2"
+                                                    name="M"
+                                                    id="M"
+                                                    placeholder="M"
                                                     disabled={!this.state.slopeIntercept}
                                                     onChange={this.onChange}
                                                 />
@@ -153,30 +115,33 @@ class Ao1modal extends Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">
-                                            Unit
-                                        </th>
+                                        <td>
+                                            D=
+                                        </td>
                                         <td>
                                             <FormGroup>
                                                 <Input
-                                                    type="text"
-                                                    name="unit"
-                                                    id="unit"
-                                                    placeholder="V"
+                                                    type="number"
+                                                    name="D"
+                                                    id="D"
+                                                    placeholder="D"
                                                     disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
-                                        <th scope="row">
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             Unit
-                                        </th>
+                                        </td>
                                         <td>
                                             <FormGroup>
                                                 <Input
                                                     type="text"
                                                     name="unit"
                                                     id="unit"
-                                                    placeholder="V"
+                                                    placeholder="Unit"
                                                     disabled={!this.state.slopeIntercept}
                                                 />
                                             </FormGroup>
@@ -184,11 +149,12 @@ class Ao1modal extends Component {
                                     </tr>
                                 </tbody>
                             </Table>
-                            <p>*Result = n2 + (input - n1) x [ (m2-n2)/(m1-n1) ]</p>
+                            <p>*Result = M x Input + D</p>
+
                             <FormGroup>
                                 <Label for="name">Alias name of channel</Label>
-                                <Input name="name" id="aliasName" placeholder="AO-1" onChange={this.onChange} />
-                                <Button color="dark" style={{ marginTop: '2rem' }} block>Save Changes</Button>
+                                <Input name="name" id="name" placeholder="AO-1" onChange={this.onChange} />
+                                <Button color="dark" style={{ marginTop: '2rem' }} block onClick={this.onSubmit.bind(this, name)}>Save Changes</Button>
                             </FormGroup>
                         </Form>
                     </ModalBody>
@@ -200,6 +166,7 @@ class Ao1modal extends Component {
 
 Ao1modal.propTypes = {
     getAOChannels: PropTypes.func.isRequired,
+    setChannelAoInfo: PropTypes.func.isRequired,
     setAOChannelName: PropTypes.func.isRequired,
     setAOChannelStatus: PropTypes.func.isRequired,
     setAOChannelSlopeInterceptResult: PropTypes.func.isRequired,
@@ -212,6 +179,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
     getAOChannels,
+    setChannelAoInfo,
     setAOChannelName,
     setAOChannelStatus,
     setAOChannelSlopeInterceptResult
