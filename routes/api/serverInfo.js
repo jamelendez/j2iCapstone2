@@ -8,7 +8,7 @@ const MelioraServerInfo = require('../../models/ServerInfo');
 // @route  GET api/serverInfo
 // @desc   Get Meliora server's name and location defined by the user in the web app. 
 // @access Public
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
     //Model
     MelioraServerInfo.find()
         .then(serverInfo => res.json(serverInfo));

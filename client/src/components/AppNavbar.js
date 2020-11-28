@@ -23,6 +23,7 @@ import {
     Link
 } from "react-router-dom";
 import Help from '../modals/HelpModal'
+import Logout from './auth/Logout';
 
 
 class AppNav extends Component {
@@ -48,7 +49,7 @@ class AppNav extends Component {
                                 <Help />
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/login">Log out</NavLink>
+                                <Logout />
                             </NavItem>
 
                         </Nav>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getServerInfo, setServerInfo } from '../actions/serverInfoActions'
 import PropTypes from 'prop-types';
 
+
 class GeneralSettings extends Component {
 
     constructor(props) {
