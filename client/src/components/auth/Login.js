@@ -34,7 +34,7 @@ class Login extends Component {
             if (error.id === 'LOGIN_FAIL') {
                 this.setState({ msg: error.msg.msg });
             } else {
-                this.setState({ msh: null });
+                this.setState({ msg: null });
             }
         }
     }

@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose')
 const path = require('path')
 const config = require('config');
-const aedes = require('aedes')();
-const server = require('net').createServer(aedes.handle)
+
+
 
 const app = express();
 
@@ -40,11 +40,7 @@ const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log('Server started on port ' + port));
 
-// MQTT Broker
 
-const mqttport = 1883
 
-server.listen(mqttport, function () {
-    console.log('MQTT server started and listening on port ', mqttport)
-})
+
 

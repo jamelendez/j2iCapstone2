@@ -44,9 +44,10 @@ class Do4modal extends Component {
                 const currentName = this.props.do1.do[i].name;
                 const currentAliasOFF = this.props.do1.do[i].aliasOFF;
                 const currentAliasON = this.props.do1.do[i].aliasON;
+                var nameToSet = newName;
                 console.log("currentName: " + currentName);
-                if (newName == '') {
-                    newName = currentName
+                if (nameToSet == '') {
+                    nameToSet = currentName
                 }
                 if (newAliasOFF == '') {
                     console.log('entro');
@@ -59,7 +60,7 @@ class Do4modal extends Component {
                 const updatedChannel =
                 {
                     _id: this.state.channel_ids[i].id,
-                    name: newName,
+                    name: nameToSet,
                     status: newStatus,
                     aliasOFF: newAliasOFF,
                     aliasON: newAliasON
@@ -67,6 +68,7 @@ class Do4modal extends Component {
                 this.props.setChannelDoInfo(updatedChannel, i + 1);
             }
         }
+
 
         else {
             const currentName = this.props.do1.do[3].name;

@@ -19,6 +19,12 @@ class Ai2modal extends Component {
         toAll: false,
         pointSlopeFormula: false,
         slopeIntercept: false,
+        channel_ids: [
+            { id: '5fbdb95aaae376e8250b2460' },
+            { id: '5fbdb991aae376e8250b2461' },
+            { id: '5fbdb99baae376e8250b2462' },
+            { id: '5fbdb9a3aae376e8250b2463' }
+        ],
         n1: 0,
         m1: 0,
         n2: 0,
@@ -38,34 +44,40 @@ class Ai2modal extends Component {
     };
 
     onSubmit = (newName) => {
-        console.log('newName: ' + newName);
-        console.log('status: ' + this.state.status);
-        const currentName = this.props.ai1.ai[1].name;
-        if (newName == '') {
-            newName = currentName
-        }
-        const updatedChannel =
-        {
-            _id: '5fbdb991aae376e8250b2461',
-            name: newName,
-            status: this.state.status,
-        }
-        this.props.setChannelAiInfo(updatedChannel, 2);
-        //this.props.setAIChannelName(this.state.name, 1);
-        /*if (this.state.status === false) {
-            this.props.setAIChannelStatus('Disabled', 1);
-        }
-        else {
-            this.props.setAIChannelStatus('Enabled', 1);
-        }*/
-        /*if (this.state.pointSlopeFormula) {
-            this.props.calculateAutoScalling(this.state.n1, this.state.n2, this.state.m1, this.state.m2, this.props.ai1.ai[0].value, 1);
+        if (this.state.toAll) {
+            for (var i = 0; i < 4; i++) {
+                console.log('newName: ' + newName);
+                console.log('status: ' + this.state.status);
+                const currentName = this.props.ai1.ai[i].name;
+                var nameToSet = newName;
+                if (nameToSet == '') {
+                    nameToSet = currentName
+                }
+                const updatedChannel =
+                {
+                    _id: this.state.channel_ids[i].id,
+                    name: nameToSet,
+                    status: this.state.status,
+                }
+                this.props.setChannelAiInfo(updatedChannel, i + 1);
+            }
+        } else {
+            console.log('newName: ' + newName);
+            console.log('status: ' + this.state.status);
+            const currentName = this.props.ai1.ai[1].name;
+            if (newName == '') {
+                newName = currentName
+            }
+            const updatedChannel =
+            {
+                _id: this.state.channel_ids[1].id,
+                name: newName,
+                status: this.state.status,
+            }
+            this.props.setChannelAiInfo(updatedChannel, 2);
         }
 
-        if (this.state.slopeIntercept) {
-            const result = +(this.state.M * this.props.ai1.ai[0].value) + +this.state.D;
-            this.props.setAIChannelSlopeInterceptResult(result, 1);
-        }*/
+
 
 
         this.toggle();
@@ -95,6 +107,12 @@ class Ai2modal extends Component {
                     <ModalHeader toggle={this.toggle}>AI Channel 2 Settings</ModalHeader>
                     <ModalBody>
                         <Form>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="toAll" checked={this.state.toAll} onChange={this.onCheckboxChange} />{' '}
+                                                    Apply to all AI channels
+                                </Label>
+                            </FormGroup>
                             <FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}

@@ -19,6 +19,12 @@ class Ao2modal extends Component {
         toAll: false,
         pointSlopeFormula: false,
         slopeIntercept: false,
+        channel_ids: [
+            { id: '5fbdb9c4aae376e8250b2464' },
+            { id: '5fbdb9e7aae376e8250b2465' },
+            { id: '5fbdb9eeaae376e8250b2466' },
+            { id: '5fbdb9f6aae376e8250b2467' }
+        ],
         n1: 0,
         m1: 0,
         n2: 0,
@@ -38,22 +44,38 @@ class Ao2modal extends Component {
     };
 
     onSubmit = (newName) => {
-        console.log('newName: ' + newName);
-        console.log('status: ' + this.state.status);
-        const currentName = this.props.ao1.ao[1].name;
-        if (newName == '') {
-            newName = currentName
+        if (this.state.toAll) {
+            for (var i = 0; i < 4; i++) {
+                console.log('newName: ' + newName);
+                console.log('status: ' + this.state.status);
+                const currentName = this.props.ao1.ao[i].name;
+                var nameToSet = newName;
+                if (nameToSet == '') {
+                    nameToSet = currentName
+                }
+                const updatedChannel =
+                {
+                    _id: this.state.channel_ids[i].id,
+                    name: nameToSet,
+                    status: this.state.status,
+                }
+                this.props.setChannelAoInfo(updatedChannel, i + 1);
+            }
+        } else {
+            console.log('newName: ' + newName);
+            console.log('status: ' + this.state.status);
+            const currentName = this.props.ao1.ao[1].name;
+            if (newName == '') {
+                newName = currentName
+            }
+            const updatedChannel =
+            {
+                _id: this.state.channel_ids[1].id,
+                name: newName,
+                status: this.state.status,
+            }
+            this.props.setChannelAoInfo(updatedChannel, 2);
         }
-        const updatedChannel =
-        {
-            _id: '5fbdb9e7aae376e8250b2465',
-            name: newName,
-            status: this.state.status,
-        }
-        this.props.setChannelAoInfo(updatedChannel, 2);
-
-
-
         this.toggle();
     }
 
@@ -81,6 +103,12 @@ class Ao2modal extends Component {
                     <ModalHeader toggle={this.toggle}>AO Channel 2 Settings</ModalHeader>
                     <ModalBody>
                         <Form>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="toAll" checked={this.state.toAll} onChange={this.onCheckboxChange} />{' '}
+                                                    Apply to all AO channels
+                                </Label>
+                            </FormGroup>
                             <FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" name="status" checked={this.state.status} onChange={this.onCheckboxChange} />{' '}

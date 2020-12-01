@@ -44,9 +44,10 @@ class Di2modal extends Component {
                 const currentName = this.props.di1.di[i].name;
                 const currentAliasOFF = this.props.di1.di[i].aliasOFF;
                 const currentAliasON = this.props.di1.di[i].aliasON;
+                var nameToSet = newName;
                 console.log("currentName: " + currentName);
-                if (newName == '') {
-                    newName = currentName
+                if (nameToSet == '') {
+                    nameToSet = currentName
                 }
                 if (newAliasOFF == '') {
                     console.log('entro');
@@ -59,7 +60,7 @@ class Di2modal extends Component {
                 const updatedChannel =
                 {
                     _id: this.state.channel_ids[i].id,
-                    name: newName,
+                    name: nameToSet,
                     status: newStatus,
                     aliasOFF: newAliasOFF,
                     aliasON: newAliasON
