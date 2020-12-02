@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 // @desc Update Server Information given by the user.  
 // @access Private
 router.put('/:_id', auth, (req, res) => {
-    console.log("req: " + req);
+    //console.log("req: " + req);
     const updatedServerInfo = new MelioraServerInfo({
         serverName: req.body.serverName,
         serverLocation: req.body.serverLocation

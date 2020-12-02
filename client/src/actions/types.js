@@ -14,6 +14,8 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const RESET_PW_SUCCESS = 'RESET_PW_SUCCESS';
+export const RESET_PW_FAIL = 'RESET_PW_FAIL';
 
 // Basic DI channel info action types. 
 export const GET_CHANNELDI1_INFO = 'GET_CHANNELDI1_INFO';

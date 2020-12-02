@@ -8,7 +8,9 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    RESET_PW_SUCCESS,
+    RESET_PW_FAIL
 } from '../actions/types';
 
 // Check token & load user
@@ -90,6 +92,32 @@ export const logout = () => {
         type: LOGOUT_SUCCESS
     };
 }
+
+export const resetPassword = (user) => (dispatch, getState) => {
+    console.log("user: " + JSON.stringify(user))
+    const id = user._id;
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const password = user.password;
+    // Request body
+    const body = JSON.stringify({ password });
+    axios.put(`/api/resetPassword/${id}`, user, tokenConfig(getState))
+        .then(res => dispatch({
+            type: RESET_PW_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'RESET_PW_FAIL'));
+            dispatch({
+                type: RESET_PW_FAIL
+            });
+        });
+}
+
 
 // Set up config/headers and token
 export const tokenConfig = getState => {

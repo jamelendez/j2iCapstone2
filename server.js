@@ -34,6 +34,7 @@ app.use('/api/digitalInputs', require('./routes/api/digitalInputs'));
 app.use('/api/digitalOutputs', require('./routes/api/digitalOutputs'));
 app.use('/api/analogInputs', require('./routes/api/analogInputs'));
 app.use('/api/analogOutputs', require('./routes/api/analogOutputs'));
+app.use('/api/resetPassword', require('./routes/api/resetPassword'));
 
 
 const port = process.env.PORT || 5000;
