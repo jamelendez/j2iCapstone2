@@ -5,7 +5,7 @@ import { resetPassword } from '../actions/authActions'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { clearErrors } from '../actions/errorActions'
-
+//
 class ChangePassword extends Component {
     state = {
         password1: '',
