@@ -9,6 +9,8 @@ const auth = require('../../middleware/auth')
 // User  Model
 const User = require('../../models/Users');
 
+
+
 // @route   POST api/auth
 // @desc    Auth user
 // @access  Public
@@ -59,5 +61,7 @@ router.get('/user', auth, (req, res) => {
         .select('-password')
         .then(user => res.json(user));
 });
+
+
 
 module.exports = router;

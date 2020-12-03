@@ -16,6 +16,9 @@ export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const RESET_PW_SUCCESS = 'RESET_PW_SUCCESS';
 export const RESET_PW_FAIL = 'RESET_PW_FAIL';
+export const OLD_PW_VALID = 'OLD_PW_VALID';
+export const OLD_PW_INVALID = 'OLD_PW_INVALID';
+export const OLD_PW_NULL = 'OLD_PW_NULL';
 
 // Basic DI channel info action types. 
 export const GET_CHANNELDI1_INFO = 'GET_CHANNELDI1_INFO';

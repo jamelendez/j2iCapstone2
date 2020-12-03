@@ -10,7 +10,10 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     RESET_PW_SUCCESS,
-    RESET_PW_FAIL
+    RESET_PW_FAIL,
+    OLD_PW_VALID,
+    OLD_PW_INVALID,
+    OLD_PW_NULL
 } from '../actions/types';
 
 // Check token & load user
@@ -72,7 +75,6 @@ export const login = (username, password) => dispatch => {
 
     // Request body
     const body = JSON.stringify({ username, password });
-    console.log("Login: " + username);
     axios.post('/api/auth', body, config)
         .then(res => dispatch({
             type: LOGIN_SUCCESS,
@@ -94,7 +96,6 @@ export const logout = () => {
 }
 
 export const resetPassword = (user) => (dispatch, getState) => {
-    console.log("user: " + JSON.stringify(user))
     const id = user._id;
     // Headers
     const config = {
@@ -116,6 +117,38 @@ export const resetPassword = (user) => (dispatch, getState) => {
                 type: RESET_PW_FAIL
             });
         });
+}
+
+export const validateOldPassword = (user) => dispatch => {
+    const id = user._id;
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const password = user.password;
+    console.log("old password: " + password);
+    // Request body
+    const body = JSON.stringify({ password });
+    axios.post(`/api/validateOldPassword/${id}`, body, config)
+        .then(res => dispatch({
+            type: OLD_PW_VALID,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'OLD_PW_INVALID'));
+            dispatch({
+                type: OLD_PW_INVALID
+            });
+        });
+}
+
+export const oldPwNull = () => {
+    return {
+        type: OLD_PW_NULL
+    };
 }
 
 

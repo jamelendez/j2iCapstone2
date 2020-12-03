@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Button, Form, Label, Input } from 'reactstrap'
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import { resetPassword } from '../actions/authActions'
+import { resetPassword, validateOldPassword, oldPwNull } from '../actions/authActions'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { clearErrors } from '../actions/errorActions'
@@ -10,6 +10,8 @@ class ChangePassword extends Component {
     state = {
         password1: '',
         password2: '',
+        oldPassword: '',
+        isOldValid: null,
         msg: ''
     }
 
@@ -17,12 +19,15 @@ class ChangePassword extends Component {
         isAuthenticated: PropTypes.bool,
         error: PropTypes.object.isRequired,
         resetPassword: PropTypes.func.isRequired,
-        clearErrors: PropTypes.func.isRequired
+        clearErrors: PropTypes.func.isRequired,
+        user: PropTypes.object.isRequired,
+        validateOldPassword: PropTypes.func.isRequired,
+        isOldValid: PropTypes.bool,
+        oldPwNull: PropTypes.func.isRequired
     }
 
     onValidSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state.password1.length)
         const valid = "^[A-Za-z0-9!@#%()+=]*$"
         if (this.state.password1 !== this.state.password2) {
             this.setState({
@@ -32,10 +37,32 @@ class ChangePassword extends Component {
             this.setState({
                 msg: 'Password is too short. It must be at least 8 characters and at most 16 characters'
             })
-        }
+        } else if (this.props.user.firstPwChange) {
+            const old = {
+                _id: '5fc11cb9b34a3a2660fab9f5',
+                password: this.state.oldPassword
+            }
+            //console.log("isOldValid: " + this.props.auth.isOldValid)
+            this.props.validateOldPassword(old);
+            console.log("isOldValid: " + this.props.isOldValid)
+            if (this.props.isOldValid) {
+                const change = {
+                    _id: '5fc11cb9b34a3a2660fab9f5',
+                    password: this.state.password1
+                }
+                this.props.resetPassword(change);
 
+                this.setState({
+                    msg: 'Passwod has been changed.'
+                })
+            }
+            else {
+                this.setState({
+                    msg: 'Invalid old password.'
+                })
+            }
 
-        else {
+        } else {
             const change = {
                 _id: '5fc11cb9b34a3a2660fab9f5',
                 password: this.state.password1
@@ -45,7 +72,8 @@ class ChangePassword extends Component {
                 msg: 'Passwod has been changed.'
             })
         }
-
+        //this.props.oldPwNull();
+        console.log("isOldValid: " + this.props.isOldValid)
     }
 
     handleInvalidSubmit(event, errors, values) {
@@ -56,7 +84,23 @@ class ChangePassword extends Component {
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+        /*const old = {
+            _id: '5fc11cb9b34a3a2660fab9f5',
+            password: this.state.oldPassword
+        }
+        this.props.validateOldPassword(old);*/
     };
+
+    validateOld = (e) => {
+
+        const old = {
+            _id: '5fc11cb9b34a3a2660fab9f5',
+            password: e.target.value
+        }
+        this.props.validateOldPassword(old);
+
+    }
+
 
     render() {
         return (
@@ -68,6 +112,16 @@ class ChangePassword extends Component {
                     onValidSubmit={this.onValidSubmit}
                     onInvalidSubmit={this.handleInvalidSubmit.bind(this)}
                 >
+                    <AvField
+                        name="oldPassword"
+                        label="Old Password"
+                        type="password"
+                        pattern="^[A-Za-z0-9!@#%()+=]*$"
+                        placeholder="********"
+                        maxLength="16"
+                        title="Type in you old password."
+                        disabled={!this.props.user.firstPwChange}
+                        onChange={this.validateOld} />
                     <AvField
                         name="password1"
                         label="New Password"
@@ -88,7 +142,7 @@ class ChangePassword extends Component {
                         onChange={this.onChange} />
                     <Button
                         style={{ marginTop: '2rem', marginBottom: '2rem' }}
-                    //onClick={this.onChangePWClick}
+
                     >Save Changes</Button>
                 </AvForm>
 
@@ -102,7 +156,11 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.error,
     resetPassword: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired
+    clearErrors: PropTypes.func.isRequired,
+    user: state.auth.user,
+    validateOldPassword: PropTypes.func.isRequired,
+    isOldValid: state.auth.isOldValid,
+    oldPwNull: PropTypes.func.isRequired
 });
 
-export default connect(mapStateToProps, { resetPassword, clearErrors })(ChangePassword);
+export default connect(mapStateToProps, { resetPassword, clearErrors, validateOldPassword, oldPwNull })(ChangePassword);

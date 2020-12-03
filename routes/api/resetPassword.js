@@ -20,7 +20,7 @@ router.put('/:_id', (req, res) => {
         bcrypt.hash(password, salt, (err, hash) => {
             if (err) throw err;
             password = hash;
-            User.findByIdAndUpdate(req.params._id, { password: password })
+            User.findByIdAndUpdate(req.params._id, { password: password, firstPwChange: true })
                 .then(user => {
                     jwt.sign(
                         { id: user.id },
@@ -33,6 +33,7 @@ router.put('/:_id', (req, res) => {
                                 user: {
                                     id: user.id,
                                     username: user.username,
+                                    firstPwChange: user.firstPwChange
                                 }
                             });
                         }
