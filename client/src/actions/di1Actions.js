@@ -32,6 +32,10 @@ export const setChannelDiInfo = (channel, chNumber) => dispatch => {
         )
 }
 
+export const sendChannelsStatusToMQTTBroker = () => dispatch => {
+    axios.get('/api-broker/digitalInputs');
+}
+
 export const setDIChannelName = (name, chNumber) => dispatch => {
     return {
         type: SET_DICHANNEL_NAME,

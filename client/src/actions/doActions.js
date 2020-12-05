@@ -32,6 +32,10 @@ export const setChannelDoInfo = (channel, chNumber) => dispatch => {
         )
 }
 
+export const sendChannelsStatusToMQTTBroker = () => dispatch => {
+    axios.get('/api-broker/digitalOutputs');
+}
+
 export const setDOChannelName = (name, chNumber) => {
     return {
         type: SET_DOCHANNEL_NAME,

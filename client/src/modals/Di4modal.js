@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
     getChanelDi1Info,
     setChannelDiInfo,
+    sendChannelsStatusToMQTTBroker,
     setDIChannelName,
     setDIChannelAliasOFF,
     setDIChannelAliasON,
@@ -67,6 +68,7 @@ class Di4modal extends Component {
                 }
                 this.props.setChannelDiInfo(updatedChannel, i + 1);
             }
+            this.props.sendChannelsStatusToMQTTBroker();
         }
         else {
             const currentName = this.props.di1.di[3].name;
@@ -93,6 +95,7 @@ class Di4modal extends Component {
                 aliasON: newAliasON
             }
             this.props.setChannelDiInfo(updatedChannel, 4);
+            this.props.sendChannelsStatusToMQTTBroker();
         }
 
 
@@ -168,6 +171,7 @@ class Di4modal extends Component {
 Di4modal.propTypes = {
     getChanelDi1Info: PropTypes.func.isRequired,
     setChannelDiInfo: PropTypes.func.isRequired,
+    sendChannelsStatusToMQTTBroker: PropTypes.func.isRequired,
     setDIChannelName: PropTypes.func.isRequired,
     setDIChannelAliasOFF: PropTypes.func.isRequired,
     setDIChannelAliasON: PropTypes.func.isRequired,
@@ -182,6 +186,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
     getChanelDi1Info,
     setChannelDiInfo,
+    sendChannelsStatusToMQTTBroker,
     setDIChannelName,
     setDIChannelAliasOFF,
     setDIChannelAliasON,
