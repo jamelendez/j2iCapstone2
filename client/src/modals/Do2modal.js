@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
     getDOChannels,
     setChannelDoInfo,
+    sendChannelsStatusToMQTTBroker,
     setDOChannelName,
     setDOChannelAliasOFF,
     setDOChannelAliasON,
@@ -66,6 +67,7 @@ class Do2modal extends Component {
                     aliasON: newAliasON
                 }
                 this.props.setChannelDoInfo(updatedChannel, i + 1);
+                this.props.sendChannelsStatusToMQTTBroker();
             }
         }
 
@@ -95,6 +97,7 @@ class Do2modal extends Component {
                 aliasON: newAliasON
             }
             this.props.setChannelDoInfo(updatedChannel, 2);
+            this.props.sendChannelsStatusToMQTTBroker();
         }
         this.toggle();
     }
@@ -164,6 +167,7 @@ class Do2modal extends Component {
 Do2modal.propTypes = {
     getDOChannels: PropTypes.func.isRequired,
     setChannelDoInfo: PropTypes.func.isRequired,
+    sendChannelsStatusToMQTTBroker: PropTypes.func.isRequired,
     setDOChannelName: PropTypes.func.isRequired,
     setDOChannelAliasOFF: PropTypes.func.isRequired,
     setDOChannelAliasON: PropTypes.func.isRequired,
@@ -178,6 +182,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
     getDOChannels,
     setChannelDoInfo,
+    sendChannelsStatusToMQTTBroker,
     setDOChannelName,
     setDOChannelAliasOFF,
     setDOChannelAliasON,
