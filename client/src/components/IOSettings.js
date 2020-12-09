@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table } from 'reactstrap';
+
+import { Button, Table } from 'reactstrap';
 import Di1modal from '../modals/Di1modal';
 import Di2modal from '../modals/Di2modal';
 import Di3modal from '../modals/Di3modal';
@@ -20,18 +21,38 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getChanelDi1Info } from '../actions/di1Actions';
 import { getDOChannels } from '../actions/doActions'
-import { getAIChannels } from '../actions/aiActions'
+import { getAIChannels, getAIValuesFromMQTTBroker } from '../actions/aiActions'
 import { getAOChannels } from '../actions/aoActions'
 
 
 
+
 class IOSettings extends Component {
+    state = {
+        aiMin1: 0,
+        aiMin2: 0,
+        aiMin3: 0,
+        aiMin4: 0,
+        aiMax1: 0,
+        aiMax2: 0,
+        aiMax3: 0,
+        aiMax4: 0,
+        aoMin1: 0,
+        aoMin2: 0,
+        aoMin3: 0,
+        aoMin4: 0,
+        aoMax1: 0,
+        aoMax2: 0,
+        aoMax3: 0,
+        aoMax4: 0,
+    }
 
     componentDidMount() {
         this.props.getChanelDi1Info();
         this.props.getDOChannels();
         this.props.getAIChannels();
         this.props.getAOChannels();
+        this.props.getAIValuesFromMQTTBroker();
     }
 
     render() {
@@ -99,15 +120,7 @@ class IOSettings extends Component {
         const aiValue3 = this.props.ai1.inputs[2].value;
         const aiValue4 = this.props.ai1.inputs[3].value;
 
-        const aiMin = this.props.ai1.inputs[0].min;
-        const aiMin2 = this.props.ai1.inputs[1].min;
-        const aiMin3 = this.props.ai1.inputs[2].min;
-        const aiMin4 = this.props.ai1.inputs[3].min;
 
-        const aiMax = this.props.ai1.inputs[0].max;
-        const aiMax2 = this.props.ai1.inputs[1].max;
-        const aiMax3 = this.props.ai1.inputs[2].max;
-        const aiMax4 = this.props.ai1.inputs[3].max;
 
         // Analog Ouput Information
         const { status: aoStatus1 } = this.props.ao1.ao[0];
@@ -132,17 +145,6 @@ class IOSettings extends Component {
         const aoValue2 = this.props.ao1.inputs[1].value;
         const aoValue3 = this.props.ao1.inputs[2].value;
         const aoValue4 = this.props.ao1.inputs[3].value;
-
-        const aoMin = this.props.ao1.inputs[0].min;
-        const aoMin2 = this.props.ao1.inputs[1].min;
-        const aoMin3 = this.props.ao1.inputs[2].min;
-        const aoMin4 = this.props.ao1.inputs[3].min;
-
-        const aoMax = this.props.ao1.inputs[0].max;
-        const aoMax2 = this.props.ao1.inputs[1].max;
-        const aoMax3 = this.props.ao1.inputs[2].max;
-        const aoMax4 = this.props.ao1.inputs[3].max;
-
 
         return (
             <div>
@@ -187,7 +189,6 @@ class IOSettings extends Component {
                     </tbody>
                 </Table>
 
-
                 <h2>DO Channel Settings</h2>
                 <Table id="DO" bordered hover>
                     <thead>
@@ -224,8 +225,10 @@ class IOSettings extends Component {
                     </tbody>
                 </Table>
 
-
                 <h2>AI Channel Settings</h2>
+                <Button style={{ marginBottom: '2rem' }}>
+                    Refresh Min. and Max
+                </Button>
                 <Table bordered hover>
                     <thead>
                         <tr>
@@ -245,8 +248,8 @@ class IOSettings extends Component {
                             <td>-24V - 24V</td>
                             <td>{current_aistatus1}</td>
                             <td>{aiValue}</td>
-                            <td>{aiMin}</td>
-                            <td>{aiMax}</td>
+                            <td>{this.state.aiMin1}</td>
+                            <td>{this.state.aiMax1}</td>
                         </tr>
                         <tr>
                             <th scope="row">
@@ -255,8 +258,8 @@ class IOSettings extends Component {
                             <td>-24V - 24V</td>
                             <td>{current_aistatus2}</td>
                             <td>{aiValue2}</td>
-                            <td>{aiMin2}</td>
-                            <td>{aiMax2}</td>
+                            <td>{this.state.aiMin2}</td>
+                            <td>{this.state.aiMax2}</td>
                         </tr>
                         <tr>
                             <th scope="row">
@@ -265,8 +268,8 @@ class IOSettings extends Component {
                             <td>-24V - 24V</td>
                             <td>{current_aistatus3}</td>
                             <td>{aiValue3}</td>
-                            <td>{aiMin3}</td>
-                            <td>{aiMax3}</td>
+                            <td>{this.state.aiMin3}</td>
+                            <td>{this.state.aiMax3}</td>
                         </tr>
                         <tr>
                             <th scope="row">
@@ -275,12 +278,16 @@ class IOSettings extends Component {
                             <td>-24V - 24V</td>
                             <td>{current_aistatus4}</td>
                             <td>{aiValue4}</td>
-                            <td>{aiMin4}</td>
-                            <td>{aiMax4}</td>
+                            <td>{this.state.aiMin4}</td>
+                            <td>{this.state.aiMax4}</td>
                         </tr>
                     </tbody>
                 </Table>
+
                 <h2>AO Channel Settings</h2>
+                <Button style={{ marginBottom: '2rem' }}>
+                    Refresh Min. and Max
+                </Button>
                 <Table bordered hover>
                     <thead>
                         <tr>
@@ -300,8 +307,8 @@ class IOSettings extends Component {
                             <td>0V - 24V</td>
                             <td>{current_aostatus1}</td>
                             <td>{aoValue}</td>
-                            <td>{aoMin}</td>
-                            <td>{aoMax}</td>
+                            <td>{this.state.aoMin1}</td>
+                            <td>{this.state.aoMax1}</td>
                         </tr>
                         <tr>
                             <th scope="row">
@@ -310,8 +317,8 @@ class IOSettings extends Component {
                             <td>0V - 24V</td>
                             <td>{current_aostatus2}</td>
                             <td>{aoValue2}</td>
-                            <td>{aoMin2}</td>
-                            <td>{aoMax2}</td>
+                            <td>{this.state.aoMin2}</td>
+                            <td>{this.state.aoMax2}</td>
                         </tr>
                         <tr>
                             <th scope="row">
@@ -320,8 +327,8 @@ class IOSettings extends Component {
                             <td>0V - 24V</td>
                             <td>{current_aostatus3}</td>
                             <td>{aoValue3}</td>
-                            <td>{aoMin3}</td>
-                            <td>{aoMax3}</td>
+                            <td>{this.state.aoMin3}</td>
+                            <td>{this.state.aoMax3}</td>
                         </tr>
                         <tr>
                             <th scope="row">
@@ -330,8 +337,8 @@ class IOSettings extends Component {
                             <td>0V - 24V</td>
                             <td>{current_aostatus4}</td>
                             <td>{aoValue4}</td>
-                            <td>{aoMin4}</td>
-                            <td>{aoMax4}</td>
+                            <td>{this.state.aoMin4}</td>
+                            <td>{this.state.aoMax4}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -345,6 +352,7 @@ IOSettings.propTypes = {
     getDOChannels: PropTypes.func.isRequired,
     getAIChannels: PropTypes.func.isRequired,
     getAOChannels: PropTypes.func.isRequired,
+    getAIValuesFromMQTTBroker: PropTypes.func.isRequired,
     di1: PropTypes.object.isRequired,
     do1: PropTypes.object.isRequired,
     ai1: PropTypes.object.isRequired,
@@ -363,5 +371,6 @@ export default connect(mapStateToProps,
         getChanelDi1Info,
         getDOChannels,
         getAIChannels,
-        getAOChannels
+        getAOChannels,
+        getAIValuesFromMQTTBroker
     })(IOSettings);

@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import {
     getAIChannels,
     setChannelAiInfo,
-    setAIChannelName,
-    setAIChannelStatus,
-    calculateAutoScalling,
-    setAIChannelSlopeInterceptResult
+    sendChannelsStatusToMQTTBroker,
+    sendAutoScallingToMQTTBroker,
+    sendSlopeInterceptToMQTTBroker,
 } from '../actions/aiActions';
 import PropTypes from 'prop-types';
 
@@ -29,8 +28,11 @@ class Ai1modal extends Component {
         m1: 0,
         n2: 0,
         m2: 0,
+        unit1: '',
+        unit2: '',
         M: 0,
-        D: 0
+        D: 0,
+        unit3: ''
     }
 
     componentDidMount() {
@@ -60,6 +62,7 @@ class Ai1modal extends Component {
                     status: this.state.status,
                 }
                 this.props.setChannelAiInfo(updatedChannel, i + 1);
+                this.props.sendChannelsStatusToMQTTBroker();
             }
         } else {
             console.log('newName: ' + newName);
@@ -75,6 +78,29 @@ class Ai1modal extends Component {
                 status: this.state.status,
             }
             this.props.setChannelAiInfo(updatedChannel, 1);
+            this.props.sendChannelsStatusToMQTTBroker();
+
+            if (this.state.pointSlopeFormula) {
+                const data = {
+                    chNumber: 0,
+                    n1: this.state.n1,
+                    n2: this.state.n2,
+                    m1: this.state.m1,
+                    m2: this.state.m2,
+                    unit1: this.state.unit1,
+                    unit2: this.state.unit2
+                }
+                this.props.sendAutoScallingToMQTTBroker(data);
+            }
+            if (this.state.slopeIntercept) {
+                const data = {
+                    chNumber: 0,
+                    M: this.state.M,
+                    D: this.state.D,
+                    unit: this.state.unit3
+                }
+                this.props.sendSlopeInterceptToMQTTBroker(data);
+            }
         }
 
 
@@ -210,10 +236,11 @@ class Ai1modal extends Component {
                                             <FormGroup>
                                                 <Input
                                                     type="text"
-                                                    name="unit"
+                                                    name="unit1"
                                                     id="unit"
                                                     placeholder="V"
                                                     disabled={!this.state.pointSlopeFormula}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -224,10 +251,11 @@ class Ai1modal extends Component {
                                             <FormGroup>
                                                 <Input
                                                     type="text"
-                                                    name="unit"
+                                                    name="unit2"
                                                     id="unit"
                                                     placeholder="V"
                                                     disabled={!this.state.pointSlopeFormula}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -287,10 +315,11 @@ class Ai1modal extends Component {
                                             <FormGroup>
                                                 <Input
                                                     type="text"
-                                                    name="unit"
+                                                    name="unit3"
                                                     id="unit"
                                                     placeholder="Unit"
                                                     disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -315,10 +344,9 @@ class Ai1modal extends Component {
 Ai1modal.propTypes = {
     getAIChannels: PropTypes.func.isRequired,
     setChannelAiInfo: PropTypes.func.isRequired,
-    setAIChannelName: PropTypes.func.isRequired,
-    setAIChannelStatus: PropTypes.func.isRequired,
-    calculateAutoScalling: PropTypes.func.isRequired,
-    setAIChannelSlopeInterceptResult: PropTypes.func.isRequired,
+    sendChannelsStatusToMQTTBroker: PropTypes.func.isRequired,
+    sendAutoScallingToMQTTBroker: PropTypes.func.isRequired,
+    sendSlopeInterceptToMQTTBroker: PropTypes.func.isRequired,
     ai1: PropTypes.object.isRequired
 }
 
@@ -329,8 +357,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
     getAIChannels,
     setChannelAiInfo,
-    setAIChannelName,
-    setAIChannelStatus,
-    calculateAutoScalling,
-    setAIChannelSlopeInterceptResult
+    sendChannelsStatusToMQTTBroker,
+    sendAutoScallingToMQTTBroker,
+    sendSlopeInterceptToMQTTBroker,
 })(Ai1modal);

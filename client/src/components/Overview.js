@@ -87,20 +87,20 @@ class Overview extends Component {
 
 
 
-        const aiValue = this.props.ai1.inputs[0].value;
-        const aiValue2 = this.props.ai1.inputs[1].value;
-        const aiValue3 = this.props.ai1.inputs[2].value;
-        const aiValue4 = this.props.ai1.inputs[3].value;
+        const aiValue = this.props.ai1.values[0].value;
+        const aiValue2 = this.props.ai1.values[1].value;
+        const aiValue3 = this.props.ai1.values[2].value;
+        const aiValue4 = this.props.ai1.values[3].value;
 
-        const aiMin = this.props.ai1.inputs[0].min;
-        const aiMin2 = this.props.ai1.inputs[1].min;
-        const aiMin3 = this.props.ai1.inputs[2].min;
-        const aiMin4 = this.props.ai1.inputs[3].min;
+        const aiMin = 0;
+        const aiMin2 = 0;
+        const aiMin3 = 0;
+        const aiMin4 = 0;
 
-        const aiMax = this.props.ai1.inputs[0].max;
-        const aiMax2 = this.props.ai1.inputs[1].max;
-        const aiMax3 = this.props.ai1.inputs[2].max;
-        const aiMax4 = this.props.ai1.inputs[3].max;
+        const aiMax = 0;
+        const aiMax2 = 0;
+        const aiMax3 = 0;
+        const aiMax4 = 0;
 
         // Analog Ouput Information
         const { status: aoStatus1 } = this.props.ao1.ao[0];

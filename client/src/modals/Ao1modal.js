@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import {
     getAOChannels,
     setChannelAoInfo,
+    sendChannelsStatusToMQTTBroker,
+    sendSlopeInterceptToMQTTBroker,
     setAOChannelName,
     setAOChannelStatus,
     calculateAutoScalling,
@@ -25,12 +27,9 @@ class Ao1modal extends Component {
             { id: '5fbdb9eeaae376e8250b2466' },
             { id: '5fbdb9f6aae376e8250b2467' }
         ],
-        n1: 0,
-        m1: 0,
-        n2: 0,
-        m2: 0,
         M: 0,
-        D: 0
+        D: 0,
+        unit: ''
     }
 
     componentDidMount() {
@@ -61,6 +60,7 @@ class Ao1modal extends Component {
                 }
                 this.props.setChannelAoInfo(updatedChannel, i + 1);
             }
+            this.props.sendChannelsStatusToMQTTBroker();
         } else {
             console.log('newName: ' + newName);
             console.log('status: ' + this.state.status);
@@ -75,6 +75,17 @@ class Ao1modal extends Component {
                 status: this.state.status,
             }
             this.props.setChannelAoInfo(updatedChannel, 1);
+            this.props.sendChannelsStatusToMQTTBroker();
+
+            if (this.state.slopeIntercept) {
+                const data = {
+                    chNumber: 0,
+                    M: this.state.M,
+                    D: this.state.D,
+                    unit: this.state.unit
+                }
+                this.props.sendSlopeInterceptToMQTTBroker(data);
+            }
         }
         this.toggle();
     }
@@ -171,6 +182,7 @@ class Ao1modal extends Component {
                                                     id="unit"
                                                     placeholder="Unit"
                                                     disabled={!this.state.slopeIntercept}
+                                                    onChange={this.onChange}
                                                 />
                                             </FormGroup>
                                         </td>
@@ -195,6 +207,8 @@ class Ao1modal extends Component {
 Ao1modal.propTypes = {
     getAOChannels: PropTypes.func.isRequired,
     setChannelAoInfo: PropTypes.func.isRequired,
+    sendChannelsStatusToMQTTBroker: PropTypes.func.isRequired,
+    sendSlopeInterceptToMQTTBroker: PropTypes.func.isRequired,
     setAOChannelName: PropTypes.func.isRequired,
     setAOChannelStatus: PropTypes.func.isRequired,
     setAOChannelSlopeInterceptResult: PropTypes.func.isRequired,
@@ -208,6 +222,8 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
     getAOChannels,
     setChannelAoInfo,
+    sendChannelsStatusToMQTTBroker,
+    sendSlopeInterceptToMQTTBroker,
     setAOChannelName,
     setAOChannelStatus,
     setAOChannelSlopeInterceptResult

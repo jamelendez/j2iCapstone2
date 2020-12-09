@@ -32,6 +32,14 @@ export const setChannelAoInfo = (channel, chNumber) => dispatch => {
         )
 }
 
+export const sendChannelsStatusToMQTTBroker = () => dispatch => {
+    axios.get('/api-broker/analogOutputs');
+}
+
+export const sendSlopeInterceptToMQTTBroker = (data) => dispatch => {
+    axios.post('/api-broker/analogOutputs/slopeIntercept', data);
+}
+
 export const setAOChannelName = (name, chNumber) => {
     return {
         type: SET_AOCHANNEL_NAME,

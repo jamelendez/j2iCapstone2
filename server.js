@@ -40,8 +40,10 @@ app.use('/api/validateOldPassword', require('./routes/api/validateOldPassword'))
 // Use MQTT Routes
 app.use('/api-broker/digitalInputs', require('./routes/api-broker/digitalInputs'));
 app.use('/api-broker/digitalOutputs', require('./routes/api-broker/digitalOutputs'));
-
-
+app.use('/api-broker/analogInputs', require('./routes/api-broker/analogInputs'));
+app.use('/api-broker/analogOutputs', require('./routes/api-broker/analogOutputs'));
+app.use('/api-broker/userDefinedModbusAddressing', require('./routes/api-broker/userDefinedModbusAddressing'));
+app.use('/api-broker/analogValues', require('./routes/api-broker/analogValues'));
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log('Server started on port ' + port));
