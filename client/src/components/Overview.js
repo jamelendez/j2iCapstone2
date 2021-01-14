@@ -115,14 +115,14 @@ class Overview extends Component {
         const aiValue4 = this.props.ai1.ai_values[3].value;
 
         if(aiValue > this.state.aiMax1) this.setState({aiMax1: aiValue});
-        if(aiValue > this.state.aiMax2) this.setState({aiMax2: aiValue});
-        if(aiValue > this.state.aiMax3) this.setState({aiMax3: aiValue});
-        if(aiValue > this.state.aiMax4) this.setState({aiMax4: aiValue});
+        if(aiValue2 > this.state.aiMax2) this.setState({aiMax2: aiValue2});
+        if(aiValue3 > this.state.aiMax3) this.setState({aiMax3: aiValue3});
+        if(aiValue4 > this.state.aiMax4) this.setState({aiMax4: aiValue4});
 
         if(aiValue < this.state.aiMin1) this.setState({aiMin1: aiValue});
-        if(aiValue < this.state.aiMin2) this.setState({aiMin2: aiValue});
-        if(aiValue < this.state.aiMin3) this.setState({aiMin3: aiValue});
-        if(aiValue < this.state.aiMin4) this.setState({aiMin4: aiValue});
+        if(aiValue2 < this.state.aiMin2) this.setState({aiMin2: aiValue2});
+        if(aiValue3 < this.state.aiMin3) this.setState({aiMin3: aiValue3});
+        if(aiValue4 < this.state.aiMin4) this.setState({aiMin4: aiValue4});
 
         // Analog Ouput Information
         const { status: aoStatus1 } = this.props.ao1.ao[0];
