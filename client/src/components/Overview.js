@@ -10,6 +10,25 @@ import { Timestamp } from 'mongodb';
 
 class Overview extends Component {
 
+    state = {
+        aiMin1: 0,
+        aiMin2: 0,
+        aiMin3: 0,
+        aiMin4: 0,
+        aiMax1: 0,
+        aiMax2: 0,
+        aiMax3: 0,
+        aiMax4: 0,
+        aoMin1: 0,
+        aoMin2: 0,
+        aoMin3: 0,
+        aoMin4: 0,
+        aoMax1: 0,
+        aoMax2: 0,
+        aoMax3: 0,
+        aoMax4: 0,
+    }
+
     componentDidMount() {
         this.props.getChanelDi1Info();
         this.props.getDOChannels();
@@ -95,15 +114,15 @@ class Overview extends Component {
         const aiValue3 = this.props.ai1.ai_values[2].value;
         const aiValue4 = this.props.ai1.ai_values[3].value;
 
-        const aiMin = 0;
-        const aiMin2 = 0;
-        const aiMin3 = 0;
-        const aiMin4 = 0;
+        if(aiValue > aiMax1) aiMax1 = aiValue;
+        if(aiValue2 > aiMax2) aiMax2 = aiValue2;
+        if(aiValue3 > aiMax3) aiMax3 = aiValue3;
+        if(aiValue4 > aiMax4) aiMax4 = aiValue4;
 
-        const aiMax = 0;
-        const aiMax2 = 0;
-        const aiMax3 = 0;
-        const aiMax4 = 0;
+        if(aiValue < aiMin1) aiMin1 = aiValue;
+        if(aiValue2 < aiMin2) aiMin2 = aiValue2;
+        if(aiValue3 < aiMin3) aiMin3 = aiValue3;
+        if(aiValue4 < aiMin4) aiMin4 = aiValue4;
 
         // Analog Ouput Information
         const { status: aoStatus1 } = this.props.ao1.ao[0];
@@ -129,15 +148,16 @@ class Overview extends Component {
         const aoValue3 = this.props.ao1.ao_values[2].value;
         const aoValue4 = this.props.ao1.ao_values[3].value;
 
-        const aoMin = 0;
-        const aoMin2 = 0;
-        const aoMin3 = 0;
-        const aoMin4 = 0;
+        if(aoValue > aoMax1) aoMax1 = aoValue;
+        if(aoValue2 > aoMax2) aoMax2 = aoValue2;
+        if(aoValue3 > aoMax3) aoMax3 = aoValue3;
+        if(aoValue4 > aoMax4) aoMax4 = aoValue4;
 
-        const aoMax = 0;
-        const aoMax2 = 0;
-        const aoMax3 = 0;
-        const aoMax4 = 0;
+        if(aoValue < aoMin1) aoMin1 = aoValue;
+        if(aoValue2 < aoMin2) aoMin2 = aoValue2;
+        if(aoValue3 < aoMin3) aoMin3 = aoValue3;
+        if(aoValue4 < aoMin4) aoMin4 = aoValue4;
+        
         return (
             <div>
                 <h1>Welcome to Meliora Overview</h1>
