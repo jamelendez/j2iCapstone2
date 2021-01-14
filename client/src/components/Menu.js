@@ -94,11 +94,6 @@ class Menu extends Component {
                             >
                                 Load Factory Default
                                 </Button>
-                            <Button
-                                onClick={this.pageSaveReset} 
-                            >
-                                Save/Reset
-                            </Button>
                         </ButtonGroup>
                     </Col>
                     <Col>
