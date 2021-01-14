@@ -42,12 +42,10 @@ class ChangePassword extends Component {
                 _id: '5fc11cb9b34a3a2660fab9f5',
                 password: this.state.oldPassword
             }
-            //console.log("isOldValid: " + this.props.auth.isOldValid)
             this.props.validateOldPassword(old);
-            console.log("isOldValid: " + this.props.isOldValid)
             if (this.props.isOldValid) {
                 const change = {
-                    _id: '5fc11cb9b34a3a2660fab9f5',
+                    _id: this.props.user.id,
                     password: this.state.password1
                 }
                 this.props.resetPassword(change);
@@ -64,7 +62,7 @@ class ChangePassword extends Component {
 
         } else {
             const change = {
-                _id: '5fc11cb9b34a3a2660fab9f5',
+                _id: this.props.user.id,
                 password: this.state.password1
             }
             this.props.resetPassword(change);
@@ -72,8 +70,6 @@ class ChangePassword extends Component {
                 msg: 'Passwod has been changed.'
             })
         }
-        //this.props.oldPwNull();
-        console.log("isOldValid: " + this.props.isOldValid)
     }
 
     handleInvalidSubmit(event, errors, values) {
@@ -89,7 +85,7 @@ class ChangePassword extends Component {
     validateOld = (e) => {
 
         const old = {
-            _id: '5fc11cb9b34a3a2660fab9f5',
+            _id: this.props.user.id,
             password: e.target.value
         }
         this.props.validateOldPassword(old);

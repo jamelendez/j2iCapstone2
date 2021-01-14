@@ -12,10 +12,9 @@ const User = require('../../models/Users');
 // @route   PUT api/resetPassword
 // @desc    Reset password for user
 // @access  Private
-// $2a$10$YBMfxblZftx3bmq4kb/Tsel/mQu8e/hDTj/53gFTE8U2X4zRbejdW
 router.put('/:_id', (req, res) => {
     var password = req.body.password;
-
+    console.log(req.params._id)
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt, (err, hash) => {
             if (err) throw err;
