@@ -12,7 +12,7 @@ var mqttClient = mqtt.connect({
 });
 var options = {
     retain: true,
-    qos: 1
+    qos: 2
 }
 
 // udma = user-defined modbus addressing
