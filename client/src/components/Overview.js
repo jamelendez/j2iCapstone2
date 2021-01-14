@@ -149,14 +149,14 @@ class Overview extends Component {
         const aoValue4 = this.props.ao1.ao_values[3].value;
 
         if(aoValue > this.state.aoMax1) this.setState({aoMax1: aoValue});
-        if(aoValue > this.state.aoMax2) this.setState({aoMax2: aoValue});
-        if(aoValue > this.state.aoMax3) this.setState({aoMax3: aoValue});
-        if(aoValue > this.state.aoMax4) this.setState({aoMax4: aoValue});
+        if(aoValue > this.state.aoMax2) this.setState({aoMax2: aoValue2});
+        if(aoValue > this.state.aoMax3) this.setState({aoMax3: aoValue3});
+        if(aoValue > this.state.aoMax4) this.setState({aoMax4: aoValue4});
 
         if(aoValue < this.state.aoMin1) this.setState({aoMin1: aoValue});
-        if(aoValue < this.state.aoMin2) this.setState({aoMin2: aoValue});
-        if(aoValue < this.state.aoMin3) this.setState({aoMin3: aoValue});
-        if(aoValue < this.state.aoMin4) this.setState({aoMin4: aoValue});
+        if(aoValue < this.state.aoMin2) this.setState({aoMin2: aoValue2});
+        if(aoValue < this.state.aoMin3) this.setState({aoMin3: aoValue3});
+        if(aoValue < this.state.aoMin4) this.setState({aoMin4: aoValue4});
 
 
         return (
