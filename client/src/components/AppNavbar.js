@@ -5,23 +5,8 @@ import {
     NavbarToggler,
     NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText,
-    Button,
-    ButtonGroup
-
+    NavItem
 } from 'reactstrap';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
 import Help from '../modals/HelpModal'
 import Logout from './auth/Logout';
 

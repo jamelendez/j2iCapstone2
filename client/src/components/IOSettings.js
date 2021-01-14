@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import { getChanelDi1Info } from '../actions/di1Actions';
 import { getDOChannels } from '../actions/doActions'
 import { getAIChannels, getAIValuesFromMQTTBroker } from '../actions/aiActions'
-import { getAOChannels } from '../actions/aoActions'
+import { getAOChannels, getAOValuesFromMQTTBroker } from '../actions/aoActions'
 
 
 
@@ -53,6 +53,7 @@ class IOSettings extends Component {
         this.props.getAIChannels();
         this.props.getAOChannels();
         this.props.getAIValuesFromMQTTBroker();
+        this.props.getAOValuesFromMQTTBroker();
     }
 
     render() {
@@ -113,14 +114,10 @@ class IOSettings extends Component {
         if (aiStatus4) { current_aistatus4 = 'Enabled'; }
         else { current_aistatus4 = 'Disabled'; }
 
-
-
-        const aiValue = this.props.ai1.inputs[0].value;
-        const aiValue2 = this.props.ai1.inputs[1].value;
-        const aiValue3 = this.props.ai1.inputs[2].value;
-        const aiValue4 = this.props.ai1.inputs[3].value;
-
-
+        const aiValue = this.props.ai1.ai_values[0].value;
+        const aiValue2 = this.props.ai1.ai_values[1].value;
+        const aiValue3 = this.props.ai1.ai_values[2].value;
+        const aiValue4 = this.props.ai1.ai_values[3].value;
 
         // Analog Ouput Information
         const { status: aoStatus1 } = this.props.ao1.ao[0];
@@ -141,10 +138,10 @@ class IOSettings extends Component {
         if (aoStatus4) { current_aostatus4 = 'Enabled'; }
         else { current_aostatus4 = 'Disabled'; }
 
-        const aoValue = this.props.ao1.inputs[0].value;
-        const aoValue2 = this.props.ao1.inputs[1].value;
-        const aoValue3 = this.props.ao1.inputs[2].value;
-        const aoValue4 = this.props.ao1.inputs[3].value;
+        const aoValue = this.props.ao1.ao_values[0].value;
+        const aoValue2 = this.props.ao1.ao_values[1].value;
+        const aoValue3 = this.props.ao1.ao_values[2].value;
+        const aoValue4 = this.props.ao1.ao_values[3].value;
 
         return (
             <div>
@@ -353,6 +350,7 @@ IOSettings.propTypes = {
     getAIChannels: PropTypes.func.isRequired,
     getAOChannels: PropTypes.func.isRequired,
     getAIValuesFromMQTTBroker: PropTypes.func.isRequired,
+    getAOValuesFromMQTTBroker: PropTypes.func.isRequired,
     di1: PropTypes.object.isRequired,
     do1: PropTypes.object.isRequired,
     ai1: PropTypes.object.isRequired,
@@ -372,5 +370,6 @@ export default connect(mapStateToProps,
         getDOChannels,
         getAIChannels,
         getAOChannels,
-        getAIValuesFromMQTTBroker
+        getAIValuesFromMQTTBroker, 
+        getAOValuesFromMQTTBroker
     })(IOSettings);

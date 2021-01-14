@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { Button, Form, Label, Input } from 'reactstrap'
+import React, { Component } from 'react';
+import { Button} from 'reactstrap'
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { resetPassword, validateOldPassword, oldPwNull } from '../actions/authActions'
 import { connect } from 'react-redux';
@@ -28,7 +28,7 @@ class ChangePassword extends Component {
 
     onValidSubmit = (e) => {
         e.preventDefault();
-        const valid = "^[A-Za-z0-9!@#%()+=]*$"
+        //const valid = "^[A-Za-z0-9!@#%()+=]*$"
         if (this.state.password1 !== this.state.password2) {
             this.setState({
                 msg: 'New password and Retype password must be the same.'
@@ -84,11 +84,6 @@ class ChangePassword extends Component {
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        /*const old = {
-            _id: '5fc11cb9b34a3a2660fab9f5',
-            password: this.state.oldPassword
-        }
-        this.props.validateOldPassword(old);*/
     };
 
     validateOld = (e) => {

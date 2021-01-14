@@ -1,16 +1,5 @@
 import React, { Component } from 'react';
 import LFDmodal from '../modals/LFDmodal'
-import { Button } from 'reactstrap';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import {
-    getServerInfo,
-    setServerInfo
-} from '../actions/serverInfoActions';
-import { setChannelDiInfo } from '../actions/di1Actions';
-import { setChannelDoInfo } from '../actions/doActions';
-import { setChannelAiInfo } from '../actions/aiActions';
-import { setChannelAoInfo } from '../actions/aoActions';
 
 class LdFacDef extends Component {
 

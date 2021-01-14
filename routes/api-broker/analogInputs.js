@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 var mqtt = require('mqtt');
 var topic = "/cc3200/Meliora/ai";
-var autoScalingTopic = "/cc3200/Meliora/ai/autoscalling";
+var autoScalingTopic = "/cc3200/Meliora/ai/autoscaling";
 var slopeInterceptTopic = "/cc3200/Meliora/ai/slopeintercept";
 var mqttClient = mqtt.connect({
-    host: "mqtt.eclipse.org",
+    host: "mqtt.eclipseprojects.io",
     port: 1883,
     username: "meliora",
     password: "123456",

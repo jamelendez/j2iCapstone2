@@ -63,6 +63,28 @@ class Ai3modal extends Component {
                 }
                 this.props.setChannelAiInfo(updatedChannel, i + 1);
                 this.props.sendChannelsStatusToMQTTBroker();
+
+                if (this.state.pointSlopeFormula) {
+                    const data = {
+                        chNumber: i,
+                        n1: this.state.n1,
+                        n2: this.state.n2,
+                        m1: this.state.m1,
+                        m2: this.state.m2,
+                        unit1: this.state.unit1,
+                        unit2: this.state.unit2
+                    }
+                    this.props.sendAutoScallingToMQTTBroker(data);
+                }
+                if (this.state.slopeIntercept) {
+                    const data = {
+                        chNumber: i,
+                        M: this.state.M,
+                        D: this.state.D,
+                        unit: this.state.unit3
+                    }
+                    this.props.sendSlopeInterceptToMQTTBroker(data);
+                }
             }
         } else {
             console.log('newName: ' + newName);

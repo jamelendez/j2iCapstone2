@@ -4,7 +4,7 @@ var mqtt = require('mqtt');
 var topic = "/cc3200/Meliora/ao";
 var slopeInterceptTopic = "/cc3200/Meliora/ao/slopeintercept";
 var mqttClient = mqtt.connect({
-    host: "mqtt.eclipse.org",
+    host: "mqtt.eclipseprojects.io",
     port: 1883,
     username: "meliora",
     password: "123456",
@@ -20,7 +20,7 @@ var options = {
 const AOChannels = require('../../models/AOChannels');
 
 // @route  GET api-broker/digitalInputs
-// @desc   Get digital inputs status from dB and public to broker.
+// @desc   Get digital inputs status from dB and publish to broker.
 // @access Public
 router.get('/', (req, res) => {
     AOChannels.find({}, 'status', (err, data) => {

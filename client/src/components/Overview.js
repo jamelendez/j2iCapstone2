@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getChanelDi1Info } from '../actions/di1Actions';
 import { getDOChannels } from '../actions/doActions'
-import { getAIChannels } from '../actions/aiActions'
-import { getAOChannels } from '../actions/aoActions'
+import { getAIChannels, getAIValuesFromMQTTBroker } from '../actions/aiActions'
+import { getAOChannels, getAOValuesFromMQTTBroker } from '../actions/aoActions'
+import { Timestamp } from 'mongodb';
 
 class Overview extends Component {
 
@@ -14,6 +15,8 @@ class Overview extends Component {
         this.props.getDOChannels();
         this.props.getAIChannels();
         this.props.getAOChannels();
+        this.props.getAIValuesFromMQTTBroker();
+        this.props.getAOValuesFromMQTTBroker();
     }
 
     static propTypes = {
@@ -21,6 +24,8 @@ class Overview extends Component {
         getDOChannels: PropTypes.func.isRequired,
         getAIChannels: PropTypes.func.isRequired,
         getAOChannels: PropTypes.func.isRequired,
+        getAIValuesFromMQTTBroker: PropTypes.func.isRequired,
+        getAOValuesFromMQTTBroker: PropTypes.func.isRequired,
         di1: PropTypes.object.isRequired,
         do1: PropTypes.object.isRequired,
         ai1: PropTypes.object.isRequired,
@@ -85,12 +90,10 @@ class Overview extends Component {
         if (aiStatus4) { current_aistatus4 = 'Enabled'; }
         else { current_aistatus4 = 'Disabled'; }
 
-
-
-        const aiValue = this.props.ai1.values[0].value;
-        const aiValue2 = this.props.ai1.values[1].value;
-        const aiValue3 = this.props.ai1.values[2].value;
-        const aiValue4 = this.props.ai1.values[3].value;
+        const aiValue = this.props.ai1.ai_values[0].value;
+        const aiValue2 = this.props.ai1.ai_values[1].value;
+        const aiValue3 = this.props.ai1.ai_values[2].value;
+        const aiValue4 = this.props.ai1.ai_values[3].value;
 
         const aiMin = 0;
         const aiMin2 = 0;
@@ -121,20 +124,20 @@ class Overview extends Component {
         if (aoStatus4) { current_aostatus4 = 'Enabled'; }
         else { current_aostatus4 = 'Disabled'; }
 
-        const aoValue = this.props.ao1.inputs[0].value;
-        const aoValue2 = this.props.ao1.inputs[1].value;
-        const aoValue3 = this.props.ao1.inputs[2].value;
-        const aoValue4 = this.props.ao1.inputs[3].value;
+        const aoValue = this.props.ao1.ao_values[0].value;
+        const aoValue2 = this.props.ao1.ao_values[1].value;
+        const aoValue3 = this.props.ao1.ao_values[2].value;
+        const aoValue4 = this.props.ao1.ao_values[3].value;
 
-        const aoMin = this.props.ao1.inputs[0].min;
-        const aoMin2 = this.props.ao1.inputs[1].min;
-        const aoMin3 = this.props.ao1.inputs[2].min;
-        const aoMin4 = this.props.ao1.inputs[3].min;
+        const aoMin = 0;
+        const aoMin2 = 0;
+        const aoMin3 = 0;
+        const aoMin4 = 0;
 
-        const aoMax = this.props.ao1.inputs[0].max;
-        const aoMax2 = this.props.ao1.inputs[1].max;
-        const aoMax3 = this.props.ao1.inputs[2].max;
-        const aoMax4 = this.props.ao1.inputs[3].max;
+        const aoMax = 0;
+        const aoMax2 = 0;
+        const aoMax3 = 0;
+        const aoMax4 = 0;
         return (
             <div>
                 <h1>Welcome to Meliora Overview</h1>
@@ -310,5 +313,7 @@ export default connect(mapStateToProps,
         getChanelDi1Info,
         getDOChannels,
         getAIChannels,
-        getAOChannels
+        getAOChannels, 
+        getAIValuesFromMQTTBroker,
+        getAOValuesFromMQTTBroker
     })(Overview);

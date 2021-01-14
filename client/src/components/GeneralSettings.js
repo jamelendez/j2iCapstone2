@@ -27,7 +27,7 @@ class GeneralSettings extends Component {
 
     // Handles the message to be displayed after clicking the 'Save Changes' Button. 
     onSaveChangesClick = (serverName, serverLocation) => {
-        const { current_id, currentServerName, currentServerLocation } = this.props.serverInfo.serverInfo;
+        const { currentServerName, currentServerLocation } = this.props.serverInfo.serverInfo;
         if (serverName == '') {
             serverName = currentServerName;
         }

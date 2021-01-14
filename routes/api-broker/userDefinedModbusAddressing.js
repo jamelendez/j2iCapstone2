@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 var mqtt = require('mqtt');
-var topic = "/cc3200/Meliora/udma";
+var topic = "/cc3200/Meliora/addressing";
 var mqttClient = mqtt.connect({
-    host: "mqtt.eclipse.org",
+    host: "mqtt.eclipseprojects.io",
     port: 1883,
     username: "meliora",
     password: "123456",

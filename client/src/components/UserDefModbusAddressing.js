@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Table, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { sendAddressesToMQTTBroker } from '../actions/udmaActions';
 
 class UserDefModbusAddressing extends Component {
@@ -9,13 +9,10 @@ class UserDefModbusAddressing extends Component {
         errMsgColor: "green",
 
         // Default Addresses for Modbus Functions
-        diValueStartAddress: 1,
+        diValueStartAddress: 10001,
         doValueStartAddress: 1,
-        aiValueStartAddress: 1,
-        aoValueStartAddress: 1,
-        aiScalingStartAddress: 65,
-        aiSlopeInterceptStartAddress: 129,
-        aoSlopeInterceptStartAddress: 193,
+        aiValueStartAddress: 40001,
+        aoValueStartAddress: 30001
     }
 
     // Handle when input change is detected. Change the state value corresponding
@@ -78,10 +75,7 @@ class UserDefModbusAddressing extends Component {
                 this.state.diValueStartAddress,
                 this.state.doValueStartAddress,
                 this.state.aiValueStartAddress,
-                this.state.aoValueStartAddress,
-                this.state.aiScalingStartAddress,
-                this.state.aiSlopeInterceptStartAddress,
-                this.state.aoSlopeInterceptStartAddress
+                this.state.aoValueStartAddress
             ]
             sendAddressesToMQTTBroker(addresses);
         }
@@ -209,73 +203,6 @@ class UserDefModbusAddressing extends Component {
                             <td>4</td>
                             <td>1 BIT</td>
                         </tr>
-
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>AI Scaling Value</td>
-                            <td>
-                                <Form>
-                                    <Input type="number"
-                                        name="aiScalingStartAddress"
-                                        placeholder="00065"
-                                        disabled={!this.state.udma}
-                                        onChange={this.onChange} />
-                                </Form>
-                            </td>
-                            <td>
-                                04: INPUT REGISTER
-                            </td>
-                            <td>R</td>
-                            <td>40065</td>
-                            <td>4</td>
-                            <td>1 BIT</td>
-
-                        </tr>
-
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>AI Slope-Intercept</td>
-                            <td>
-                                <Form>
-                                    <Input type="number"
-                                        name="aiSlopeInterceptStartAddress"
-                                        placeholder="00129"
-                                        disabled={!this.state.udma}
-                                        onChange={this.onChange} />
-                                </Form>
-                            </td>
-                            <td>
-                                04: INPUT REGISTER
-                            </td>
-                            <td>R</td>
-                            <td>40128</td>
-                            <td>4</td>
-                            <td>1 BIT</td>
-
-                        </tr>
-
-                        <tr>
-                            <th scope="row">7</th>
-                            <td>AO Slope-Intercept</td>
-                            <td>
-                                <Form>
-                                    <Input type="number"
-                                        name="aoSlopeInterceptStartAddress"
-                                        placeholder="40193"
-                                        disabled={!this.state.udma}
-                                        onChange={this.onChange} />
-                                </Form>
-                            </td>
-                            <td>
-                                04: INPUT REGISTER
-                            </td>
-                            <td>R</td>
-                            <td>40193</td>
-                            <td>4</td>
-                            <td>1 BIT</td>
-
-                        </tr>
-
                     </tbody>
 
                 </Table>

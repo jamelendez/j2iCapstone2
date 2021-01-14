@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {
-  HashRouter as Router, Switch, Route, Redirect
+  BrowserRouter as Router, Switch, Route
 } from "react-router-dom";
-import AppNavbar from './components/AppNavbar';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import Menu from './components/Menu';
-import InfoBar from './components/InfoBar';
-import { Col, Container, Row } from 'reactstrap';
+import { Container} from 'reactstrap';
 
 import { Provider } from 'react-redux';
 import store from './store'
@@ -14,9 +11,7 @@ import { loadUser } from './actions/authActions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Timer from './components/Timer'
 import Login from './components/auth/Login'
-import Register from './components/auth/Register'
 import PrivateRoute from './components/auth/PrivateRoute';
 import Main from './Main'
 
@@ -37,7 +32,7 @@ class App extends Component {
         <div className="App">
 
           <Container>
-            <Router>
+            <Router >
               <Switch>
                 <PrivateRoute exact path="/main" component={Main} />
                 <Route path='/forgot_password'>

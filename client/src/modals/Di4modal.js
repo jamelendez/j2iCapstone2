@@ -70,6 +70,7 @@ class Di4modal extends Component {
             }
             this.props.sendChannelsStatusToMQTTBroker();
         }
+
         else {
             const currentName = this.props.di1.di[3].name;
             const currentAliasOFF = this.props.di1.di[3].aliasOFF;
@@ -97,8 +98,6 @@ class Di4modal extends Component {
             this.props.setChannelDiInfo(updatedChannel, 4);
             this.props.sendChannelsStatusToMQTTBroker();
         }
-
-
 
         this.toggle();
     }

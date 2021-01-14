@@ -5,7 +5,8 @@ import {
     SET_CHANNELAO1_INFO,
     SET_AOCHANNEL_STATUS,
     SET_AOCHANNEL_NAME,
-    SET_AOCHANNEL_SLOPEINTERCEPT_RESULT
+    SET_AOCHANNEL_SLOPEINTERCEPT_RESULT,
+    GET_AO_VALUES
 } from '../actions/types';
 
 export const getAOChannels = () => dispatch => {
@@ -38,6 +39,16 @@ export const sendChannelsStatusToMQTTBroker = () => dispatch => {
 
 export const sendSlopeInterceptToMQTTBroker = (data) => dispatch => {
     axios.post('/api-broker/analogOutputs/slopeIntercept', data);
+}
+
+export const getAOValuesFromMQTTBroker = () => dispatch => {
+    axios.get('/api-broker/analogOutputValues')
+        .then(res =>
+            dispatch({
+                type: GET_AO_VALUES,
+                payload: res.data
+            })
+        );
 }
 
 export const setAOChannelName = (name, chNumber) => {

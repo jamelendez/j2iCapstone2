@@ -8,7 +8,12 @@ import update from 'immutability-helper';
 
 const initialState = {
     ai: [{}, {}, {}, {}],
-    values: [{}, {}, {}, {}],
+    ai_values: [
+        {value: 0},
+        {value: 0},
+        {value: 0},
+        {value: 0}
+    ],
     autoScalling: [
         { n1: 0, n2: 0, m1: 0, m2: 0, unit1: 'V', unit2: 'V', result: 0, ch: 1 },
         { n1: 0, n2: 0, m1: 0, m2: 0, unit1: 'V', unit2: 'V', result: 0, ch: 2 },
@@ -41,13 +46,10 @@ export default function (state = initialState, action) {
                 }
             })
         case GET_AI_VALUES:
-            return update(state, {
-                values: {
-                    [action.payload2 - 1]: {
-                        value: { $set: action.payload }
-                    }
-                }
-            })
+            return {
+                ...state,
+                ai_values: action.payload,
+            };
         case AI_CHANNELS_LOADING:
             return {
                 ...state,

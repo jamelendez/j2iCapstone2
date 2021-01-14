@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 const path = require('path')
 const config = require('config');
-
+const path = require('path');
 
 
 const app = express();
@@ -43,7 +43,19 @@ app.use('/api-broker/digitalOutputs', require('./routes/api-broker/digitalOutput
 app.use('/api-broker/analogInputs', require('./routes/api-broker/analogInputs'));
 app.use('/api-broker/analogOutputs', require('./routes/api-broker/analogOutputs'));
 app.use('/api-broker/userDefinedModbusAddressing', require('./routes/api-broker/userDefinedModbusAddressing'));
-app.use('/api-broker/analogValues', require('./routes/api-broker/analogValues'));
+app.use('/api-broker/analogInputValues', require('./routes/api-broker/analogInputValues'));
+app.use('/api-broker/analogOutputValues', require('./routes/api-broker/analogOutputValues'));
+
+// Serve static assets if in production
+if(process.env.NODE_ENV === 'production') {
+    // Set a static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));  
+    });
+}
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log('Server started on port ' + port));

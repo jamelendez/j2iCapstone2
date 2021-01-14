@@ -97,15 +97,6 @@ export const logout = () => {
 
 export const resetPassword = (user) => (dispatch, getState) => {
     const id = user._id;
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    const password = user.password;
-    // Request body
-    const body = JSON.stringify({ password });
     axios.put(`/api/resetPassword/${id}`, user, tokenConfig(getState))
         .then(res => dispatch({
             type: RESET_PW_SUCCESS,

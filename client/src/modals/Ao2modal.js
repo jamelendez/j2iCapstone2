@@ -58,6 +58,16 @@ class Ao2modal extends Component {
                     status: this.state.status,
                 }
                 this.props.setChannelAoInfo(updatedChannel, i + 1);
+
+                if (this.state.slopeIntercept) {
+                    const data = {
+                        chNumber: i,
+                        M: this.state.M,
+                        D: this.state.D,
+                        unit: this.state.unit
+                    }
+                    this.props.sendSlopeInterceptToMQTTBroker(data);
+                }
             }
             this.props.sendChannelsStatusToMQTTBroker();
         } else {

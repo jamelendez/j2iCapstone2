@@ -37,16 +37,16 @@ export const sendAutoScallingToMQTTBroker = (data) => dispatch => {
     axios.post('/api-broker/analogInputs', data);
 }
 
-export const sendSlopeInterceptToMQTTBroker = (data) => {
-    axios.post('/api-broker/analogInputs/slopeIntercept', data);
-}
-
 export const getAIValuesFromMQTTBroker = () => dispatch => {
-    axios.get('/api-broker/analogValues/vai')
+    axios.get('/api-broker/analogInputValues')
         .then(res =>
             dispatch({
                 type: GET_AI_VALUES,
                 payload: res.data
             })
         );
+}
+
+export const sendSlopeInterceptToMQTTBroker = (data) => {
+    axios.post('/api-broker/analogInputs/slopeIntercept', data);
 }
