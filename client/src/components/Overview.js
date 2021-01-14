@@ -114,15 +114,15 @@ class Overview extends Component {
         const aiValue3 = this.props.ai1.ai_values[2].value;
         const aiValue4 = this.props.ai1.ai_values[3].value;
 
-        if(aiValue > aiMax1) aiMax1 = aiValue;
-        if(aiValue2 > aiMax2) aiMax2 = aiValue2;
-        if(aiValue3 > aiMax3) aiMax3 = aiValue3;
-        if(aiValue4 > aiMax4) aiMax4 = aiValue4;
+        if(aiValue > this.state.aiMax1) this.setState({aiMax1: aiValue});
+        if(aiValue > this.state.aiMax2) this.setState({aiMax2: aiValue});
+        if(aiValue > this.state.aiMax3) this.setState({aiMax3: aiValue});
+        if(aiValue > this.state.aiMax4) this.setState({aiMax4: aiValue});
 
-        if(aiValue < aiMin1) aiMin1 = aiValue;
-        if(aiValue2 < aiMin2) aiMin2 = aiValue2;
-        if(aiValue3 < aiMin3) aiMin3 = aiValue3;
-        if(aiValue4 < aiMin4) aiMin4 = aiValue4;
+        if(aiValue < this.state.aiMin1) this.setState({aiMin1: aiValue});
+        if(aiValue < this.state.aiMin2) this.setState({aiMin2: aiValue});
+        if(aiValue < this.state.aiMin3) this.setState({aiMin3: aiValue});
+        if(aiValue < this.state.aiMin4) this.setState({aiMin4: aiValue});
 
         // Analog Ouput Information
         const { status: aoStatus1 } = this.props.ao1.ao[0];
@@ -148,16 +148,17 @@ class Overview extends Component {
         const aoValue3 = this.props.ao1.ao_values[2].value;
         const aoValue4 = this.props.ao1.ao_values[3].value;
 
-        if(aoValue > aoMax1) aoMax1 = aoValue;
-        if(aoValue2 > aoMax2) aoMax2 = aoValue2;
-        if(aoValue3 > aoMax3) aoMax3 = aoValue3;
-        if(aoValue4 > aoMax4) aoMax4 = aoValue4;
+        if(aoValue > this.state.aoMax1) this.setState({aoMax1: aoValue});
+        if(aoValue > this.state.aoMax2) this.setState({aoMax2: aoValue});
+        if(aoValue > this.state.aoMax3) this.setState({aoMax3: aoValue});
+        if(aoValue > this.state.aoMax4) this.setState({aoMax4: aoValue});
 
-        if(aoValue < aoMin1) aoMin1 = aoValue;
-        if(aoValue2 < aoMin2) aoMin2 = aoValue2;
-        if(aoValue3 < aoMin3) aoMin3 = aoValue3;
-        if(aoValue4 < aoMin4) aoMin4 = aoValue4;
-        
+        if(aoValue < this.state.aoMin1) this.setState({aoMin1: aoValue});
+        if(aoValue < this.state.aoMin2) this.setState({aoMin2: aoValue});
+        if(aoValue < this.state.aoMin3) this.setState({aoMin3: aoValue});
+        if(aoValue < this.state.aoMin4) this.setState({aoMin4: aoValue});
+
+
         return (
             <div>
                 <h1>Welcome to Meliora Overview</h1>
@@ -241,32 +242,32 @@ class Overview extends Component {
                             <td>-24V - 24V</td>
                             <td>{current_aistatus1}</td>
                             <td>{aiValue}</td>
-                            <td>{aiMin}</td>
-                            <td>{aiMax}</td>
+                            <td>{this.state.aiMin1}</td>
+                            <td>{this.state.aiMax1}</td>
                         </tr>
                         <tr>
                             <th scope="row">2</th>
                             <td>-24V - 24V</td>
                             <td>{current_aistatus2}</td>
                             <td>{aiValue2}</td>
-                            <td>{aiMin2}</td>
-                            <td>{aiMax2}</td>
+                            <td>{this.state.aiMin2}</td>
+                            <td>{this.state.aiMax2}</td>
                         </tr>
                         <tr>
                             <th scope="row">3</th>
                             <td>-24V - 24V</td>
                             <td>{current_aistatus3}</td>
                             <td>{aiValue3}</td>
-                            <td>{aiMin3}</td>
-                            <td>{aiMax3}</td>
+                            <td>{this.state.aiMin3}</td>
+                            <td>{this.state.aiMax3}</td>
                         </tr>
                         <tr>
                             <th scope="row">4</th>
                             <td>-24V - 24V</td>
                             <td>{current_aistatus4}</td>
                             <td>{aiValue4}</td>
-                            <td>{aiMin4}</td>
-                            <td>{aiMax4}</td>
+                            <td>{this.state.aiMin4}</td>
+                            <td>{this.state.aiMax4}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -287,32 +288,32 @@ class Overview extends Component {
                             <td>0V - 24V</td>
                             <td>{current_aostatus1}</td>
                             <td>{aoValue}</td>
-                            <td>{aoMin}</td>
-                            <td>{aoMax}</td>
+                            <td>{this.state.aoMin1}</td>
+                            <td>{this.state.aoMax1}</td>
                         </tr>
                         <tr>
                             <th scope="row">2</th>
                             <td>0V - 24V</td>
                             <td>{current_aostatus2}</td>
                             <td>{aoValue2}</td>
-                            <td>{aoMin2}</td>
-                            <td>{aoMax2}</td>
+                            <td>{this.state.aoMin2}</td>
+                            <td>{this.state.aoMax2}</td>
                         </tr>
                         <tr>
                             <th scope="row">3</th>
                             <td>0V - 24V</td>
                             <td>{current_aostatus3}</td>
                             <td>{aoValue3}</td>
-                            <td>{aoMin3}</td>
-                            <td>{aoMax3}</td>
+                            <td>{this.state.aoMin3}</td>
+                            <td>{this.state.aoMax3}</td>
                         </tr>
                         <tr>
                             <th scope="row">4</th>
                             <td>0V - 24V</td>
                             <td>{current_aostatus4}</td>
                             <td>{aoValue4}</td>
-                            <td>{aoMin4}</td>
-                            <td>{aoMax4}</td>
+                            <td>{this.state.aoMin4}</td>
+                            <td>{this.state.aoMax4}</td>
                         </tr>
                     </tbody>
                 </Table>

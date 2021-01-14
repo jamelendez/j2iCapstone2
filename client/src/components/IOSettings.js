@@ -119,15 +119,15 @@ class IOSettings extends Component {
         const aiValue3 = this.props.ai1.ai_values[2].value;
         const aiValue4 = this.props.ai1.ai_values[3].value;
 
-        if(aiValue > aiMax1) aiMax1 = aiValue;
-        if(aiValue2 > aiMax2) aiMax2 = aiValue2;
-        if(aiValue3 > aiMax3) aiMax3 = aiValue3;
-        if(aiValue4 > aiMax4) aiMax4 = aiValue4;
+        if(aiValue > this.state.aiMax1) this.setState({aiMax1: aiValue});
+        if(aiValue > this.state.aiMax2) this.setState({aiMax2: aiValue});
+        if(aiValue > this.state.aiMax3) this.setState({aiMax3: aiValue});
+        if(aiValue > this.state.aiMax4) this.setState({aiMax4: aiValue});
 
-        if(aiValue < aiMin1) aiMin1 = aiValue;
-        if(aiValue2 < aiMin2) aiMin2 = aiValue2;
-        if(aiValue3 < aiMin3) aiMin3 = aiValue3;
-        if(aiValue4 < aiMin4) aiMin4 = aiValue4;
+        if(aiValue < this.state.aiMin1) this.setState({aiMin1: aiValue});
+        if(aiValue < this.state.aiMin2) this.setState({aiMin2: aiValue});
+        if(aiValue < this.state.aiMin3) this.setState({aiMin3: aiValue});
+        if(aiValue < this.state.aiMin4) this.setState({aiMin4: aiValue});
 
         // Analog Ouput Information
         const { status: aoStatus1 } = this.props.ao1.ao[0];
@@ -153,15 +153,15 @@ class IOSettings extends Component {
         const aoValue3 = this.props.ao1.ao_values[2].value;
         const aoValue4 = this.props.ao1.ao_values[3].value;
 
-        if(aoValue > aoMax1) aoMax1 = aoValue;
-        if(aoValue2 > aoMax2) aoMax2 = aoValue2;
-        if(aoValue3 > aoMax3) aoMax3 = aoValue3;
-        if(aoValue4 > aoMax4) aoMax4 = aoValue4;
+        if(aoValue > this.state.aoMax1) this.setState({aoMax1: aoValue});
+        if(aoValue > this.state.aoMax2) this.setState({aoMax2: aoValue});
+        if(aoValue > this.state.aoMax3) this.setState({aoMax3: aoValue});
+        if(aoValue > this.state.aoMax4) this.setState({aoMax4: aoValue});
 
-        if(aoValue < aoMin1) aoMin1 = aoValue;
-        if(aoValue2 < aoMin2) aoMin2 = aoValue2;
-        if(aoValue3 < aoMin3) aoMin3 = aoValue3;
-        if(aoValue4 < aoMin4) aoMin4 = aoValue4;
+        if(aoValue < this.state.aoMin1) this.setState({aoMin1: aoValue});
+        if(aoValue < this.state.aoMin2) this.setState({aoMin2: aoValue});
+        if(aoValue < this.state.aoMin3) this.setState({aoMin3: aoValue});
+        if(aoValue < this.state.aoMin4) this.setState({aoMin4: aoValue});
 
         return (
             <div>
