@@ -14,7 +14,7 @@ const UserSchema = new Schema({
     },
     firstPwChange: {
         type: Boolean,
-        required: true
+        required: false
     }
 });
 

@@ -74,7 +74,7 @@ mqttClient.subscribe(slopeInterceptTopic, { qos: 1 });
 
 // Recieve message
 mqttClient.on('message', function (topic, message, packet) {
-    console.log("message is " + message);
+    console.log("Analog Output Status: " + message);
     console.log("topic is " + topic);
 });
 

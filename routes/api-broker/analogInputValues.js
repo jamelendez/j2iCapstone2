@@ -36,9 +36,7 @@ router.get('/', (req, res) => {
     if (mqttClient.connected == true) {
         mqttClient.publish(flagTopicVai, "1", options);
     }
-    // if (mqttClient.connected == true) {
-    //     mqttClient.publish(topicvai, vai_msg, options);
-    // }
+    
     res.json(ai_values);
 });
 
@@ -57,8 +55,15 @@ mqttClient.on("error", function (error) {
 mqttClient.subscribe(topicvai, { qos: 1 }); // Analog Input Values
 
 mqttClient.on('message', function (topicvai, message, packet) {
+    vai_msg = "" + message;
     console.log("Recieving analog input values: " + message);
-    vai_msg = message
+    vai_msg_arr = vai_msg.split(','); 
+    ai_values =  [
+        {value: parseFloat(vai_msg_arr[0])},
+        {value: parseFloat(vai_msg_arr[1])},
+        {value: parseFloat(vai_msg_arr[2])},
+        {value: parseFloat(vai_msg_arr[3])}
+    ];
     console.log("topic is " + topicvai);
 });
 
