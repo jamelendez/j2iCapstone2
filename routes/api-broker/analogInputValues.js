@@ -14,7 +14,7 @@ var mqttClient = mqtt.connect({
 });
 var options = {
     retain: true,
-    qos: 1
+    qos: 2
 }
 
 var vai_msg = "0, 0, 0, 0"
